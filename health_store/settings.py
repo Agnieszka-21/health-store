@@ -26,18 +26,28 @@ SECRET_KEY = 'django-insecure-i@6oh-)4ev*bzbrltp2n#m3wtot8v5(ju2@gi7#wk_r^rn_-v1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-agnieszka21-healthstore-gnje3zewcam.ws.codeinstitute-ide.net']
+ALLOWED_HOSTS = [
+    '8000-agnieszka21-healthstore-gnje3zewcam.ws.codeinstitute-ide.net',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-agnieszka21-healthstore-gnje3zewcam.ws.codeinstitute-ide.net',
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.auth',  # required for Django AllAuth
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
+    'django.contrib.messages',  # required for Django AllAuth
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    # Django-AllAuth
+    'allauth',
+    'allauth.account',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +77,16 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
 
 WSGI_APPLICATION = 'health_store.wsgi.application'
 
@@ -99,6 +119,19 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+# Email configuration based on CI's Boutique Ado walkthrough
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
 
 
 # Internationalization
