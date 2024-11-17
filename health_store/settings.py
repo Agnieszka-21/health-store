@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'allauth.account',
     # Project apps
     'home',
+    'products',
     'profiles',
     # Other
     'django_countries',
