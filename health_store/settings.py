@@ -48,6 +48,10 @@ INSTALLED_APPS = [
     # Django-AllAuth
     'allauth',
     'allauth.account',
+    # Project apps
+    'profiles',
+    # Other
+    'django_countries',
 ]
 
 MIDDLEWARE = [
