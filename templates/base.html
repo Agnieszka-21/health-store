@@ -23,7 +23,9 @@
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <!-- Google Fonts -->
-
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Orelega+One&display=swap" rel="stylesheet">
         <!-- Custom styles -->
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
         {% endblock %}
@@ -48,8 +50,8 @@
         <header>
             {% block promo_banner %}
             <div id="promo-banner">
-                <div class="col">
-                    <h4 class="logo-font my-1">Get 10% off your first order - sign up today to receive your promo code</h4>                
+                <div class="row">
+                    <h4 class="col my-1 text-center">Get 10% off your first order - sign up today to receive your promo code</h4>                
                 </div> 
             </div>
             {% endblock %}
@@ -57,28 +59,33 @@
             {% block navigation %}
             <div id="main-nav">
                 <!-- from Bootstrap docs: https://getbootstrap.com/docs/5.0/components/navbar/ -->
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div class="container-fluid d-flex justify-content-between">
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="#">Home</a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" href="#">Shop</a>
                                 </li>
-                                <li class="nav-item"></li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="#">Blog</a>
                                 </li>
-                                <li class="nav-item"></li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="#">Events</a>
                                 </li>
-                                <a class="navbar-brand active" aria-current="page" href="#">Health Store</a>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h1 id="logo"><a class="navbar-brand active" aria-current="page" href="#">Health&#127807Store</a></h1>
+                        </div>
+
+                        <div class="navbar">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row" id="menu-icons">
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa-solid fa-user"></i>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -92,22 +99,22 @@
                                         {% endif %}
                                     </ul>
                                 </li>
-                                <li class="nav-item dropdown"></li>
-                                    <a class="nav-link" href="#">Basket
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="#">
                                         <i class="fa-solid fa-basket-shopping"></i>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                                </li>
                             </ul>
-                            <form class="d-flex">
-                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                <button class="btn btn-outline-success" type="submit">Search</button>
-                            </form>
                         </div>
                     </div>
                 </nav>
+            </div>
+
+            <div class="w-50 mx-auto py-3">
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
             </div>
             {% endblock %}
         </header>

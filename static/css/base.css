@@ -1,0 +1,11 @@
+html {
+    height: 100%;
+}
+
+#logo {
+    font-family: "Orelega One", serif;
+}
+
+#menu-icons i {
+    padding: 0 .5rem;
+}
