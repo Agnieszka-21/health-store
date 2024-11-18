@@ -2,10 +2,18 @@ html {
     height: 100%;
 }
 
+.navbar-collapse {
+    flex-grow: 0;
+}
+
 #logo {
     font-family: "Orelega One", serif;
 }
 
 #menu-icons i {
     padding: 0 .5rem;
+}
+
+#copyright {
+    background-color: rgba(0, 0, 0, 0.2);
 }

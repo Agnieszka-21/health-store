@@ -46,13 +46,11 @@
 
         <title>Health Store {% block extra_title %}{% endblock %}</title>
     </head>
-    <body class="d-flex flex-column">
+    <body class="d-flex flex-column h-100">
         <header>
             {% block promo_banner %}
             <div id="promo-banner">
-                <div class="row">
-                    <h4 class="col my-1 text-center">Get 10% off your first order - sign up today to receive your promo code</h4>                
-                </div> 
+                <h6 class="my-1 text-center">Get 10% off your first order - sign up to our newsletter to receive your promo code</h6>                
             </div>
             {% endblock %}
 
@@ -79,7 +77,7 @@
                         </div>
 
                         <div>
-                            <h1 id="logo"><a class="navbar-brand active" aria-current="page" href="#">Health&#127807Store</a></h1>
+                            <h1 id="logo"><a class="navbar-brand" aria-current="page" href="#">Health&#127807Store</a></h1>
                         </div>
 
                         <div class="navbar">
@@ -109,27 +107,26 @@
                     </div>
                 </nav>
             </div>
+            {% endblock %}
 
-            <div class="w-50 mx-auto py-3">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
+            {% block searchbar %}
             {% endblock %}
         </header>
 
+        
         {% if messages %}
         {% endif %}
 
-        {% block page_header %}
-        {% endblock %}
+        <main class="flex-grow-1">
+            {% block page_header %}
+            {% endblock %}
 
-        {% block content %}
-        {% endblock %}
+            {% block content %}
+            {% endblock %}
 
-        {% block newsletter_signup %}
-        {% endblock %}
+            {% block newsletter_signup %}
+            {% endblock %}
+        </main>
 
         {% block footer %}
         <!-- Source: https://mdbootstrap.com/docs/standard/extended/social-media-icons-footer/ -->
@@ -143,14 +140,14 @@
                         ><i class="fab fa-facebook-f"></i
                     ></a>
                 
-                    <!-- Twitter -->
+                    <!-- Twitter X -->
                     <a data-mdb-ripple-init class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-                        ><i class="fab fa-twitter"></i
+                        ><i class="fa-brands fa-x-twitter"></i
                     ></a>
                 
-                    <!-- Google -->
+                    <!-- YouTube -->
                     <a data-mdb-ripple-init class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-                        ><i class="fab fa-google"></i
+                        ><i class="fa-brands fa-youtube"></i
                     ></a>
                 
                     <!-- Instagram -->
@@ -162,7 +159,7 @@
             <!-- Grid container -->
           
             <!-- Copyright -->
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            <div class="text-center p-3" id="copyright">
             © 2024 Copyright: Health Store Ltd.</div>
             <!-- Copyright -->
         </footer>

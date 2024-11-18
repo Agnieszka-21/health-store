@@ -2,6 +2,17 @@
 {% load static %}
 
 
+{% block extra_title %}- Home{% endblock %}
+
+{% block searchbar %}
+<div class="w-50 mx-auto py-3">
+    <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+</div>
+{% endblock %}
+
 {% block page_header %}
 <!-- Carousel based on Booststrap docs: https://getbootstrap.com/docs/5.0/components/carousel/ -->
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
