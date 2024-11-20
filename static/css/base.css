@@ -2,6 +2,11 @@ html {
     height: 100%;
 }
 
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
 .navbar-collapse {
     flex-grow: 0;
 }
@@ -16,4 +21,15 @@ html {
 
 #copyright {
     background-color: rgba(0, 0, 0, 0.2);
+}
+
+
+@media (min-width: 1200px) {
+    .carousel {
+        height: 80%;
+    }
+
+    .carousel-inner {
+        height: 45vh;
+    }
 }
