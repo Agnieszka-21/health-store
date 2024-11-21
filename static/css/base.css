@@ -25,11 +25,35 @@ body {
 
 
 @media (min-width: 1200px) {
+    #search {
+        width: 50% !important;
+    }
+
     .carousel {
-        height: 80%;
+        height: 80vh;
     }
 
     .carousel-inner {
+        height: 100%;
+    }
+}
+
+@media (min-width: 1440px) {
+    .carousel {
+        height: 65vh;
+    }
+
+    .carousel-inner {
+        height: 100%;
+    }
+}
+
+@media (min-width: 1920px) {
+    .carousel {
         height: 45vh;
+    }
+
+    .carousel-inner {
+        height: 100%;
     }
 }
