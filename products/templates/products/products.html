@@ -59,9 +59,13 @@
                         <div class="card h-100 border-0">
                             {% for image in images %}
                                 {% if image.primary_img %}
-                                <img class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ product.name }}">
+                                <a href="{% url 'product_detail' product.id %}">
+                                    <img class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ product.name }}">
+                                </a>
                                 {% else %}
-                                <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                                <a href="{% url 'product_detail' product.id %}">
+                                    <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                                </a>
                                 {% endif %}
                             {% endfor %}
                             <div class="card-body pb-0">

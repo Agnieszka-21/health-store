@@ -43,5 +43,5 @@ class Image(models.Model):
     name_tertiary_img = models.CharField(max_length=254, null=True, blank=True)
 
     def __str__(self):
-        return self.name_primary_img
+        return self.product.name
         
