@@ -90,10 +90,10 @@
                                         {% if request.user.is_authenticated %}
                                         <li><a class="dropdown-item" href="#">Account</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="#">Log out</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'account_logout' %}">Log out</a></li>
                                         {% else %}
-                                        <li><a class="dropdown-item" href="#">Sign up</a></li>
-                                        <li><a class="dropdown-item" href="#">Log in</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'account_signup' %}">Sign up</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'account_login' %}">Log in</a></li>
                                         {% endif %}
                                     </ul>
                                 </li>
