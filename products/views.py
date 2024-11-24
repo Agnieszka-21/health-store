@@ -11,12 +11,20 @@ def all_products(request):
     products = Product.objects.all()
     images = Image.objects.all()
     query = None
-    # categories = None
+    categories = None
     # sort = None
     # direction = None
     # current_sorting = f'{sort}_{direction}'
 
     if request.method == "GET":
+        if 'category' in request.GET:
+            categories = request.GET['category'].split(',')
+            print('Request.GET categories: ', categories)
+            products = products.filter(category__name__in=categories)
+            print('Products: ', products)
+            categories = Category.objects.filter(name__in=categories)
+            print('Categories: ', categories)
+
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
@@ -30,7 +38,7 @@ def all_products(request):
         'products': products,
         'images': images,
         'search_term': query,
-        # 'current_categories': categories,
+        'current_categories': categories,
         # 'current_sorting': current_sorting,
     }
 
