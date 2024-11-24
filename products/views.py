@@ -11,21 +11,16 @@ def all_products(request):
     products = Product.objects.all()
     images = Image.objects.all()
     query = None
-    print('Query is None at this stage')
     # categories = None
     # sort = None
     # direction = None
     # current_sorting = f'{sort}_{direction}'
 
     if request.method == "GET":
-        print('request.GET is working')
         if 'q' in request.GET:
-            print('q is in request.GET')
             query = request.GET['q']
-            print(query)
             if not query:
                 messages.error(request, 'Please enter a keyword you want to find')
-                print('Please enter a keyword you want to find')
                 return redirect(reverse('products'))
 
             queries = Q(name__icontains=query) | Q(description__icontains=query)
