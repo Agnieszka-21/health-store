@@ -4,14 +4,18 @@
 
 {% block extra_title %}- Home{% endblock %}
 
-{% block searchbar %}
+<!-- {% block searchbar %}
 <div id="search" class="w-100 mx-auto p-3">
-    <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="What product would you like to find? Type its name here">
-        <button class="btn btn-outline-success" type="submit" aria-label="Search now"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+    <form method="GET" action="{% url 'products' %}" class="d-flex">
+        <div class="input-group">
+            <input name="q" class="form-control me-2" type="text" placeholder="Search" aria-label="What product would you like to find? Type its name here">
+            <div class="input-group-append">
+                <button class="btn btn-outline-success" type="submit" aria-label="Search now"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+            </div>
+        </div>
     </form>
 </div>
-{% endblock %}
+{% endblock %} -->
 
 {% block page_header %}
 <!-- Carousel based on Booststrap docs: https://getbootstrap.com/docs/5.0/components/carousel/ -->
@@ -48,7 +52,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="py-5 text-center">
-    <button type="button" class="btn btn-lg btn-outline-success">Shop now</button>
-</div>
+<form id="shop-now" action="{% url 'products' %}" class="py-5 py-lg-3 text-center">
+    <input type="submit" value="Shop now" class="btn btn-lg btn-outline-success">
+</form>
 {% endblock %}
