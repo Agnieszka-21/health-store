@@ -19,7 +19,6 @@ def all_products(request):
     if request.method == "GET":
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')
-            print('Request.GET categories: ', categories)
             products = products.filter(category__name__in=categories)
             print('Products: ', products)
             categories = Category.objects.filter(name__in=categories)
@@ -31,7 +30,7 @@ def all_products(request):
                 messages.error(request, 'Please enter a keyword you want to find')
                 return redirect(reverse('products'))
 
-            queries = Q(name__icontains=query) | Q(description__icontains=query)
+            queries = Q(name__icontains=query) | Q(description__icontains=query) | Q(ingredients__icontains=query)
             products = products.filter(queries)
 
     context = {
