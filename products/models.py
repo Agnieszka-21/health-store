@@ -1,6 +1,5 @@
 from django.db import models
 
-# Copied from CI's Boutique Ado walkthrough for now
 
 class Category(models.Model):
 
@@ -17,8 +16,25 @@ class Category(models.Model):
         return self.friendly_name
 
 
+class Brand(models.Model):
+
+    name = models.CharField(max_length=254)
+    friendly_name = models.CharField(max_length=254, null=True, blank=True)
+    url = models.URLField(max_length=180, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_friendly_name(self):
+        return self.friendly_name
+
+    def get_url(self):
+        return self.url
+
+
 class Product(models.Model):
     category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
+    brand = models.ForeignKey('Brand', null=True, blank=True, on_delete=models.SET_NULL)
     sku = models.CharField(max_length=254, null=True, blank=True)
     name = models.CharField(max_length=254)
     description = models.TextField()
