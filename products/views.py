@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.db.models import Q
 from django.contrib import messages
 from django.http import HttpResponse
-from .models import Category, Product, Image
+from .models import Category, Brand, Product, Image
 
 
 def all_products(request):
@@ -10,8 +10,11 @@ def all_products(request):
 
     products = Product.objects.all()
     images = Image.objects.all()
+    all_categories = Category.objects.all()
+    all_brands = Brand.objects.all()
     query = None
     categories = None
+    brands = None
     # sort = None
     # direction = None
     # current_sorting = f'{sort}_{direction}'
@@ -23,6 +26,13 @@ def all_products(request):
             print('Products: ', products)
             categories = Category.objects.filter(name__in=categories)
             print('Categories: ', categories)
+
+        if 'brand' in request.GET:
+            brands = request.GET['brand'].split(',')
+            products = products.filter(brand__name__in=brands)
+            print('Products: ', products)
+            brands = Brand.objects.filter(name__in=brands)
+            print('Brands: ', brands)
 
         if 'q' in request.GET:
             query = request.GET['q']
@@ -36,8 +46,11 @@ def all_products(request):
     context = {
         'products': products,
         'images': images,
-        'search_term': query,
+        'all_brands': all_brands,
+        'current_brands': brands,
+        'all_categories': all_categories,
         'current_categories': categories,
+        'search_term': query,
         # 'current_sorting': current_sorting,
     }
 
