@@ -112,6 +112,7 @@
             {% block searchbar %}
             <div id="search" class="w-100 mx-auto p-3">
                 <form method="GET" action="{% url 'products' %}" class="d-flex">
+                    {% csrf_token %}
                     <div class="input-group">
                         <input name="q" class="form-control me-2" type="text" placeholder="Search" aria-label="What product would you like to find? Type its name here">
                         <div class="input-group-text p-0">
