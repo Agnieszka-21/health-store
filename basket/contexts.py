@@ -1,7 +1,7 @@
 from decimal import Decimal
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from products.models import Product
+from products.models import Product, Image
 
 
 def basket_contents(request):
@@ -12,12 +12,14 @@ def basket_contents(request):
 
     for item_id, quantity in basket.items():
         product = get_object_or_404(Product, pk=item_id)
+        product_image = get_object_or_404(Image, product=item_id)
         total += quantity * product.price
         product_count += quantity
         basket_items.append({
             'item_id': item_id,
             'quantity': quantity,
             'product': product,
+            'product_image': product_image,
         })
 
     if total < settings.FREE_DELIVERY_THRESHOLD:
