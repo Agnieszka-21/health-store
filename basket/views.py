@@ -1,8 +1,6 @@
 from django.shortcuts import render, HttpResponse
 
 
-# Create your views here.
-
 def view_basket(request):
-    """ A view that renders the bag contents page """
-    return HttpResponse('This is the page for your basket')
+    """ A view that renders the basket contents page """
+    return render(request, 'basket/basket.html')
