@@ -116,3 +116,8 @@
     </div>
 </div>
 {% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+{% include 'products/includes/product_quantity_script.html' %}
+{% endblock %}
