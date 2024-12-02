@@ -28,6 +28,24 @@ body {
     cursor: pointer;
 }
 
+/* Messages (toasts) */
+
+.message-container {
+    position: fixed;
+    top: 10rem;
+    right: 0;
+    z-index: 99999999999;
+    background-color: #fff;
+}
+
+.custom-toast {
+    overflow: visible;
+}
+
+.toast-capper {
+    height: 2px;
+}
+
 
 @media (min-width: 1200px) {
     #search {
