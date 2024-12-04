@@ -200,3 +200,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Delivery settings
 FREE_DELIVERY_THRESHOLD = 50
 STANDARD_DELIVERY_FEE = 6.50
+
+# Stripe
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
+CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
