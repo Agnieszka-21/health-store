@@ -10,12 +10,20 @@ def all_products(request):
     """ A view to show all products, including sorting and search queries """
 
     products = Product.objects.all()
-    images = Image.objects.all()
     all_categories = Category.objects.all()
     all_brands = Brand.objects.all()
     query = None
     categories = None
     brands = None
+
+    all_images = Image.objects.all()
+    for product in products:
+        product_images = all_images.filter(product=product)
+        print('Product images: ', product_images)
+        for image in product_images:
+            main_img = image.primary_img
+            print('Primary img: ', image.primary_img)
+    
     # sort = None
     # direction = None
     # current_sorting = f'{sort}_{direction}'
@@ -46,7 +54,9 @@ def all_products(request):
 
     context = {
         'products': products,
-        'images': images,
+        # 'images': images,
+        'product_images': product_images,
+        'main_img': main_img,
         'all_brands': all_brands,
         'current_brands': brands,
         'all_categories': all_categories,
@@ -63,8 +73,6 @@ def product_detail(request, product_id):
 
     product = get_object_or_404(Product, pk=product_id)
     product_images = Image.objects.filter(product=product)
-    print(product_images)
-
     context = {
         'product': product,
         'product_images': product_images,
@@ -75,7 +83,17 @@ def product_detail(request, product_id):
 
 def add_product(request):
     """ Add a product to the store """
-    form = ProductForm()
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully added product!')
+            return redirect(reverse('add_product'))
+        else:
+            messages.error(request, 'Failed to add product. Please ensure the form is valid.')
+    else:
+        form = ProductForm()
+        
     template = 'products/add_product.html'
     context = {
         'form': form,
