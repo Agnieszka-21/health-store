@@ -93,7 +93,7 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         {% if request.user.is_authenticated %}
-                                        <li><a class="dropdown-item" href="#">Account</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'profile' %}">Account</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item" href="{% url 'account_logout' %}">Log out</a></li>
                                         {% else %}
