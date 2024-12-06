@@ -53,7 +53,7 @@ def checkout(request):
             order = order_form.save(commit=False)
             pid = request.POST.get('client_secret').split('_secret')[0]
             order.stripe_pid = pid
-            order.original_bag = json.dumps(basket)
+            order.original_basket = json.dumps(basket)
             order.save()
             for item_id, item_data in basket.items():
                 try:
@@ -67,7 +67,7 @@ def checkout(request):
                         order_line_item.save()
                 except Product.DoesNotExist:
                     messages.error(request, (
-                        "One of the products in your bag wasn't found in our database. "
+                        "One of the products in your basket wasn't found in our database. "
                         "Please call us for assistance!")
                     )
                     order.delete()
