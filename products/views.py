@@ -15,15 +15,7 @@ def all_products(request):
     query = None
     categories = None
     brands = None
-
-    all_images = Image.objects.all()
-    for product in products:
-        product_images = all_images.filter(product=product)
-        print('Product images: ', product_images)
-        for image in product_images:
-            main_img = image.primary_img
-            print('Primary img: ', image.primary_img)
-    
+        
     # sort = None
     # direction = None
     # current_sorting = f'{sort}_{direction}'
@@ -54,9 +46,6 @@ def all_products(request):
 
     context = {
         'products': products,
-        # 'images': images,
-        'product_images': product_images,
-        'main_img': main_img,
         'all_brands': all_brands,
         'current_brands': brands,
         'all_categories': all_categories,
