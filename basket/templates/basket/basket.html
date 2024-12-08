@@ -29,11 +29,11 @@
                         {% for item in basket_items %}
                             <tr>
                                 <td class="p-3 w-25">
-                                {% if item.product_image.primary_img %}    
-                                    <img class="img-fluid rounded" src="{{ item.product_image.primary_img.url }}" alt="{{ item.product.name }}">
-                                {% else %}
+                                {% for image in item.product.images.all %}
+                                    <img class="img-fluid rounded" src="{{ image.primary_img.url }}" alt="{{ item.product.name }}">
+                                {% empty %}
                                     <img class="img-fluid rounded" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
-                                {% endif %}
+                                {% endfor %}
                                 </td>
                                 <td class="py-3">
                                     <p class="my-0"><strong>{{ item.product.name }}</strong></p>
