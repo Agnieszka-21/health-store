@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 
 from .models import Category, Brand, Product, Image
-from .forms import ProductForm
+from .forms import ProductForm, ImageForm
 
 
 def all_products(request):
@@ -81,19 +81,32 @@ def add_product(request):
         return redirect(reverse('home'))
 
     if request.method == 'POST':
-        form = ProductForm(request.POST, request.FILES)
-        if form.is_valid():
-            product = form.save()
-            messages.success(request, 'Successfully added product!')
-            return redirect(reverse('product_detail', args=[product.id]))
+        product_form = ProductForm(request.POST, request.FILES)
+        image_form = ImageForm(request.POST, request.FILES)
+
+        if product_form.is_valid():
+            added_product = product_form.save()
+            if image_form.is_valid():
+                added_images = image_form.save(commit=False)
+                added_images.product = added_product
+                added_images.name_primary_img = f'{added_product.name } main image'
+                added_images.name_secondary_img = f'{added_product.name } additional image 1'
+                added_images.name_tertiary_img = f'{added_product.name} additional image 2'
+                added_images.save()
+                messages.success(request, 'Successfully added product!')
+                return redirect(reverse('product_detail', args=[added_product.id]))
+            else:
+                messages.error(request, 'Sorry, the form is not valid. Please check your images')
         else:
             messages.error(request, 'Failed to add product. Please ensure the form is valid.')
     else:
-        form = ProductForm()
+        product_form = ProductForm()
+        image_form = ImageForm()
         
     template = 'products/add_product.html'
     context = {
-        'form': form,
+        'product_form': product_form,
+        'image_form': image_form,
     }
 
     return render(request, template, context)
@@ -108,21 +121,32 @@ def edit_product(request, product_id):
         return redirect(reverse('home'))
 
     product = get_object_or_404(Product, pk=product_id)
+
     if request.method == 'POST':
-        form = ProductForm(request.POST, request.FILES, instance=product)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Successfully updated product!')
-            return redirect(reverse('product_detail', args=[product.id]))
+        product_form = ProductForm(request.POST, request.FILES, instance=product)
+        image_form = ImageForm(request.POST, request.FILES)
+        if product_form.is_valid():
+            edited_product = product_form.save()
+            if image_form.is_valid():
+                edited_images = image_form.save(commit=False)
+                edited_images.product = added_product
+                edited_images.name_primary_img = f'{edited_product.name } main image'
+                edited_images.name_secondary_img = f'{edited_product.name } additional image 1'
+                edited_images.name_tertiary_img = f'{edited_product.name} additional image 2'
+                edited_images.save()
+                messages.success(request, 'Successfully updated product!')
+                return redirect(reverse('product_detail', args=[edited_product.id]))
         else:
             messages.error(request, 'Failed to update product. Please ensure the form is valid.')
     else:
-        form = ProductForm(instance=product)
+        product_form = ProductForm(instance=product)
+        image_form = ImageForm(instance=product)
         messages.info(request, f'You are editing {product.name}')
 
     template = 'products/edit_product.html'
     context = {
-        'form': form,
+        'product_form': product_form,
+        'image_form': image_form,
         'product': product,
     }
 
