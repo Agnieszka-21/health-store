@@ -34,11 +34,12 @@ DEBUG = 'DEVELOPMENT' in os.environ
 ALLOWED_HOSTS = [
     '8000-agnieszka21-healthstore-gnje3zewcam.ws.codeinstitute-ide.net',
     'localhost',
-    'health-store-ff0f909bba3d.herokuapp.com/',
+    'health-store-ff0f909bba3d.herokuapp.com',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-agnieszka21-healthstore-gnje3zewcam.ws.codeinstitute-ide.net',
+    'https://health-store-ff0f909bba3d.herokuapp.com',
 ]
 
 
