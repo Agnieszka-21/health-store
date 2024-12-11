@@ -88,11 +88,14 @@ def add_product(request):
             added_product = product_form.save()
             if image_form.is_valid():
                 added_images = image_form.save(commit=False)
-                added_images.product = added_product
-                added_images.name_primary_img = f'{added_product.name } main image'
-                added_images.name_secondary_img = f'{added_product.name } additional image 1'
-                added_images.name_tertiary_img = f'{added_product.name} additional image 2'
-                added_images.save()
+                if added_images.primary_img:
+                    added_images.product = added_product
+                    added_images.name_primary_img = f'{added_product.name } main image'
+                    if added_images.secondary_img:
+                        added_images.name_secondary_img = f'{added_product.name } additional image 1'
+                        if added_images.tertiary_img:
+                            added_images.name_tertiary_img = f'{added_product.name} additional image 2'
+                    added_images.save()
                 messages.success(request, 'Successfully added product!')
                 return redirect(reverse('product_detail', args=[added_product.id]))
             else:
