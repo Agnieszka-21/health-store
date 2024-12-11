@@ -124,26 +124,45 @@ def edit_product(request, product_id):
         return redirect(reverse('home'))
 
     product = get_object_or_404(Product, pk=product_id)
+    product_images = Image.objects.filter(product=product)
 
     if request.method == 'POST':
         product_form = ProductForm(request.POST, request.FILES, instance=product)
-        image_form = ImageForm(request.POST, request.FILES)
+        if product_images:
+            existing_product_img = Image.objects.get(product=product)
+            image_form = ImageForm(request.POST, request.FILES, instance=existing_product_img)
+        else:
+            image_form = ImageForm(request.POST, request.FILES)
+
         if product_form.is_valid():
             edited_product = product_form.save()
+
             if image_form.is_valid():
                 edited_images = image_form.save(commit=False)
-                edited_images.product = added_product
-                edited_images.name_primary_img = f'{edited_product.name } main image'
-                edited_images.name_secondary_img = f'{edited_product.name } additional image 1'
-                edited_images.name_tertiary_img = f'{edited_product.name} additional image 2'
-                edited_images.save()
+                if edited_images.primary_img:
+                    edited_images.product = edited_product
+                    edited_images.name_primary_img = f'{edited_product.name } main image'
+                    if edited_images.secondary_img:
+                        edited_images.name_secondary_img = f'{edited_product.name } additional image 1'
+                        if edited_images.tertiary_img:
+                            edited_images.name_tertiary_img = f'{edited_product.name} additional image 2'
+                    edited_images.save()
+                else:
+                    messages.error(request, 'A primary image is required if you want to add a secondary image. A secondary image is required if you want to add a tertiary image')
+                    return redirect(reverse('edit_product', args=[edited_product.id]))
+
                 messages.success(request, 'Successfully updated product!')
                 return redirect(reverse('product_detail', args=[edited_product.id]))
         else:
             messages.error(request, 'Failed to update product. Please ensure the form is valid.')
     else:
         product_form = ProductForm(instance=product)
-        image_form = ImageForm(instance=product)
+        if product_images:
+            existing_product_img = Image.objects.get(product=product)
+            image_form = ImageForm(instance=existing_product_img)
+        else:
+            image_form = ImageForm()
+
         messages.info(request, f'You are editing {product.name}')
 
     template = 'products/edit_product.html'
