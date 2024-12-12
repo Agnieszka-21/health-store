@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify 
 
 import datetime
 
@@ -13,6 +14,10 @@ class Article(models.Model):
     published = models.BooleanField(default=False)
     date_of_publication = models.DateField(null=True, blank=True)
     related_products = models.ManyToManyField('products.Product', related_name='articles', blank=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Article, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -30,6 +35,10 @@ class Recipe(models.Model):
     published = models.BooleanField(default=False)
     date_of_publication = models.DateField(default=datetime.date.today)
     related_products = models.ManyToManyField('products.Product', related_name='recipes', blank=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Recipe, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title

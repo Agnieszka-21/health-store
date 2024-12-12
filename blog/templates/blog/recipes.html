@@ -1,1 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block extra_title %}- Healthy recipes: plant-based, vegan-friendly, delicious{% endblock %}
+
+{% block content %}
 <h1>This is where you find all recipes</h1>
+
+    {% for recipe in recipes_list %}
+    <a href="{% url 'recipe_detail' recipe.slug %}">This is a recipe</a>
+    {% endfor %}
+
+{% endblock %}
