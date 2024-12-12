@@ -5,11 +5,16 @@
 {% block extra_title %}- Articles for your health and well-being{% endblock %}
 
 {% block content %}
-<h1>This is where you find all articles</h1>
+    <h1>This is where you find all articles</h1>
 
-    {% for article in articles_list %}
-    <p>Article title: {{ article.title }}</p>
-    <a href="{% url 'article_detail' article.slug %}">This is the first article</a>
+    <ul>
+    {% for article in object_list %}
+        <li class="list-unstyled">
+            <a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
+        </li>
+    {% empty %}
+        <li class="list-unstyled">No articles yet.</li>
     {% endfor %}
+    </ul>
 
 {% endblock %}

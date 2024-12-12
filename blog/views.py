@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from django.views import generic
+from django.views.generic.list import ListView
+from django.utils import timezone
 
 from .models import Article, Recipe
 
@@ -8,7 +9,7 @@ def choose_articles_or_recipes(request):
     return render(request, 'blog/blog_options.html')
 
 
-class ArticlesList(generic.ListView):
+class ArticleListView(ListView):
     """
     Returns all articles in :model:`blog.Article`
 
@@ -21,14 +22,18 @@ class ArticlesList(generic.ListView):
 
     :template:`blog/articles.html`
     """
-    queryset = Article.objects.all()
+    queryset = Article.objects.filter(published=True)
     template_name = 'blog/articles.html'
+    paginate_by = 3
 
-    def show_articles(self):
-        print('All articles: ', queryset)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["now"] = timezone.now()
+        print('All articles: ', self.object_list)
+        return context
 
 
-class RecipesList(generic.ListView):
+class RecipeListView(ListView):
     """
     Returns all articles in :model:`blog.Recipe`
 
@@ -41,8 +46,15 @@ class RecipesList(generic.ListView):
 
     :template:`blog/recipes.html`
     """
-    queryset = Recipe.objects.all()
+    queryset = Recipe.objects.filter(published=True)
     template_name = 'blog/recipes.html'
+    paginate_by = 3
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["now"] = timezone.now()
+        print('All recipes: ', self.object_list)
+        return context
 
 
 def article_detail(request, slug):
