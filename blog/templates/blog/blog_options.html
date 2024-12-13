@@ -2,17 +2,24 @@
 {% load static %}
 
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+{% endblock %}
+
 {% block extra_title %}- Articles and recipes that support your health and well-being{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-12 col-lg-6">
-            <h1><a class="nav-link" href="{% url 'articles' %}">Articles</a></h1>
+    <div class="row blog-options">
+        <div class="col-12 flex-grow-1 col-lg-6 flex-lg-grow-0 articles-bg-img d-flex justify-content-center align-items-center">
+            <a class="nav-link" href="{% url 'articles' %}">
+                <h1 class="blog-options-title">Articles</h1>
+            </a>
         </div>
-        
-        <div class="col-12 col-lg-6">
-            <h1><a class="nav-link" href="{% url 'recipes' %}">Recipes</a></h1>
+        <div class="col-12 flex-grow-1 col-lg-6 flex-lg-grow-0 recipes-bg-img d-flex justify-content-center align-items-center">
+            <a class="nav-link" href="{% url 'recipes' %}">
+                <h1 class="blog-options-title">Recipes</h1>
+            </a>
         </div>
     </div>
 
