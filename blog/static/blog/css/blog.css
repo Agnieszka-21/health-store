@@ -1,3 +1,60 @@
-.blog-banner {
-    width: 10vw;
+#blog-content ~ div {
+    width: 80vw;
+}
+
+#blog-content ~ * > font,
+#blog-content ~ * > li > font {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+.card {
+    border: none;
+    background-color: transparent;
+}
+
+.image-container {
+    position: relative;
+}
+
+.scale {
+    width: 100%;
+    height: auto;
+}
+
+.masthead {
+    margin-top: 10px;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.masthead-text {
+    background-color: #445261;
+    color: white;
+    position: relative;
+}
+
+.blog-image{
+    position: relative;
+    overflow: hidden;
+}
+
+/* .post-link {
+    text-decoration: none;
+    color: #445261;
+}
+
+.post-link:hover,
+.page-link {
+    color: #E84610;
+} */
+
+.post-title {
+    margin-top: 10%;
+}
+
+.post-subtitle {
+    color: darkgreen;
 }

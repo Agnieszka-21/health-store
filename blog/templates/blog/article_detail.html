@@ -9,23 +9,33 @@
 {% block extra_title %}- {{ article.title }}{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="">
-        <h1 class="">{{ article.title }}</h1>
-        <p class="">Published on {{ article.date_of_publication }}</p>
+<div class="masthead">
+    <div class="container">
+        <div class="row g-0">
+            <div class="col-12 px-3">
+                <h1 class="post-title">{{ article.title }}</h1>
+                <p class="post-subtitle">Published on {{ article.date_of_publication }}</p>
+                <p class="blog-icons">
+                    <span class="pe-3" id="save-article"><i class="fa-regular fa-bookmark"></i></span>
+                    <span id="copy-link-article"><i class="fa-solid fa-link"></i></span>
+                </p>
+            </div>
+            <div class="col-12 blog-image px-3">
+                <img src="{{ article.banner_img.url }}" class="scale" alt="{{ article.img_title }}">
+            </div>
+        </div>
     </div>
-    <!-- <div class="w-25 blog-banner">
-        <img src="{{ article.banner_img.url }}" class="blog-banner" alt="placeholder">
-    </div> -->
+</div>
 
+<div class="container">
     <div class="row">
-        <div class="col-12">
-            <div class="">
-                <p class="">
+        <div class="col card mb-4  mt-3 left  top">
+            <div class="card-body">
+                <p class="card-text" id="blog-content">
                     {{ article.content | safe }}
                 </p>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock content %}
