@@ -2,8 +2,8 @@
     width: 80vw;
 }
 
-#blog-content ~ * > font,
-#blog-content ~ * > li > font {
+/* .blog-content > font, */
+.blog-content > * {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
 }
@@ -57,4 +57,15 @@
 
 .post-subtitle {
     color: darkgreen;
+}
+
+h3 {
+    padding: 1.5rem 0;
+}
+
+#save-article:hover,
+#copy-link-article:hover,
+#save-recipe:hover,
+#copy-link-recipe:hover {
+    cursor: pointer
 }

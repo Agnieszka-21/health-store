@@ -1,0 +1,54 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+{% endblock %}
+
+{% block extra_title %}- {{ recipe.title }}{% endblock %}
+
+{% block content %}
+<div class="masthead">
+    <div class="container">
+        <div class="row g-0">
+            <div class="col-12 col-md-5 blog-image px-3">
+                <img src="{{ recipe.banner_img.url }}" class="scale" alt="{{ article.img_title }}">
+            </div>
+            <div class="col-12 col-md-7 px-3">
+                <h1 class="post-title mt-md-0">{{ recipe.title }}</h1>
+                <p class="post-subtitle">Published on {{ recipe.date_of_publication }}</p>
+                <p class="blog-icons">
+                    <span class="pe-3" id="save-recipe"><i class="fa-regular fa-bookmark"></i></span>
+                    <span id="copy-link-recipe"><i class="fa-solid fa-link"></i></span>
+                </p>
+                <div class="d-none d-lg-block blog-content">
+                    <p>{{ recipe.description | safe }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col card mb-4  mt-3 left  top">
+            <div class="card-body">
+                <article class="card-text blog-content row">
+                    <div class="d-lg-none col-12">{{ recipe.description | safe }}</div>
+                    <hr class="d-md-none col-12">
+                    <div class="col-12 col-md-5 pb-3">
+                        <h3>Ingredients</h3>
+                        {{ recipe.ingredients | safe }}
+                    </div>
+                    <hr class="d-md-none col-12">
+                    <div class="col-12 col-md-7">
+                        <h3>Method</h3>
+                        {{ recipe.method | safe }}
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

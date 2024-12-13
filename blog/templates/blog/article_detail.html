@@ -3,7 +3,7 @@
 
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+<link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
 {% endblock %}
 
 {% block extra_title %}- {{ article.title }}{% endblock %}
@@ -31,9 +31,9 @@
     <div class="row">
         <div class="col card mb-4  mt-3 left  top">
             <div class="card-body">
-                <p class="card-text" id="blog-content">
+                <article class="card-text blog-content">
                     {{ article.content | safe }}
-                </p>
+                </article>
             </div>
         </div>
     </div>
