@@ -18,10 +18,12 @@
                 <p class="blog-icons">
                     <span class="pe-3" id="save-article"><i class="fa-regular fa-bookmark"></i></span>
                     <span id="copy-link-article"><i class="fa-solid fa-link"></i></span>
-                    {% if request.user.is_superuser %}
+                    {% if request.user.is_staff %}
                     <small class="ms-3">
-                        <a href="{% url 'edit_article' article.id %}">Edit</a> | 
+                        <a href="{% url 'edit_article' article.id %}">Edit</a>
+                        {% if request.user.is_superuser %}
                         <a class="text-danger" href="{% url 'unpublish_article' article.id %}">Unpublish</a>
+                        {% endif %}
                     </small>
                     {% endif %}
                 </p>

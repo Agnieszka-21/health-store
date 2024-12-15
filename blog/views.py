@@ -7,7 +7,7 @@ from django.contrib import messages
 import datetime
 
 from .models import Article, Recipe
-from .forms import ArticleForm, RestrictedArticleForm
+from .forms import ArticleForm, RestrictedArticleForm, RecipeForm, RestrictedRecipeForm
 
 
 def choose_articles_or_recipes(request):
@@ -58,18 +58,24 @@ class RecipeListView(ListView):
 
     :template:`blog/recipes.html`
     """
-    queryset = Recipe.objects.filter(published=True)
+    queryset = Recipe.objects.all()
     template_name = 'blog/recipes.html'
     paginate_by = 3
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["now"] = timezone.now()
-        print('All recipes: ', self.object_list)
+
+        published_recipes = Recipe.objects.filter(published=True)
+        scheduled_for_publication = Recipe.objects.filter(approved=True, published=False)
+        unpublished_recipes = Recipe.objects.filter(approved=False, published=False)
+
+        context['published_recipes'] = published_recipes
+        context['unpublished_recipes'] = unpublished_recipes
+        context['scheduled_for_publication'] = scheduled_for_publication
         return context
 
 
-def article_detail(request, article_id):
+def article_detail(request, slug):
     """
     Display an individual :model:`blog.Article`.
 
@@ -82,10 +88,8 @@ def article_detail(request, article_id):
 
     :template:`blog/article_detail.html`
     """
-
-    # queryset = Article.objects.filter(published=True)
     queryset = Article.objects.all()
-    article = get_object_or_404(queryset, pk=article_id)
+    article = get_object_or_404(queryset, slug=slug)
     template = 'blog/article_detail.html'
     context = {'article': article}
 
@@ -106,7 +110,7 @@ def recipe_detail(request, slug):
     :template:`blog/recipe_detail.html`
     """
 
-    queryset = Recipe.objects.filter(published=True)
+    queryset = Recipe.objects.all()
     recipe = get_object_or_404(queryset, slug=slug)
     template = 'blog/recipe_detail.html'
     context = {'recipe': recipe}
@@ -116,7 +120,7 @@ def recipe_detail(request, slug):
 
 @login_required
 def create_article(request):
-    """ Add a product to the store """
+    """ Add a new article on the blog """
 
     if not request.user.is_staff:
         messages.error(request, 'Sorry, only store employees can add a blog article.')
@@ -127,7 +131,7 @@ def create_article(request):
         if article_form.is_valid():
             added_article = article_form.save()
             messages.success(request, 'Successfully created and saved article!')
-            return redirect(reverse('article_detail', args=[added_article.id]))
+            return redirect(reverse('article_detail', args=[added_article.slug]))
         else:
             messages.error(request, 'Failed to add article. Please ensure the form is valid.')
     else:
@@ -142,8 +146,35 @@ def create_article(request):
 
 
 @login_required
+def create_recipe(request):
+    """ Add a new recipe on the blog """
+
+    if not request.user.is_staff:
+        messages.error(request, 'Sorry, only store employees can add a recipe.')
+        return redirect(reverse('home'))
+
+    if request.method == 'POST':
+        recipe_form = RestrictedRecipeForm(request.POST, request.FILES)
+        if recipe_form.is_valid():
+            added_recipe = recipe_form.save()
+            messages.success(request, 'Successfully created and saved recipe!')
+            return redirect(reverse('recipe_detail', args=[added_recipe.slug]))
+        else:
+            messages.error(request, 'Failed to add article. Please ensure the form is valid.')
+    else:
+        recipe_form = RestrictedRecipeForm()
+        
+    template = 'blog/create_recipe.html'
+    context = {
+        'recipe_form': recipe_form,
+    }
+
+    return render(request, template, context)
+
+
+@login_required
 def edit_article(request, article_id):
-    """ Edit a product in the store """
+    """ Edit an article on the blog """
 
     if not request.user.is_staff:
         messages.error(request, 'Sorry, only store employees can edit a blog article.')
@@ -158,7 +189,7 @@ def edit_article(request, article_id):
             if article_form.is_valid():
                 edited_article = article_form.save()
                 messages.success(request, 'Successfully updated the article')
-                return redirect(reverse('article_detail', args=[edited_article.id]))
+                return redirect(reverse('article_detail', args=[edited_article.slug]))
             else:
                 messages.error(request, 'Failed to update article. Please ensure the form is valid.')
         else:
@@ -175,7 +206,7 @@ def edit_article(request, article_id):
                 else:
                     edited_article = article_form.save()
                     messages.success(request, 'Successfully updated the article')
-                    return redirect(reverse('article_detail', args=[edited_article.id]))
+                    return redirect(reverse('article_detail', args=[edited_article.slug]))
             else:
                 messages.error(request, 'Failed to update article. Please ensure the form is valid.')
         else:
@@ -191,8 +222,57 @@ def edit_article(request, article_id):
 
 
 @login_required
+def edit_recipe(request, recipe_id):
+    """ Edit a recipe on the blog """
+
+    if not request.user.is_staff:
+        messages.error(request, 'Sorry, only store employees can edit a recipe.')
+        return redirect(reverse('home'))
+
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+
+    if not request.user.is_superuser:
+        if request.method == 'POST':
+            recipe_form = RestrictedRecipeForm(request.POST, request.FILES, instance=recipe)
+
+            if recipe_form.is_valid():
+                edited_recipe = recipe_form.save()
+                messages.success(request, 'Successfully updated the recipe')
+                return redirect(reverse('recipe_detail', args=[edited_recipe.slug]))
+            else:
+                messages.error(request, 'Failed to update recipe. Please ensure the form is valid.')
+        else:
+            recipe_form = RestrictedRecipeForm(instance=recipe)
+            messages.info(request, f'You are editing {recipe.title}')
+
+    elif request.user.is_superuser:
+        if request.method == 'POST':
+            recipe_form = RecipeForm(request.POST, request.FILES, instance=recipe)
+
+            if recipe_form.is_valid():
+                if not recipe_form['date_of_publication']:
+                    messages.error(request, 'Please make sure to set a date of publication')
+                else:
+                    edited_recipe = recipe_form.save()
+                    messages.success(request, 'Successfully updated the article')
+                    return redirect(reverse('recipe_detail', args=[edited_recipe.slug]))
+            else:
+                messages.error(request, 'Failed to update recipe. Please ensure the form is valid.')
+        else:
+            recipe_form = RecipeForm(instance=recipe)
+            messages.info(request, f'You are editing {recipe.title}')
+
+    template = 'blog/edit_recipe.html'
+    context = {
+        'recipe_form': recipe_form,
+        'recipe': recipe,
+    }
+    return render(request, template, context)
+
+
+@login_required
 def unpublish_article(request, article_id):
-    """ Delete a product from the store """
+    """ Delete an article from the blog """
 
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store managers can unpublish a blog article.')
@@ -207,14 +287,44 @@ def unpublish_article(request, article_id):
 
 
 @login_required
-def delete_product(request, product_id):
-    """ Delete a product from the store """
+def unpublish_recipe(request, recipe_id):
+    """ Delete a recipe from the blog """
 
     if not request.user.is_superuser:
-        messages.error(request, 'Sorry, only store managers can delete a product.')
+        messages.error(request, 'Sorry, only store managers can unpublish a recipe.')
+        return redirect(reverse('home'))
+
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+    recipe.approved = False
+    recipe.published = False
+    recipe.save()
+    messages.success(request, 'Recipe unpublished successfully')
+    return redirect(reverse('recipes'))
+
+
+@login_required
+def delete_article(request, article_id):
+    """ Delete an article from the blog """
+
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store managers can delete an article.')
         return redirect(reverse('home'))
 
     article = get_object_or_404(Article, pk=article_id)
     article.delete()
     messages.success(request, 'Article deleted!')
     return redirect(reverse('articles'))
+
+
+@login_required
+def delete_recipe(request, recipe_id):
+    """ Delete a recipe from the blog """
+
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store managers can delete a recipe.')
+        return redirect(reverse('home'))
+
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+    recipe.delete()
+    messages.success(request, 'Recipe deleted!')
+    return redirect(reverse('recipes'))

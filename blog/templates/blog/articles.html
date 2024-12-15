@@ -20,7 +20,7 @@
                     {% if article.banner_img %}
                     <img src="{{ article.banner_img.url }}" alt="{{ article.img_title }}" style="width:200px">
                     {% endif %}
-                    <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
+                    <a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
                 </li>
 
                 {% if request.user.is_superuser %}
@@ -50,7 +50,7 @@
                         {% if article.banner_img %}
                         <img src="{{ article.banner_img.url }}" alt="{{ article.img_title }}" style="width:200px">
                         {% endif %}
-                        <a href="{% url 'article_detail' article.id %}" class="fw-bold">{{ article.title }}</a>
+                        <a href="{% url 'article_detail' article.slug %}" class="fw-bold">{{ article.title }}</a>
                         <p>Scheduled for: {{ article.date_of_publication }}</p>
                     </li>
 
@@ -65,7 +65,7 @@
                         {% if article.banner_img %}
                         <img src="{{ article.banner_img.url }}" alt="{{ article.img_title }}" style="width:200px">
                         {% endif %}
-                        <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
+                        <a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
                     </li>
 
                     <small class="ml-3">

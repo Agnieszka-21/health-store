@@ -1,24 +1,95 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+{% endblock %}
+
 
 {% block extra_title %}- Healthy recipes: plant-based, vegan-friendly, delicious{% endblock %}
 
+
 {% block content %}
-<h1>Check out our latest recipes</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Check out our most delicious vegan recipes</h1>
 
-    <!-- {% for recipe in recipes_list %}
-    <a href="{% url 'recipe_detail' recipe.slug %}">This is a recipe</a>
-    {% endfor %} -->
+            <ul>
+            {% for recipe in published_recipes %}
+                <li class="list-unstyled">
+                    {% if recipe.banner_img %}
+                    <img src="{{ recipe.banner_img.url }}" alt="{{ recipe.img_title }}" style="width:200px">
+                    {% endif %}
+                    <a href="{% url 'recipe_detail' recipe.slug %}">{{ recipe.title }}</a>
+                </li>
 
-    <ul>
-        {% for recipe in object_list %}
-            <li class="list-unstyled">
-                <a href="{% url 'recipe_detail' recipe.slug %}">{{ recipe.title }}</a>
-            </li>
-        {% empty %}
-            <li class="list-unstyled">No recipes yet.</li>
-        {% endfor %}
-    </ul>
+                {% if request.user.is_staff %}
+                <small class="ml-3">
+                    <a href="{% url 'edit_recipe' recipe.id %}">Edit</a>
+                    {% if request.user.is_superuser %} 
+                    | <a class="text-danger" href="{% url 'unpublish_recipe' recipe.id %}">Unpublish</a>
+                    {% endif %}
+                </small>
+                {% endif %}
+
+            {% empty %}
+                <li class="list-unstyled">No recipes yet.</li>
+            {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-12">
+        {% if request.user.is_authenticated %}
+            {% if request.user.is_staff %}
+                <a href="{% url 'create_recipe' %}">Create a new recipe for the blog</a>
+            
+                <h1>Recipes visible only for staff</h1>
+
+                <ul>
+                    <h3>These recipes are approved and scheduled to be published</h3>
+
+                    {% for recipe in scheduled_for_publication %}
+                    <li class="list-unstyled">
+                        {% if recipe.banner_img %}
+                        <img src="{{ recipe.banner_img.url }}" alt="{{ recipe.img_title }}" style="width:200px">
+                        {% endif %}
+                        <a href="{% url 'recipe_detail' recipe.slug %}" class="fw-bold">{{ recipe.title }}</a>
+                        <p>Scheduled for: {{ recipe.date_of_publication }}</p>
+                    </li>
+
+                    <small class="ml-3">
+                        <a href="{% url 'edit_recipe' recipe.id %}">Edit</a>
+                    </small>
+                    {% endfor %}
+
+                    <h3>These recipes have not been approved yet</h3>
+
+                    {% for recipe in unpublished_recipes %}
+                    <li class="list-unstyled">
+                        {% if recipe.banner_img %}
+                        <img src="{{ recipe.banner_img.url }}" alt="{{ recipe.img_title }}" style="width:200px">
+                        {% endif %}
+                        <a href="{% url 'recipe_detail' recipe.slug %}">{{ recipe.title }}</a>
+                    </li>
+
+                    <small class="ml-3">
+                        <a href="{% url 'edit_recipe' recipe.id %}">Edit</a>
+                    </small>
+
+                        {% if request.user.is_superuser %}
+                        <small class="ml-3">
+                            | <a class="text-danger" href="{% url 'edit_recipe' recipe.id %}">Delete</a>
+                        </small>
+                        {% endif %}
+
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+        </div>
+    </div>
+</div>
 
 {% endblock %}
+

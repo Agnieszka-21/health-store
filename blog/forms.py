@@ -27,8 +27,7 @@ class RestrictedArticleForm(ArticleForm):
         exclude = ['approved']
 
 
-class RecipeForm(forms.ModelForm):
-    
+class RecipeForm(forms.ModelForm): 
     class Meta:
         model = Recipe
         fields = [
@@ -39,7 +38,7 @@ class RecipeForm(forms.ModelForm):
             'ingredients',
             'method',
             'keywords',
-            'published',
+            'approved',
             'date_of_publication',
             'related_products',
         ]
@@ -49,3 +48,7 @@ class RecipeForm(forms.ModelForm):
             'method': SummernoteWidget(),
         }
 
+
+class RestrictedRecipeForm(RecipeForm):
+    class Meta(RecipeForm.Meta):
+        exclude = ['approved']
