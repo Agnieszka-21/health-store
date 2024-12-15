@@ -27,9 +27,11 @@
                 </p>
 
             </div>
+            {% if article.banner_img %}
             <div class="col-12 blog-image px-3">
                 <img src="{{ article.banner_img.url }}" class="scale" alt="{{ article.img_title }}">
             </div>
+            {% endif %}
         </div>
     </div>
 </div>
