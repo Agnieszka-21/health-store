@@ -11,12 +11,18 @@ class Article(models.Model):
     img_title = models.CharField(max_length=150)
     content = models.TextField()
     keywords = models.CharField(max_length=300)
-    published = models.BooleanField(default=False)
     date_of_publication = models.DateField(null=True, blank=True)
     related_products = models.ManyToManyField('products.Product', related_name='articles', blank=True)
+    approved = models.BooleanField(default=False)
+    published = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-date_of_publication']
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
+        if self.approved and (self.date_of_publication <= datetime.date.today()):
+            self.published = True
         super(Article, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -32,9 +38,10 @@ class Recipe(models.Model):
     ingredients = models.TextField()
     method = models.TextField()
     keywords = models.CharField(max_length=300)
-    published = models.BooleanField(default=False)
     date_of_publication = models.DateField(default=datetime.date.today)
     related_products = models.ManyToManyField('products.Product', related_name='recipes', blank=True)
+    approved = models.BooleanField(default=False)
+    published = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
