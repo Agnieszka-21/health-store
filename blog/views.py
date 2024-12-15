@@ -69,7 +69,7 @@ class RecipeListView(ListView):
         return context
 
 
-def article_detail(request, slug):
+def article_detail(request, article_id):
     """
     Display an individual :model:`blog.Article`.
 
@@ -83,8 +83,9 @@ def article_detail(request, slug):
     :template:`blog/article_detail.html`
     """
 
-    queryset = Article.objects.filter(published=True)
-    article = get_object_or_404(queryset, slug=slug)
+    # queryset = Article.objects.filter(published=True)
+    queryset = Article.objects.all()
+    article = get_object_or_404(queryset, pk=article_id)
     template = 'blog/article_detail.html'
     context = {'article': article}
 
@@ -114,14 +115,14 @@ def recipe_detail(request, slug):
 
 
 @login_required
-def edit_article(request, slug):
+def edit_article(request, article_id):
     """ Edit a product in the store """
 
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store managers can edit a blog article.')
         return redirect(reverse('home'))
 
-    article = get_object_or_404(Article, slug=slug)
+    article = get_object_or_404(Article, pk=article_id)
 
     if request.method == 'POST':
         article_form = ArticleForm(request.POST, request.FILES, instance=article)
@@ -129,7 +130,7 @@ def edit_article(request, slug):
         if article_form.is_valid():
             edited_article = article_form.save()
             messages.success(request, 'Successfully updated the article')
-            return redirect(reverse('article_detail', args=[edited_article.slug]))
+            return redirect(reverse('article_detail', args=[edited_article.id]))
         else:
             messages.error(request, 'Failed to update article. Please ensure the form is valid.')
     else:
@@ -146,14 +147,14 @@ def edit_article(request, slug):
 
 
 @login_required
-def unpublish_article(request, slug):
+def unpublish_article(request, article_id):
     """ Delete a product from the store """
 
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store managers can unpublish a blog article.')
         return redirect(reverse('home'))
 
-    article = get_object_or_404(Article, pk=slug)
+    article = get_object_or_404(Article, pk=article_id)
     article.published = False
     article.save()
     messages.success(request, 'Article unpublished successfully')

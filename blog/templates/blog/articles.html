@@ -17,13 +17,13 @@
             <ul>
             {% for article in published_articles %}
                 <li class="list-unstyled">
-                    <a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
+                    <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
                 </li>
 
                 {% if request.user.is_superuser %}
                 <small class="ml-3">
-                    <a href="{% url 'edit_article' article.slug %}">Edit</a> | 
-                    <a class="text-danger" href="{% url 'unpublish_article' article.slug %}">Unpublish</a>
+                    <a href="{% url 'edit_article' article.id %}">Edit</a> | 
+                    <a class="text-danger" href="{% url 'unpublish_article' article.id %}">Unpublish</a>
                 </small>
                 {% endif %}
 
@@ -42,11 +42,11 @@
                 <ul>
                     {% for article in unpublished_articles %}
                     <li class="list-unstyled">
-                        <a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
+                        <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
                     </li>
 
                     <small class="ml-3">
-                        <a href="{% url 'edit_article' article.slug %}">Edit</a> | 
+                        <a href="{% url 'edit_article' article.id %}">Edit</a> | 
                     </small>
                     {% endfor %}
                 </ul>

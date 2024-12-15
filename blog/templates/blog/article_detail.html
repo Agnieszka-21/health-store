@@ -18,7 +18,14 @@
                 <p class="blog-icons">
                     <span class="pe-3" id="save-article"><i class="fa-regular fa-bookmark"></i></span>
                     <span id="copy-link-article"><i class="fa-solid fa-link"></i></span>
+                    {% if request.user.is_superuser %}
+                    <small class="ms-3">
+                        <a href="{% url 'edit_article' article.id %}">Edit</a> | 
+                        <a class="text-danger" href="{% url 'unpublish_article' article.id %}">Unpublish</a>
+                    </small>
+                    {% endif %}
                 </p>
+
             </div>
             <div class="col-12 blog-image px-3">
                 <img src="{{ article.banner_img.url }}" class="scale" alt="{{ article.img_title }}">
