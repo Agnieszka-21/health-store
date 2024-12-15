@@ -1,5 +1,7 @@
 from django.db import models
-from django.utils.text import slugify 
+from django.utils.text import slugify
+
+from products.models import Product
 
 import datetime
 
@@ -12,7 +14,7 @@ class Article(models.Model):
     content = models.TextField()
     keywords = models.CharField(max_length=300)
     date_of_publication = models.DateField(null=True, blank=True)
-    related_products = models.ManyToManyField('products.Product', related_name='articles', blank=True)
+    related_products = models.ManyToManyField(Product, related_name='articles', blank=True)
     approved = models.BooleanField(default=False)
     published = models.BooleanField(default=False)
 
@@ -39,12 +41,17 @@ class Recipe(models.Model):
     method = models.TextField()
     keywords = models.CharField(max_length=300)
     date_of_publication = models.DateField(default=datetime.date.today)
-    related_products = models.ManyToManyField('products.Product', related_name='recipes', blank=True)
+    related_products = models.ManyToManyField(Product, related_name='recipes', blank=True)
     approved = models.BooleanField(default=False)
     published = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ['-date_of_publication']
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
+        if self.approved and (self.date_of_publication <= datetime.date.today()):
+            self.published = True
         super(Recipe, self).save(*args, **kwargs)
 
     def __str__(self):
