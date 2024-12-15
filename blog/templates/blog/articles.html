@@ -2,19 +2,58 @@
 {% load static %}
 
 
-{% block extra_title %}- Articles for your health and well-being{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+{% endblock %}
+
+{% block extra_title %}- Short reads for your health and well-being{% endblock %}
 
 {% block content %}
-    <h1>This is where you find all articles</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Check out our latest articles to support your health and well-being</h1>
 
-    <ul>
-    {% for article in object_list %}
-        <li class="list-unstyled">
-            <a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
-        </li>
-    {% empty %}
-        <li class="list-unstyled">No articles yet.</li>
-    {% endfor %}
-    </ul>
+            <ul>
+            {% for article in published_articles %}
+                <li class="list-unstyled">
+                    <a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
+                </li>
+
+                {% if request.user.is_superuser %}
+                <small class="ml-3">
+                    <a href="{% url 'edit_article' article.slug %}">Edit</a> | 
+                    <a class="text-danger" href="{% url 'unpublish_article' article.slug %}">Unpublish</a>
+                </small>
+                {% endif %}
+
+            {% empty %}
+                <li class="list-unstyled">No articles yet.</li>
+            {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-12">
+        {% if request.user.is_authenticated %}
+            {% if request.user.is_superuser %}
+            
+                <h1>See the unpublished articles - only visible for admins</h1>
+
+                <ul>
+                    {% for article in unpublished_articles %}
+                    <li class="list-unstyled">
+                        <a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
+                    </li>
+
+                    <small class="ml-3">
+                        <a href="{% url 'edit_article' article.slug %}">Edit</a> | 
+                    </small>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+        </div>
+    </div>
+</div>
 
 {% endblock %}
