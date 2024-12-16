@@ -2,7 +2,10 @@ from django import forms
 from django_summernote.widgets import SummernoteWidget
 
 from .models import Article, Recipe
+from products.models import Product
 
+
+RELATED_PRODUCT_CHOICES = Product.objects.all()
 
 class ArticleForm(forms.ModelForm):
     class Meta:
@@ -19,6 +22,8 @@ class ArticleForm(forms.ModelForm):
         ]
         widgets = {
             'content': SummernoteWidget(),
+            'date_of_publication': forms.TextInput(attrs={'placeholder': 'yyyy-mm-dd'}),
+            'related_products': forms.CheckboxSelectMultiple(choices=RELATED_PRODUCT_CHOICES),
         }
 
 
@@ -46,6 +51,8 @@ class RecipeForm(forms.ModelForm):
             'description': SummernoteWidget(),
             'ingredients': SummernoteWidget(),
             'method': SummernoteWidget(),
+            'date_of_publication': forms.TextInput(attrs={'placeholder': 'yyyy-mm-dd'}),
+            'related_products': forms.CheckboxSelectMultiple(choices=RELATED_PRODUCT_CHOICES),
         }
 
 

@@ -43,7 +43,7 @@
     <div class="row">
         <div class="col card mb-4  mt-3 left  top">
             <div class="card-body">
-                <article class="card-text blog-content row">
+                <article class="card-text blog-content row mb-5">
                     <div class="d-lg-none col-12">{{ recipe.description | safe }}</div>
                     <hr class="d-md-none col-12">
                     <div class="col-12 col-md-5 pb-3">
@@ -56,6 +56,28 @@
                         {{ recipe.method | safe }}
                     </div>
                 </article>
+                <div class="mt-5">
+                    {% if recipe.related_products.all %}
+                        <hr>
+                        <h4>Recommended products:</h4>
+                        {% for product in recipe.related_products.all %}
+                            <div class="rel-product-img">
+                                {% for image in product.images.all %}
+                                <a href="{% url 'product_detail' product.id %}">
+                                    <img class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ image.name_primary_img }}">
+                                </a>
+                                {% empty %}
+                                <a href="{% url 'product_detail' product.id %}">
+                                    <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                                </a>
+                                {% endfor %}
+                                <a href="{% url 'product_detail' product.id %}">
+                                    <p>{{ product.name }}</p>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

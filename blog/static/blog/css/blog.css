@@ -92,3 +92,7 @@ h3 {
 #copy-link-recipe:hover {
     cursor: pointer
 }
+
+.rel-product-img img {
+    width: 200px;
+}
