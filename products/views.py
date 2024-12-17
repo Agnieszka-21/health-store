@@ -72,6 +72,22 @@ def product_detail(request, product_id):
     return render(request, 'products/product_detail.html', context)
 
 
+def add_to_wishlist(request, product_id):
+    if request.user.is_authenticated:
+        try:
+            product = get_object_or_404(Product, pk=product_id)
+            wishlist = Wishlist.objects.get_or_create(
+                favourite_product=product,
+                user = request.user,
+            )
+            messages.success(request,'The item has been added to your wishlist')
+            return redirect(reverse('products'))
+        except UserProfile.DoesNotExist:
+            messages.error('Sorry, your user profile could not be found. Please try again later')
+    else:
+        messages.error('Please log in to add items to a wishlist')
+
+
 @login_required
 def add_product(request):
     """ Add a product to the store """

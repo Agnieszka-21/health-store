@@ -1,5 +1,7 @@
 from django.db import models
 
+from profiles.models import UserProfile
+
 
 class Category(models.Model):
     name = models.CharField(max_length=254)
@@ -61,4 +63,16 @@ class Image(models.Model):
 
     def __str__(self):
         return self.product.name
+
+
+class Wishlist(models.Model):
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='wishlist')
+    favourite_product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    added_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-added_date']
+
+    def __str__(self):
+        return self.favourite_product.name
         
