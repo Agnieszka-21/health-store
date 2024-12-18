@@ -86,7 +86,8 @@
                 {% for product in products %}
                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                         <div class="card h-100 border-0">
-
+                            
+                            <button class="add-to-wishlist text-end pe-3" style="border:none; background:none;" data-product-item="{{ product.id }}"><i class="fa-regular fa-heart"></i></button>
                             {% for image in product.images.all %}
                             <a href="{% url 'product_detail' product.id %}">
                                 <img class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ image.name_primary_img }}">
@@ -96,7 +97,7 @@
                                 <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
                             </a>
                             {% endfor %}
-
+                        
                             <div class="card-body pb-0">
                                 <p class="mb-0">{{ product.name }}</p>
                             </div>
@@ -153,4 +154,65 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $('.add-to-wishlist').click(
+            function(e) {
+                let product_id = $(this).attr('data-product-item');
+                var action_url = $(this).attr('action_url');
+                let that = $(this);
+                let icon = that.find('.fa-heart');
+                var csrftoken = Cookies.get('csrftoken');
+
+                console.log('Product id is: ', product_id);
+                console.log('That is: ', that);
+                console.log('Icon: ', icon);
+                console.log('Icon zero: ', icon[0])
+                console.log('Icon classlist: ', icon[0].classList);
+                console.log('CSRF: ', csrftoken)
+
+                $.ajax({
+                    url: action_url,
+                    type: "POST",
+                    data: {'attr_id': product_id },
+                    headers : { 'X-CSRFToken': csrftoken},
+                    success: function (result) {
+                        console.log("Success");
+                        if (icon[0].classList.contains('fa-regular')) {
+                            icon[0].classList.remove("fa-regular");
+                            icon[0].classList.add("fa-solid");
+                        } else if (icon[0].classList.contains('fa-solid')) {
+                            icon[0].classList.remove('fa-solid');
+                            icon[0].classList.add('fa-regular');
+                        }
+                    },
+                    error: function() {
+                        console.log('An error occurred');
+                    }    
+
+                    // error: function () {
+                    //     alert("Please login");
+                    // }
+                });
+            }
+        )
+    })
+
+    // $('#wishlist-trigger').click(function(e) {
+    //     console.log('This is coming from JS')
+    //     $('#wishlist-heart').removeClass('fa-regular');
+    //     console.log('After removing class fa-regular')
+    //     $('#wishlist-heart').addClass('fa-solid');
+        // $(this).children[0].style.color = "#66c144";
+        // $(this).querySelector('.fa-heart').style.fontSize = '1.2rem';
+        // this.getElementsByTagName('I')[0].classList.toggle('fa-spin');
+        // $(this).firstElementChild.style.transition = 'color 1.5s ease 1.25s, font-size 0.75s ease-out';        
+    // }, false)
+
+</script>
 {% endblock %}
