@@ -64,7 +64,13 @@
             </div>
         </div>
         <div>
-            {% include 'profiles/includes/wishlist.html' %}
+            <h3>This is a wishlist template</h3>
+
+            {% for item in wishlist_items %}
+                <p>{{ item.name }}</p>
+            {% empty %}
+                <p>There are no products on your wishlist</p>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

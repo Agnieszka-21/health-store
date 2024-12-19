@@ -72,16 +72,6 @@ def product_detail(request, product_id):
     return render(request, 'products/product_detail.html', context)
 
 
-def wishlist(request):
-    wishlist = []
-    if request.user.is_authenticated:
-        wishlist = list(
-            Wishlist.objects.filter(user_profile=request.user.profile).values_list('product_id'))
-    return render(
-        request, template_name='profiles/includes/wishlist.html', context={
-            'product': Product.objects.all(),'wishlist': wishlist})
-
-
 def add_to_wishlist(request):
 
     if request.POST and 'attr_id' in request.POST:

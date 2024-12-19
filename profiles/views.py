@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import UserProfile
 from .forms import UserProfileForm
 from checkout.models import Order
+from products.models import Wishlist
 
 
 @login_required
@@ -23,10 +24,12 @@ def profile(request):
         form = UserProfileForm(instance=profile)
     
     orders = profile.orders.all()
+    wishlist_items = profile.wishlist.favourite_products.all()
     template = 'profiles/profile.html'
     context = {
         'form': form,
         'orders': orders,
+        'wishlist_items': wishlist_items,
         'on_profile_page': True
     }
 
