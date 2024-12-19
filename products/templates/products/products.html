@@ -158,47 +158,5 @@
 
 {% block postloadjs %}
 {{ block.super }}
-<script type="text/javascript">
-
-    $(document).ready(function(){
-        $('.add-to-wishlist').click(
-            function(e) {
-                let product_id = $(this).attr('data-product-item');
-                let that = $(this);
-                let icon = that.find('.fa-heart');
-                let icon_classlist_value = icon[0].classList.value;
-                var csrftoken = Cookies.get('csrftoken');
-
-                console.log('Product id is: ', product_id);
-                console.log('That is: ', that);
-                console.log('Icon: ', icon);
-                console.log('Icon zero: ', icon[0])
-                console.log('Icon classlist: ', icon[0].classList);
-                console.log('Icon classlist value: ', icon[0].classList.value);
-                console.log('CSRF: ', csrftoken)
-
-                $.ajax({
-                    url: 'add-to-wishlist/',
-                    type: 'POST',
-                    data: {'attr_id': product_id, 'icon_classlist_value': icon_classlist_value },
-                    headers : { 'X-CSRFToken': csrftoken},
-                    success: function (result) {
-                        console.log('Success');
-                        if (icon[0].classList.contains('fa-regular')) {
-                            icon[0].classList.remove('fa-regular');
-                            icon[0].classList.add('fa-solid');
-                        } else if (icon[0].classList.contains('fa-solid')) {
-                            icon[0].classList.remove('fa-solid');
-                            icon[0].classList.add('fa-regular');
-                        }
-                    },
-                    error: function() {
-                        console.log('An error occurred');
-                    }    
-                });
-            }
-        )
-    })
-
-</script>
+{% include 'products/includes/wishlist_products_script.html' %}
 {% endblock %}

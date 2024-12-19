@@ -72,7 +72,7 @@ def product_detail(request, product_id):
     return render(request, 'products/product_detail.html', context)
 
 
-def add_to_wishlist(request):
+def add_to_wishlist(request, product_id):
 
     if request.POST and 'attr_id' in request.POST:
         print('Add to wishlist - ajax post request')

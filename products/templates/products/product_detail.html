@@ -41,7 +41,11 @@
         </div>
         <div class="col-12 col-md-6 col-lg-4">
             <div class="product-details-container mb-5 mt-md-5">
-                <p class="mb-0">{{ product.name }}</p>
+                <p class="mb-0">{{ product.name }}
+                    <span>
+                        <button class="add-to-wishlist text-end pe-3" style="border:none; background:none;" data-product-item="{{ product.id }}"><i class="fa-regular fa-heart"></i></button>
+                    </span>
+                </p>
                 <p class="lead mb-0 text-left font-weight-bold">€{{ product.price }}</p>
                 {% if product.category %}
                 <p class="small mt-1 mb-0">
@@ -129,4 +133,5 @@
 {% block postloadjs %}
 {{ block.super }}
 {% include 'products/includes/product_quantity_script.html' %}
+{% include 'products/includes/wishlist_product_detail_script.html' %}
 {% endblock %}
