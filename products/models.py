@@ -79,5 +79,5 @@ def create_or_update_wishlist(sender, instance, created, **kwargs):
     """
     if created:
         Wishlist.objects.create(user_profile=instance)
-    # Existing users: just save the profile
+    # Existing users: just save the wishlist
     instance.wishlist.save()

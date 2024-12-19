@@ -164,7 +164,7 @@
         $('.add-to-wishlist').click(
             function(e) {
                 let product_id = $(this).attr('data-product-item');
-                var action_url = $(this).attr('action_url');
+                // var action_url = $(this).attr('action_url');
                 let that = $(this);
                 let icon = that.find('.fa-heart');
                 var csrftoken = Cookies.get('csrftoken');
@@ -177,8 +177,8 @@
                 console.log('CSRF: ', csrftoken)
 
                 $.ajax({
-                    url: action_url,
-                    type: "POST",
+                    url: 'add-to-wishlist/',
+                    type: 'POST',
                     data: {'attr_id': product_id },
                     headers : { 'X-CSRFToken': csrftoken},
                     success: function (result) {

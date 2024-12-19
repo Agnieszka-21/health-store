@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 
-from .models import Category, Brand, Product, Image
+from .models import Category, Brand, Product, Image, Wishlist
 from .forms import ProductForm, ImageForm
 
 
@@ -72,20 +72,87 @@ def product_detail(request, product_id):
     return render(request, 'products/product_detail.html', context)
 
 
-def add_to_wishlist(request, product_id):
+# Trying something here from: https://stackoverflow.com/questions/63497844/adding-items-to-wishlist-django
+def wishlist(request):
+    wishlist = []
     if request.user.is_authenticated:
-        try:
-            product = get_object_or_404(Product, pk=product_id)
-            wishlist = Wishlist.objects.get_or_create(
-                favourite_product=product,
-                user = request.user,
-            )
-            messages.success(request,'The item has been added to your wishlist')
-            return redirect(reverse('products'))
-        except UserProfile.DoesNotExist:
-            messages.error('Sorry, your user profile could not be found. Please try again later')
+        wishlist = list(
+            Wishlist.objects.filter(user_profile=request.user.profile).values_list('product_id'))
+    return render(
+        request, template_name='profiles/includes/wishlist.html', context={
+            'product': Product.objects.all(),'wishlist': wishlist})
+
+
+def add_to_wishlist(request):
+
+    # if request.is_ajax() and request.POST and 'attr_id' in request.POST:
+    if request.POST and 'attr_id' in request.POST:
+        print('Add to wishlist - ajax post request')
+        print('attr_id: ', request.POST['attr_id'])
+
+        product = int(request.POST.get('attr_id'))
+        # wishlist[product_id] = product
+
+        if request.user.is_authenticated:
+            wishlist = Wishlist.objects.get(user_profile = request.user.profile)
+            # favourite_products = int(request.POST['attr_id'])
+            print('Wishlist: ', wishlist)
+            # if wishlist.favourite_products:
+            #     # wishlist.delete()
+            #     print('Item was not added because it is already on the wishlist')
+            # else:
+            wishlist.favourite_products.add(request.POST['attr_id'])
+                # Wishlist.objects.update_or_create(
+                #     user_profile_id=request.user.id,
+                #     favourite_products.add(int(request.POST['attr_id'])),
+                # )
+            print('wishlist was updated')
+        else:
+            print("No Product is Found")
     else:
-        messages.error('Please log in to add items to a wishlist')
+        print('You have to log in to add a product to your wishlist')
+
+    return redirect(reverse('products'))
+
+
+def add_to_basket(request, item_id):
+    """ Add a quantity of the specified product to the shopping bag """
+
+    product = get_object_or_404(Product, pk=item_id)
+    quantity = int(request.POST.get('quantity'))
+    redirect_url = request.POST.get('redirect_url')
+    basket = request.session.get('basket', {})
+
+    if item_id in list(basket.keys()):
+        basket[item_id] += quantity
+        messages.success(request, f'Updated {product.name} quantity in your basket')
+    else:
+        basket[item_id] = quantity
+        messages.success(request, f'Added {product.name} to your basket')
+
+    request.session['basket'] = basket
+    return redirect(redirect_url)
+
+
+# def add_to_wishlist(request, product_id):
+
+#     # product_id = request.GET['id']
+#     # product = Product.objects.get(id=product_id)
+
+#     if request.user.is_authenticated:
+#         try:
+#             product = get_object_or_404(Product, pk=product_id)
+#             wishlist = Wishlist.objects.get_or_create(
+#                 wishlist_item=product,
+#                 user=request.user,
+#                 profile=request.user.profile,
+#             )
+#             messages.success(request,'The item has been added to your wishlist')
+#             return redirect(reverse('products'))
+#         except UserProfile.DoesNotExist:
+#             messages.error('Sorry, your user profile could not be found. Please try again later')
+#     else:
+#         messages.error('Please log in to add items to a wishlist')
 
 
 @login_required
