@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from profiles.models import UserProfile
 
@@ -66,13 +68,16 @@ class Image(models.Model):
 
 
 class Wishlist(models.Model):
-    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='wishlist')
-    favourite_product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    added_date = models.DateTimeField(auto_now_add=True)
+    user_profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='wishlist')
+    favourite_products = models.ManyToManyField(Product)
 
-    class Meta:
-        ordering = ['-added_date']
 
-    def __str__(self):
-        return self.favourite_product.name
-        
+@receiver(post_save, sender=UserProfile)
+def create_or_update_wishlist(sender, instance, created, **kwargs):
+    """
+    Create or update a personal wishlist
+    """
+    if created:
+        Wishlist.objects.create(user_profile=instance)
+    # Existing users: just save the profile
+    instance.wishlist.save()
