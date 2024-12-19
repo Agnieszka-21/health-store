@@ -72,7 +72,6 @@ def product_detail(request, product_id):
     return render(request, 'products/product_detail.html', context)
 
 
-# Trying something here from: https://stackoverflow.com/questions/63497844/adding-items-to-wishlist-django
 def wishlist(request):
     wishlist = []
     if request.user.is_authenticated:
@@ -85,28 +84,20 @@ def wishlist(request):
 
 def add_to_wishlist(request):
 
-    # if request.is_ajax() and request.POST and 'attr_id' in request.POST:
     if request.POST and 'attr_id' in request.POST:
         print('Add to wishlist - ajax post request')
         print('attr_id: ', request.POST['attr_id'])
-
-        product = int(request.POST.get('attr_id'))
-        # wishlist[product_id] = product
+        print('icon_classlist_value: ', request.POST['icon_classlist_value'])
 
         if request.user.is_authenticated:
             wishlist = Wishlist.objects.get(user_profile = request.user.profile)
-            # favourite_products = int(request.POST['attr_id'])
             print('Wishlist: ', wishlist)
-            # if wishlist.favourite_products:
-            #     # wishlist.delete()
-            #     print('Item was not added because it is already on the wishlist')
-            # else:
-            wishlist.favourite_products.add(request.POST['attr_id'])
-                # Wishlist.objects.update_or_create(
-                #     user_profile_id=request.user.id,
-                #     favourite_products.add(int(request.POST['attr_id'])),
-                # )
-            print('wishlist was updated')
+
+            if 'fa-regular' in request.POST['icon_classlist_value']:
+                wishlist.favourite_products.add(request.POST['attr_id'])
+            elif 'fa-solid' in request.POST['icon_classlist_value']:
+                wishlist.favourite_products.remove(request.POST['attr_id'])
+            print('Wishlist updated - products: ', wishlist.favourite_products.all())
         else:
             print("No Product is Found")
     else:
