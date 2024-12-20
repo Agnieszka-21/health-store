@@ -12,74 +12,87 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h1>Check out our latest articles</h1>
-
-            <ul>
+            <div>
+            {% if request.user.is_staff %}
+                <div class="my-5 text-center">
+                    <a class="btn btn-dark" href="{% url 'create_article' %}">
+                        <i class="fa-solid fa-plus pe-2"></i>Create a new article</a>
+                </div>
+            {% endif %}
             {% for article in published_articles %}
-                <li class="list-unstyled">
+                <div class="row blog-thumbnail">
                     {% if article.banner_img %}
-                    <img src="{{ article.banner_img.url }}" alt="{{ article.img_title }}" style="width:200px">
+                    <img class="col-lg-4" src="{{ article.banner_img.url }}" alt="{{ article.img_title }}">
+                    {% else %}
+                    <img class="col-lg-4" src="{{ MEDIA_URL }}noimage.png" alt="{{ article.title }}">
                     {% endif %}
-                    <a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
-                </li>
+                    <a class="col-lg-6" href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
 
-                {% if request.user.is_superuser %}
-                <small class="ml-3">
-                    <a href="{% url 'edit_article' article.id %}">Edit</a> | 
-                    <a class="text-danger" href="{% url 'unpublish_article' article.id %}">Unpublish</a>
-                </small>
-                {% endif %}
-
+                    {% if request.user.is_superuser %}
+                    <small class="col-lg-2">
+                        <a href="{% url 'edit_article' article.id %}">Edit</a> | 
+                        <a class="text-danger" href="{% url 'unpublish_article' article.id %}">Unpublish</a>
+                    </small>
+                    {% endif %}
+                </div>
             {% empty %}
-                <li class="list-unstyled">No articles yet.</li>
+                <div>
+                    <p>No articles yet.</p>
+                </div>
             {% endfor %}
-            </ul>
+            </div>
         </div>
-
-        <div class="col-12">
+       
         {% if request.user.is_authenticated %}
             {% if request.user.is_staff %}
-                <a href="{% url 'create_article' %}">Create a new article for the blog</a>
-            
-                <h1>Articles visible only for staff</h1>
-
-                <ul>
-                    <h3>These articles are scheduled to be published</h3>
+            <div class="col-12">
+                <div class="row blog-thumbnail">
+                    <hr>
+                    <h4>Approved and scheduled for publishing</h4>
                     {% for article in scheduled_for_publication %}
-                    <li class="list-unstyled">
                         {% if article.banner_img %}
-                        <img src="{{ article.banner_img.url }}" alt="{{ article.img_title }}" style="width:200px">
+                        <img class="col-lg-4" src="{{ article.banner_img.url }}" alt="{{ article.img_title }}">
+                        {% else %}
+                        <img class="col-lg-4" src="{{ MEDIA_URL }}noimage.png" alt="{{ article.title }}">
                         {% endif %}
-                        <a href="{% url 'article_detail' article.slug %}" class="fw-bold">{{ article.title }}</a>
-                        <p>Scheduled for: {{ article.date_of_publication }}</p>
-                    </li>
-
-                    <small class="ml-3">
-                        <a href="{% url 'edit_article' article.id %}">Edit</a>
-                    </small>
-                    {% endfor %}
-
-                    <h3>These articles are marked as not approved</h3>
-                    {% for article in unpublished_articles %}
-                    <li class="list-unstyled">
-                        {% if article.banner_img %}
-                        <img src="{{ article.banner_img.url }}" alt="{{ article.img_title }}" style="width:200px">
-                        {% endif %}
-                        <a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
-                    </li>
-
-                    <small class="ml-3">
-                        <a href="{% url 'edit_article' article.id %}">Edit</a>
-                    </small>
-
-                        {% if request.user.is_superuser %}
-                        <small class="ml-3">
-                            <a class="text-danger" href="{% url 'edit_article' article.id %}">| Delete</a>
+                        <div class="col-lg-8">
+                            <a href="{% url 'article_detail' article.slug %}" class="fw-bold">{{ article.title }}</a>
+                            <p>Scheduled for: {{ article.date_of_publication }}</p>
+                        </div>
+                        <small class="col-lg-2">
+                            <a href="{% url 'edit_article' article.id %}">Edit</a>
                         </small>
-                        {% endif %}
-
+                    {% empty %}
+                        <div>
+                            <p>No articles scheduled for publication</p>
+                        </div>
                     {% endfor %}
-                </ul>
+                    <hr>
+                </div>
+                    
+                <div class="row blog-thumbnail">
+                    <h4>Waiting for admin's approval</h4>
+                    {% for article in unpublished_articles %}
+                        {% if article.banner_img %}
+                        <img class="col-lg-4" src="{{ article.banner_img.url }}" alt="{{ article.img_title }}">
+                        {% else %}
+                        <img class="col-lg-4" src="{{ MEDIA_URL }}noimage.png" alt="{{ article.title }}">
+                        {% endif %}
+                    <a class="col-lg-6" href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
+
+                    <small class="col-lg-2">
+                        <a href="{% url 'edit_article' article.id %}">Edit</a>
+                        {% if request.user.is_superuser %}
+                        | <a class="text-danger" href="{% url 'edit_article' article.id %}">Delete</a>
+                        {% endif %}
+                    </small>
+                    {% empty %}
+                    <div>
+                        <p>No articles waiting for admin's approval</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
             {% endif %}
         {% endif %}
         </div>

@@ -59,6 +59,11 @@
     position: relative;
 }
 
+.blog-thumbnail > img {
+    max-height: 15vh;
+    object-fit: contain;
+}
+
 .blog-image{
     position: relative;
     overflow: hidden;
