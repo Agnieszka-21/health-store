@@ -72,12 +72,12 @@ class Wishlist(models.Model):
     favourite_products = models.ManyToManyField(Product)
 
 
-@receiver(post_save, sender=UserProfile)
-def create_or_update_wishlist(sender, instance, created, **kwargs):
-    """
-    Create or update a personal wishlist
-    """
-    if created:
-        Wishlist.objects.create(user_profile=instance)
-    # Existing users: just save the wishlist
-    instance.wishlist.save()
+# @receiver(post_save, sender=UserProfile)
+# def create_or_update_wishlist(sender, instance, created, **kwargs):
+#     """
+#     Create or update a personal wishlist
+#     """
+#     if created:
+#         Wishlist.objects.create(user_profile=instance)
+#     # Existing users: just save the wishlist
+#     instance.wishlist.save()
