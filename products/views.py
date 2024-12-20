@@ -72,26 +72,30 @@ def product_detail(request, product_id):
     return render(request, 'products/product_detail.html', context)
 
 
+@login_required
 def add_to_wishlist(request, product_id):
+
+    # if not request.user.is_authenticated:
+    #     messages.error(request, 'Please log in to save a product to your wishlist')
+    #     return redirect(reverse('products'))
 
     if request.POST and 'attr_id' in request.POST:
         print('Add to wishlist - ajax post request')
         print('attr_id: ', request.POST['attr_id'])
         print('icon_classlist_value: ', request.POST['icon_classlist_value'])
 
-        if request.user.is_authenticated:
-            wishlist = Wishlist.objects.get(user_profile = request.user.profile)
-            print('Wishlist: ', wishlist)
+        wishlist = Wishlist.objects.get(user_profile = request.user.profile)
+        print('Wishlist: ', wishlist)
 
-            if 'fa-regular' in request.POST['icon_classlist_value']:
-                wishlist.favourite_products.add(request.POST['attr_id'])
-            elif 'fa-solid' in request.POST['icon_classlist_value']:
-                wishlist.favourite_products.remove(request.POST['attr_id'])
-            print('Wishlist updated - products: ', wishlist.favourite_products.all())
-        else:
-            print("No Product is Found")
+        if 'fa-regular' in request.POST['icon_classlist_value']:
+            wishlist.favourite_products.add(request.POST['attr_id'])
+        elif 'fa-solid' in request.POST['icon_classlist_value']:
+            wishlist.favourite_products.remove(request.POST['attr_id'])
+        print('Wishlist updated - products: ', wishlist.favourite_products.all())
+
     else:
-        print('You have to log in to add a product to your wishlist')
+        messages.error(request, 'Sorry, something went wrong')
+        print('Sorry, something went wrong')
 
     return redirect(reverse('products'))
 

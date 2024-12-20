@@ -158,5 +158,10 @@
 
 {% block postloadjs %}
 {{ block.super }}
-{% include 'products/includes/wishlist_products_script.html' %}
+{% if user.is_authenticated %}
+    {% include 'products/includes/wishlist_products_script.html' %}
+{% else %}
+    {% include 'products/includes/wishlist_unavailable_script.html' %}
+{% endif %}
+
 {% endblock %}

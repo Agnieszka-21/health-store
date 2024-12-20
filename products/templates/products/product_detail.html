@@ -133,5 +133,11 @@
 {% block postloadjs %}
 {{ block.super }}
 {% include 'products/includes/product_quantity_script.html' %}
-{% include 'products/includes/wishlist_product_detail_script.html' %}
+
+{% if user.is_authenticated %}
+    {% include 'products/includes/wishlist_product_detail_script.html' %}
+{% else %}
+    {% include 'products/includes/wishlist_unavailable_script.html' %}
+{% endif %}
+
 {% endblock %}
