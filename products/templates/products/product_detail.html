@@ -13,21 +13,21 @@
             {% if product_images %}
                 {% for image in product_images %}
                     {% if image.primary_img %}
-                    <div id="main-image">
+                    <div>
                         <a href="{{ image.primary_img.url }}" target="_blank">
-                            <img class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ image.name_primary_img }}">
+                            <img id="main-image" class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ image.name_primary_img }}">
                         </a>
                     </div>
                     {% endif %}
                     <ol class="list-unstyled d-flex py-3">
                         {% if image.secondary_img %}
                         <li class="w-25 me-3">
-                            <img class="img-thumbnail" src="{{ image.secondary_img.url }}" alt="{{ image.name_secondary_img }}">
+                            <img id="img-thumbnail-1" class="img-thumbnail" src="{{ image.secondary_img.url }}" alt="{{ image.name_secondary_img }}">
                         </li>
                         {% endif %}
                         {% if image.tertiary_img %}
                         <li class="w-25 me-3">
-                            <img class="img-thumbnail" src="{{ image.tertiary_img.url }}" alt="{{ image.name_tertiary_img }}">
+                            <img id="img-thumbnail-2" class="img-thumbnail" src="{{ image.tertiary_img.url }}" alt="{{ image.name_tertiary_img }}">
                         </li>
                         {% endif %}
                     </ol>  
@@ -133,6 +133,7 @@
 {% block postloadjs %}
 {{ block.super }}
 {% include 'products/includes/product_quantity_script.html' %}
+{% include 'products/includes/product_images_script.html' %}
 
 {% if user.is_authenticated %}
     {% include 'products/includes/wishlist_product_detail_script.html' %}
