@@ -69,15 +69,15 @@ class Image(models.Model):
 
 class Wishlist(models.Model):
     user_profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='wishlist')
-    favourite_products = models.ManyToManyField(Product)
+    favourite_products = models.ManyToManyField(Product, blank=True)
 
 
-# @receiver(post_save, sender=UserProfile)
-# def create_or_update_wishlist(sender, instance, created, **kwargs):
-#     """
-#     Create or update a personal wishlist
-#     """
-# #     if created:
-#     Wishlist.objects.create(user_profile=instance)
-# #     # Existing users: just save the wishlist
-# #     instance.wishlist.save()
+@receiver(post_save, sender=UserProfile)
+def create_or_update_wishlist(sender, instance, created, **kwargs):
+    """
+    Create or update a personal wishlist
+    """
+    if created:
+        Wishlist.objects.create(user_profile=instance)
+    # Existing users: just save the wishlist
+    instance.wishlist.save()
