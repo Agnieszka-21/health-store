@@ -63,13 +63,57 @@
                 </div>
             </div>
         </div>
-        <div>
-            <h3>This is a wishlist template</h3>
+        <div class="row">
+            <h3>Your wishlist</h3>
 
-            {% for item in wishlist_items %}
-                <p>{{ item.name }}</p>
+            {% for product in wishlist_items %}
+            <div id="wishlist-product" class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                <div class="card h-100 border-0">
+                    <button class="add-to-wishlist text-end pe-3" style="border:none; background:none;" data-product-item="{{ product.id }}">
+                        <i class="fa-solid fa-heart"></i>
+                    </button>
+
+                    {% for image in product.images.all %}
+                    <a href="{% url 'product_detail' product.id %}">
+                        <img class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ image.name_primary_img }}">
+                    </a>
+                    {% empty %}
+                    <a href="{% url 'product_detail' product.id %}">
+                        <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                    </a>
+                    {% endfor %}
+
+                    <div class="card-body pb-0">
+                        <p>{{ product.name }}</p>
+                    </div>
+                    
+
+                    {% if forloop.counter|divisibleby:1 %}
+                        <div class="col-12 d-sm-none mb-5">
+                            <hr>
+                        </div>
+                    {% endif %}                        
+                    {% if forloop.counter|divisibleby:2 %}
+                        <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
+                            <hr>
+                        </div>
+                    {% endif %}
+                    {% if forloop.counter|divisibleby:3 %}
+                        <div class="col-12 d-none d-lg-block d-xl-none mb-5">
+                            <hr>
+                        </div>
+                    {% endif %}
+                    {% if forloop.counter|divisibleby:4 %}
+                        <div class="col-12 d-none d-xl-block mb-5">
+                            <hr>
+                        </div>
+                    {% endif %}
+                </div> 
+            </div>
             {% empty %}
+            <div>
                 <p>There are no products on your wishlist</p>
+            </div>
             {% endfor %}
         </div>
     </div>
@@ -78,4 +122,5 @@
 {% block postloadjs %}
     {{ block.super }}
     <script type="text/javascript" src="{% static 'profiles/js/countryfield.js' %}"></script>
+    {% include 'profiles/includes/wishlist_script.html' %}
 {% endblock %}
