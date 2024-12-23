@@ -8,20 +8,20 @@
         <div class="col-12 col-md-6">
             <hr>
             <h2 class="logo-font mb-4">Product Management</h2>
-            <h5 class="text-muted">Edit a Product</h5>
+            <h5 class="text-muted">Delete a Product</h5>
             <hr>
         </div>
     </div>
 
     <div class="row">
         <div class="col-12 col-md-6">
-            <form method="POST" action="{% url 'edit_product' product.id %}" class="form mb-2" enctype="multipart/form-data">
+            <form method="POST" action="{% url 'delete_product' product.id %}" class="form mb-2">
                 {% csrf_token %}
-                {{ product_form | crispy }}
-                {{ image_form | crispy }}
                 <div class="text-right">
+                    <p>Are you sure you want to delete <span class="fw-bold">{{ product.name }}?</span></p>
+                    <p class="text-danger">This action cannot be undone!</p>
                     <a class="btn btn-light rounded-0" href="{% url 'products' %}">Cancel</a>
-                    <button class="btn btn-dark rounded-0" type="submit">Update Product</button>
+                    <button class="btn btn-dark rounded-0" type="submit">Delete Product</button>
                 </div>
             </form>
         </div>            
