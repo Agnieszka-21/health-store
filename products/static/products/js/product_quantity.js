@@ -1,6 +1,4 @@
-<!-- Code copied and adjusted from the CI's Boutique Ado walkthrough project -->
-
-<script type="text/javascript">
+// Code copied and adjusted from Code Institute's walkthrough project Boutique Ado
 
     // Disable +/- buttons outside 1-9 range
     function handleEnableDisable(itemId) {
@@ -43,5 +41,3 @@
        let itemId = $(this).data('item_id');
        handleEnableDisable(itemId);
     });
-    
-</script>

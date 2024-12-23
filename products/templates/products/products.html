@@ -85,8 +85,11 @@
                 {% for product in products %}
                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                         <div class="card h-100 border-0">
-                            
+
+                            {% if request.user.is_authenticated %}
                             <button class="add-to-wishlist text-end pe-3" style="border:none; background:none;" data-product-item="{{ product.id }}"><i class="fa-regular fa-heart"></i></button>
+                            {% endif %}
+
                             {% for image in product.images.all %}
                             <a href="{% url 'product_detail' product.id %}">
                                 <img class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ image.name_primary_img }}">
@@ -157,35 +160,12 @@
 
 {% block postloadjs %}
 {{ block.super }}
+<!-- Sort products -->
+<script src="{% static 'products/js/sort_products.js' %}"></script>
 
-<!-- Script element below copied from CI's Boutique Ado -->
-<script type="text/javascript">
-    $('#sort-selector').change(function() {
-        var selector = $(this);
-        var currentUrl = new URL(window.location);
-
-        var selectedVal = selector.val();
-        if(selectedVal != "reset"){
-            var sort = selectedVal.split("_")[0];
-            var direction = selectedVal.split("_")[1];
-
-            currentUrl.searchParams.set("sort", sort);
-            currentUrl.searchParams.set("direction", direction);
-
-            window.location.replace(currentUrl);
-        } else {
-            currentUrl.searchParams.delete("sort");
-            currentUrl.searchParams.delete("direction");
-
-            window.location.replace(currentUrl);
-        }
-    })
-</script>
-
-{% if user.is_authenticated %}
-    {% include 'products/includes/wishlist_products_script.html' %}
-{% else %}
-    {% include 'products/includes/wishlist_unavailable_script.html' %}
-{% endif %}
+    {% if user.is_authenticated %}
+    <!-- Save products to and remove from wishlist -->
+    <script src="{% static 'products/js/wishlist_products.js' %}"></script>
+    {% endif %}
 
 {% endblock %}

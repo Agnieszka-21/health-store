@@ -1,26 +1,15 @@
-<script type="text/javascript">
-
-    $(document).ready(function(){
-        $('.add-to-wishlist').click(
-            function(e) {
+$(document).ready(function(){
+    $('.add-to-wishlist').click(
+        function(e) {
                 let product_id = $(this).attr('data-product-item');
                 let that = $(this);
                 let icon = that.find('.fa-heart');
                 let icon_classlist_value = icon[0].classList.value;
                 var csrftoken = Cookies.get('csrftoken');
-                let action_url_1 = 'add-to-wishlist/';
-
-                console.log('Product id is: ', product_id);
-                console.log('That is: ', that);
-                console.log('Icon: ', icon);
-                console.log('Icon zero: ', icon[0])
-                console.log('Icon classlist: ', icon[0].classList);
-                console.log('Icon classlist value: ', icon[0].classList.value);
-                console.log('CSRF: ', csrftoken)
-                console.log('Action URL 1: ', action_url_1);
+                let action_url_2 = `${product_id}/add-to-wishlist/`;
 
                 $.ajax({
-                    url: action_url_1,
+                    url: action_url_2,
                     type: 'POST',
                     data: {'attr_id': product_id, 'icon_classlist_value': icon_classlist_value },
                     headers : { 'X-CSRFToken': csrftoken},
@@ -37,9 +26,7 @@
                     error: function() {
                         console.log('An error occurred');
                     }    
-                });
-            }
-        )
-    })
-    
-</script>
+            });
+        }
+    )
+})
