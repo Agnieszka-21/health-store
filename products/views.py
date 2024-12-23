@@ -1,12 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.db.models.functions import Lower
 
-from .models import Category, Brand, Product, Image, Wishlist
-from .forms import ProductForm, ImageForm
+from .models import Category, Brand, Product, Image, Wishlist, Review
+from .forms import ProductForm, ImageForm, ReviewForm
 
 
 def all_products(request):
@@ -83,14 +83,64 @@ def product_detail(request, product_id):
     reviews = product.reviews.all().order_by("-created_on")
     review_count = product.reviews.filter(approved=True).count()
 
+    if request.method == "POST":
+        review_form = ReviewForm(data=request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.author = request.user
+            review.product = product
+            review.save()
+            messages.success(
+                request, 'Thank you! Review submitted and awaiting approval'
+            )
+            
+    review_form = ReviewForm()
     context = {
         'product': product,
         'product_images': product_images,
         'reviews': reviews,
         'review_count': review_count,
+        'review_form': review_form,
     }
 
     return render(request, 'products/product_detail.html', context)
+
+
+def edit_review(request, product_id, review_id):
+    """
+    Edit a review
+    """
+    if request.method == "POST":
+        product = get_object_or_404(Product, pk=product_id)
+        review = get_object_or_404(Review, pk=review_id)
+        review_form = ReviewForm(data=request.POST, instance=review)
+
+        if review_form.is_valid() and review.author == request.user:
+            review = review_form.save(commit=False)
+            review.product = product
+            review.approved = False
+            review.save()
+            messages.success(request, 'Your review has been updated!')
+        else:
+            messages.error(request, 'Error updating review!')
+
+    return HttpResponseRedirect(reverse('product_detail', args=[product_id]))
+
+
+def delete_review(request, product_id, review_id):
+    """
+    view to delete review
+    """
+    product = get_object_or_404(Product, pk=product_id)
+    review = get_object_or_404(Review, pk=review_id)
+
+    if review.author == request.user:
+        review.delete()
+        messages.success(request, 'Review deleted!')
+    else:
+        messages.error(request, 'You can only delete your own reviews!')
+
+    return HttpResponseRedirect(reverse('product_detail', args=[product_id]))
 
 
 @login_required

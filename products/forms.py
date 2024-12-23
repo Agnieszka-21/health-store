@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product, Category, Image
+from .models import Product, Category, Image, Review
 
 
 class ProductForm(forms.ModelForm):
@@ -28,4 +28,8 @@ class ImageForm(forms.ModelForm):
             'tertiary_img',
         ]
 
-            
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['rating', 'text',]
