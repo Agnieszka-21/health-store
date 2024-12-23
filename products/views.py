@@ -80,9 +80,14 @@ def product_detail(request, product_id):
 
     product = get_object_or_404(Product, pk=product_id)
     product_images = Image.objects.filter(product=product)
+    reviews = product.reviews.all().order_by("-created_on")
+    review_count = product.reviews.filter(approved=True).count()
+
     context = {
         'product': product,
         'product_images': product_images,
+        'reviews': reviews,
+        'review_count': review_count,
     }
 
     return render(request, 'products/product_detail.html', context)

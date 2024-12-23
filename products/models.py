@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.auth.models import User
 
 from profiles.models import UserProfile
 
@@ -53,13 +54,10 @@ class Product(models.Model):
 
 class Image(models.Model):
     product = models.ForeignKey(Product, null=False, blank=False, on_delete=models.CASCADE, related_name='images')
-    primary_img_url = models.URLField(max_length=1024, null=True, blank=True)
     primary_img = models.ImageField(null=True, blank=True)
     name_primary_img = models.CharField(max_length=254, null=True, blank=True)
-    secondary_img_url = models.URLField(max_length=1024, null=True, blank=True)
     secondary_img = models.ImageField(null=True, blank=True)
     name_secondary_img = models.CharField(max_length=254, null=True, blank=True)
-    tertiary_img_url = models.URLField(max_length=1024, null=True, blank=True)
     tertiary_img = models.ImageField(null=True, blank=True)
     name_tertiary_img = models.CharField(max_length=254, null=True, blank=True)
 
@@ -81,3 +79,24 @@ def create_or_update_wishlist(sender, instance, created, **kwargs):
         Wishlist.objects.create(user_profile=instance)
     # Existing users: just save the wishlist
     instance.wishlist.save()
+
+
+class Review(models.Model):
+    """
+    Stores a single review entry related to :model:`auth.User`
+    and :model:`products.Product`
+    """
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="reviews")
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="reviewer")
+    rating = models.IntegerField(default=0)    
+    text = models.TextField(null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["created_on"]
+
+    def __str__(self):
+        return f"Comment {self.text} by {self.author}"
