@@ -75,6 +75,26 @@ def all_products(request):
     return render(request, 'products/products.html', context)
 
 
+@login_required
+def handle_rating(request, product_id):
+
+    if request.POST and 'rating_id' in request.POST:
+        print('Star rating - ajax post request')
+        print('rating_id: ', request.POST['rating_id'])
+
+        if request.POST['rating_id'] == 'star1':
+            print('Rating_id is star1')
+            star_rating = 1
+            print('Star_rating in the 2nd if: ', star_rating)
+
+        elif request.POST['rating_id'] == 'star2':
+            print('Rating_id is star2')
+            star_rating = 2
+            print('Star_rating2 in the 2nd if: ', star_rating)
+        
+        return star_rating
+
+
 def product_detail(request, product_id):
     """ Show individual product details """
 
@@ -89,6 +109,11 @@ def product_detail(request, product_id):
             review = review_form.save(commit=False)
             review.author = request.user
             review.product = product
+            print('Before handle rating function is called')
+            star_rating = handle_rating(request, product_id)
+            print('Star_rating in def product_detail: ', star_rating)
+            review.rating = star_rating
+            print('Review.rating in def product_detail is: ', review.rating)
             review.save()
             messages.success(
                 request, 'Thank you! Review submitted and awaiting approval'

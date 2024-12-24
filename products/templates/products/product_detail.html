@@ -148,9 +148,17 @@
         <div class="col-md-4 card mb-4 mt-3 ">
             <div class="card-body">
                 {% if user.is_authenticated %}
-                <h3>Leave a review:</h3>
+                <h3>Leave a review</h3>
                 <p>Posting as: {{ user.username }}</p>
+
                 <form id="reviewForm" method="post" style="margin-top: 1.3em;">
+                    <p class="stars">
+                        <i class="fa-regular fa-star" id="star1"></i>
+                        <i class="fa-regular fa-star" id="star2"></i>
+                        <i class="fa-regular fa-star" id="star3"></i>
+                        <i class="fa-regular fa-star" id="star4"></i>
+                        <i class="fa-regular fa-star" id="star5"></i>
+                    </p>
                     {{ review_form | crispy }}
                     {% csrf_token %}
                     <button id="submitButton" type="submit" class="btn btn-signup btn-lg">Submit</button>
@@ -193,6 +201,8 @@
     {% if user.is_authenticated %}
     <!-- Save products to and remove from wishlist -->
     <script src="{% static 'products/js/wishlist_product_detail.js' %}"></script>
+    <!-- Handle star rating -->
+    <script src="{% static 'products/js/star_rating.js' %}"></script>
     {% endif %}
 
 <!-- WORK IN PROGRESS -->
