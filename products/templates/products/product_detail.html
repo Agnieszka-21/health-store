@@ -117,12 +117,13 @@
 
     <!-- Displaying count of reviews -->
     <div class="row">
-        <div class="col-md-8 card mb-4  mt-3 ">
-            <h3>Reviews:</h3>
+        <div class="col-md-8 card mb-4 mt-3 ">
             <div class="card-body">
+                <h3>Reviews</h3>
                 {% for review in reviews %}
                 <div
                     class="p-2 reviews{% if not review.approved and review.author == user %} faded{% elif not review.approved %} d-none{% endif %}">
+                    <p>Star rating: {{ review.rating }}</p>
                     <p class="font-weight-bold">
                         {{ review.author }}
                         <span class="font-weight-normal">
@@ -130,7 +131,7 @@
                         </span> wrote:
                     </p>
                     <div id="review{{ review.id }}">
-                        {{ review.text | linebreaks }}
+                        Review text: {{ review.text | linebreaks }}
                     </div>
                     {% if not review.approved and review.author == user %}
                     <p class="approval">This review is awaiting approval</p>
@@ -140,7 +141,8 @@
                     <button class="btn btn-edit" review_id="{{ review.id }}">Edit</button>
                     {% endif %}
                 </div>
-                <!-- Our for loop ends here -->
+                {% empty %}
+                <p>There are no reviews for this product</p>
                 {% endfor %}
             </div>
         </div>
@@ -152,15 +154,18 @@
                 <p>Posting as: {{ user.username }}</p>
 
                 <form id="reviewForm" method="post" style="margin-top: 1.3em;">
-                    <p class="stars">
+                    {% csrf_token %}
+                    <label for="stars-rating">Star rating</label><br>
+                    <input type="number" id="stars-rating" name="stars-rating" value="" class="d-none">
+                    <p class="stars" id="stars-p">
                         <i class="fa-regular fa-star" id="star1"></i>
                         <i class="fa-regular fa-star" id="star2"></i>
                         <i class="fa-regular fa-star" id="star3"></i>
                         <i class="fa-regular fa-star" id="star4"></i>
                         <i class="fa-regular fa-star" id="star5"></i>
                     </p>
+                    
                     {{ review_form | crispy }}
-                    {% csrf_token %}
                     <button id="submitButton" type="submit" class="btn btn-signup btn-lg">Submit</button>
                 </form>
                 {% else %}

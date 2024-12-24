@@ -5,6 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.db.models.functions import Lower
 
+from bs4 import BeautifulSoup
+
 from .models import Category, Brand, Product, Image, Wishlist, Review
 from .forms import ProductForm, ImageForm, ReviewForm
 
@@ -75,24 +77,22 @@ def all_products(request):
     return render(request, 'products/products.html', context)
 
 
-@login_required
-def handle_rating(request, product_id):
-
-    if request.POST and 'rating_id' in request.POST:
-        print('Star rating - ajax post request')
-        print('rating_id: ', request.POST['rating_id'])
-
-        if request.POST['rating_id'] == 'star1':
-            print('Rating_id is star1')
-            star_rating = 1
-            print('Star_rating in the 2nd if: ', star_rating)
-
-        elif request.POST['rating_id'] == 'star2':
-            print('Rating_id is star2')
-            star_rating = 2
-            print('Star_rating2 in the 2nd if: ', star_rating)
-        
-        return star_rating
+# @login_required
+# def handle_rating(request, product_id):
+#     if request.POST and 'rating_id' in request.POST:
+#         print('Star rating - ajax post request')
+#         print('rating_id: ', request.POST['rating_id'])
+#         if request.POST['rating_id'] == 'star1':
+#             star_rating = 1
+#         elif request.POST['rating_id'] == 'star2':
+#             star_rating = 2
+#         elif request.POST['rating_id'] == 'star3':
+#             star_rating = 3
+#         elif request.POST['rating_id'] == 'star4':
+#             star_rating = 4
+#         elif request.POST['rating_id'] == 'star5':
+#             star_rating = 5
+#         return star_rating
 
 
 def product_detail(request, product_id):
@@ -105,28 +105,40 @@ def product_detail(request, product_id):
 
     if request.method == "POST":
         review_form = ReviewForm(data=request.POST)
+        context = {
+            'product': product,
+            'product_images': product_images,
+            'reviews': reviews,
+            'review_count': review_count,
+            'review_form': review_form,
+        }
+
         if review_form.is_valid():
             review = review_form.save(commit=False)
             review.author = request.user
             review.product = product
-            print('Before handle rating function is called')
-            star_rating = handle_rating(request, product_id)
-            print('Star_rating in def product_detail: ', star_rating)
-            review.rating = star_rating
-            print('Review.rating in def product_detail is: ', review.rating)
-            review.save()
-            messages.success(
-                request, 'Thank you! Review submitted and awaiting approval'
-            )
-            
-    review_form = ReviewForm()
-    context = {
-        'product': product,
-        'product_images': product_images,
-        'reviews': reviews,
-        'review_count': review_count,
-        'review_form': review_form,
-    }
+            review.rating = request.POST['stars-rating']
+            print('Request.POST: ', request.POST['stars-rating'])
+
+            try:
+                print('Try block in def product_detail')
+                review.save()
+                print('Review was saved')
+                messages.success(
+                    request, 'Thank you! Review submitted and awaiting approval'
+                )
+            except Exception as e:
+                print('Exception:', e)
+
+    else:
+        review_form = ReviewForm()
+        context = {
+            'product': product,
+            'product_images': product_images,
+            'reviews': reviews,
+            'review_count': review_count,
+            'review_form': review_form,
+        }
 
     return render(request, 'products/product_detail.html', context)
 
