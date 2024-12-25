@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <hr>
+            <h2 class="logo-font mb-4">Homepage Management</h2>
+            <h5 class="text-muted"> Create Carousel</h5>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <form method="POST" action="{% url 'create_carousel' %}" class="form mb-2" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ carousel_form | crispy }}
+                <div class="text-right">
+                    <a class="btn btn-light rounded-0" href="{% url 'home' %}">Cancel</a>
+                    <button class="btn btn-dark rounded-0" type="submit">Add carousel</button>
+                </div>
+            </form>
+        </div>            
+    </div>
+</div>
+{% endblock %}
