@@ -123,22 +123,28 @@
                 {% for review in reviews %}
                 <div
                     class="p-2 reviews{% if not review.approved and review.author == user %} faded{% elif not review.approved %} d-none{% endif %}">
-                    <p>Star rating: {{ review.rating }}</p>
+                    <p class="star-rating" id="{{ review.id }}" data-review-rating="{{ review.rating }}">
+                        <i class="fa-regular fa-star" id="review{{ review.id }}-star1"></i>
+                        <i class="fa-regular fa-star" id="review{{ review.id }}-star2"></i>
+                        <i class="fa-regular fa-star" id="review{{ review.id }}-star3"></i>
+                        <i class="fa-regular fa-star" id="review{{ review.id }}-star4"></i>
+                        <i class="fa-regular fa-star" id="review{{ review.id }}-star5"></i>
+                    </p>
                     <p class="font-weight-bold">
-                        {{ review.author }}
+                        {{ review.created_on }},
                         <span class="font-weight-normal">
-                            {{ review.created_on }}
+                            {{ review.author }}
                         </span> wrote:
                     </p>
                     <div id="review{{ review.id }}">
-                        Review text: {{ review.text | linebreaks }}
+                        {{ review.text | linebreaks }}
                     </div>
                     {% if not review.approved and review.author == user %}
                     <p class="approval">This review is awaiting approval</p>
                     {% endif %}
                     {% if user.is_authenticated and review.author == user %}
-                    <button class="btn btn-delete" review_id="{{ review.id }}">Delete</button>
-                    <button class="btn btn-edit" review_id="{{ review.id }}">Edit</button>
+                    <button class="btn btn-delete" data-review-id="{{ review.id }}">Delete</button>
+                    <button class="btn btn-edit" data-review-id="{{ review.id }}">Edit</button>
                     {% endif %}
                 </div>
                 {% empty %}
@@ -151,7 +157,7 @@
             <div class="card-body">
                 {% if user.is_authenticated %}
                 <h3>Leave a review</h3>
-                <p>Posting as: {{ user.username }}</p>
+                <p>Posting as {{ user.username }}</p>
 
                 <form id="reviewForm" method="post" style="margin-top: 1.3em;">
                     {% csrf_token %}

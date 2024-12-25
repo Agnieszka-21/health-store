@@ -129,6 +129,7 @@ def product_detail(request, product_id):
                 )
             except Exception as e:
                 print('Exception:', e)
+            return HttpResponseRedirect(reverse('product_detail', args=[product_id]))
 
     else:
         review_form = ReviewForm()
@@ -143,6 +144,7 @@ def product_detail(request, product_id):
     return render(request, 'products/product_detail.html', context)
 
 
+@login_required
 def edit_review(request, product_id, review_id):
     """
     Edit a review
@@ -164,6 +166,7 @@ def edit_review(request, product_id, review_id):
     return HttpResponseRedirect(reverse('product_detail', args=[product_id]))
 
 
+@login_required
 def delete_review(request, product_id, review_id):
     """
     view to delete review

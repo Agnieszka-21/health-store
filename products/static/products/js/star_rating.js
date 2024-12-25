@@ -3,8 +3,8 @@
 
 const stars = document.querySelectorAll('.stars i');
 console.log('JS stars: ', stars)
-let stars_arr = Array.from(stars);
-console.log('JS stars array: ', stars_arr)
+// let stars_arr = Array.from(stars);
+// console.log('JS stars array: ', stars_arr)
 
 stars.forEach((star, index1) => {
     console.log('Index1: ', index1)
