@@ -157,6 +157,7 @@ def edit_review(request, product_id, review_id):
         if review_form.is_valid() and review.author == request.user:
             review = review_form.save(commit=False)
             review.product = product
+            review.rating = request.POST['stars-rating']
             review.approved = False
             review.save()
             messages.success(request, 'Your review has been updated!')
