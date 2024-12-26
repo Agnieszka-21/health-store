@@ -5,8 +5,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.db.models.functions import Lower
 
-from bs4 import BeautifulSoup
-
 from .models import Category, Brand, Product, Image, Wishlist, Review
 from .forms import ProductForm, ImageForm, ReviewForm
 
@@ -75,24 +73,6 @@ def all_products(request):
     }
 
     return render(request, 'products/products.html', context)
-
-
-# @login_required
-# def handle_rating(request, product_id):
-#     if request.POST and 'rating_id' in request.POST:
-#         print('Star rating - ajax post request')
-#         print('rating_id: ', request.POST['rating_id'])
-#         if request.POST['rating_id'] == 'star1':
-#             star_rating = 1
-#         elif request.POST['rating_id'] == 'star2':
-#             star_rating = 2
-#         elif request.POST['rating_id'] == 'star3':
-#             star_rating = 3
-#         elif request.POST['rating_id'] == 'star4':
-#             star_rating = 4
-#         elif request.POST['rating_id'] == 'star5':
-#             star_rating = 5
-#         return star_rating
 
 
 def product_detail(request, product_id):
@@ -182,6 +162,45 @@ def delete_review(request, product_id, review_id):
         messages.error(request, 'You can only delete your own reviews!')
 
     return HttpResponseRedirect(reverse('product_detail', args=[product_id]))
+
+
+@login_required
+def manage_reviews(request):
+    """
+    Approve or delete reviews - for managers only
+    """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store managers approve reviews.')
+        return redirect(reverse('home'))
+
+    new_reviews = Review.objects.filter(approved=False)
+    print('new_reviews: ', new_reviews)
+    for review in new_reviews:
+        print('review: ', review)
+
+    if request.method == "POST":
+        try:
+            for review in new_reviews:
+                review_id = review.id
+                print('request.POSTreview-admin: ', request.POST[f'review{review_id}-admin'])
+                if request.POST[f'review{review_id}-admin'] == 'approve':
+                    review.approved = True
+                    review.save()
+                elif request.POST[f'review{review_id}-admin'] == 'delete':
+                    review.delete()
+            messages.success(request, 'Reviews have been updated')
+            return redirect(reverse('products'))
+
+        except Exception as e:
+            messages.error(request, 'Sorry, something went wrong')
+            print('Exception: ', e)
+
+    template = 'products/manage_reviews.html'
+    context = {
+        'new_reviews': new_reviews,
+    }
+
+    return render(request, template, context)
 
 
 @login_required
