@@ -28,6 +28,20 @@ body {
     cursor: pointer;
 }
 
+.btt-button {
+    height: 42px;
+    width: 42px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.btt-link,
+.update-link,
+.remove-item {
+    cursor: pointer;
+}
+
 #basket-items-qty {
     font-size: x-small;
     font-weight: 700;
