@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h2 class="logo-font mb-4">Admin Panel</h2>
+            <h5>Manage products, reviews, and homepage carousel</h5>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="card h-100 border-0">
+                <div class="card-body">
+                    <a href="{% url 'add_product' %}">Add Product</a>
+                </div>
+                    <a href="{% url 'manage_reviews' %}">Manage reviews</a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="card-body pb-0">
+                    <a href="{% url 'create_carousel' %}">Create Carousel</a>
+                </div>
+                <div class="card-body pb-0">
+                    <a href="{% url 'choose_carousel' %}">Choose carousel</a>
+                </div>
+                <div class="card-body pb-0">
+        </div>            
+    </div>
+</div>
+{% endblock %}

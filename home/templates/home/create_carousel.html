@@ -19,7 +19,7 @@
                 {% csrf_token %}
                 {{ carousel_form | crispy }}
                 <div class="text-right">
-                    <a class="btn btn-light rounded-0" href="{% url 'home' %}">Cancel</a>
+                    <a class="btn btn-light rounded-0" href="{% url 'admin_panel' %}">Cancel</a>
                     <button class="btn btn-dark rounded-0" type="submit">Add carousel</button>
                 </div>
             </form>

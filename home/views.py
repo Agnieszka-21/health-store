@@ -20,7 +20,21 @@ def home(request):
 
 
 @login_required
+def admin_panel(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store managers can access Admin Panel')
+        return redirect(reverse('home'))
+
+    return render(request, 'home/admin_panel.html')
+
+
+@login_required
 def choose_carousel(request):
+
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store managers can choose a carousel.')
+        return redirect(reverse('home'))
+
     available_carousels = Carousel.objects.all()
     current_home_carousel = Carousel.objects.get(display=True)
     print('available_carousels: ', available_carousels)
@@ -38,7 +52,7 @@ def choose_carousel(request):
             current_home_carousel.save()
             messages.success(request, 'Homepage carousel was successfully updated')
             
-            return redirect(reverse('home'))
+            return redirect(reverse('admin_panel'))
             
         except Exception:
             messages.success(request, 'Sorry, an error occurred')
@@ -63,8 +77,7 @@ def create_carousel(request):
         if carousel_form.is_valid():
             added_carousel = carousel_form.save()
             messages.success(request, 'Successfully added carousel!')
-            return redirect(reverse('home'))
-
+            return redirect(reverse('admin_panel'))
         else:
             messages.error(request, 'Failed to add a new carousel. Please ensure the form is valid.')
     else:
