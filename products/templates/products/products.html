@@ -21,7 +21,6 @@
         <div class="product-container col-10 offset-1">
             <div class="row mt-1 mb-2">
                 <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
-                    
                     <div class="filter-select-wrapper">
                         <button class="btn btn-lg" type="button" data-bs-toggle="collapse" data-bs-target="#filterProducts" aria-controls="filterProducts" aria-expanded="false" aria-label="Toggle filter">
                             Filter
@@ -59,8 +58,36 @@
                             </div>
                         </div>
                     </div>
-                        
+<!-- 
+                    <div class="dropdown">
+                        <button id="filter-btn">Filter</button>
+                        <div id="dropdown-content" class="dropdown-content hide" data-checked-filters=''>
+                            <p class="fw-bold">Category</p>
+                            {% for c in all_categories %}
+                                <label><input type="checkbox" name="category" value="{{ c.name }}"> {{ c.friendly_name }}</label><br>
+                            {% endfor %}
+                            <hr>
+                            <p class="fw-bold">Brand</p>
+                            {% for b in all_brands %}
+                                <label><input type="checkbox" name="brand" value="{{ b.name }}"> {{ b.friendly_name }}</label><br>
+                            {% endfor %}
+                        </div>
+                    </div> -->
 
+                    <div class="sort-select-wrapper w-50">
+                        <select id="category-selector" class="custom-select custom-select-sm rounded-0 border border-{% if current_category != 'None_None' %}info{% else %}black{% endif %}">
+                            <option value="reset" {% if current_category == 'None_None' %}selected{% endif %}>Filter</option>
+                            <!-- <option value="aromatherapy" {% if current_category == 'aromatherapy' %}selected{% endif %}>Aromatherapy</option>
+                            <option value="home_gift" {% if current_category == 'home_gift' %}selected{% endif %}>Home & Gift</option>
+                            <option value="supplements" {% if current_category == 'supplements' %}selected{% endif %}>Supplements</option>
+                            <option value="food_drink" {% if current_category == 'name_asc' %}selected{% endif %}>Food & Drink</option>
+                            <option value="beauty" {% if current_category == 'beauty' %}selected{% endif %}>Beauty</option> -->
+                            {% for c in all_categories %}
+                            <option value="{{ c.name }}" {% if current_category == '{{ c.name }}' %}selected{% endif %}>{{ c.friendly_name }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
                     <div class="sort-select-wrapper w-50">
                         <select id="sort-selector" class="custom-select custom-select-sm rounded-0 border border-{% if current_sorting != 'None_None' %}info{% else %}black{% endif %}">
                             <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort</option>
@@ -172,6 +199,9 @@
         window.scrollTo(0,0);
     })
 </script>
+
+<!-- Filter products -->
+<script src="{% static 'products/js/filter_products.js' %}"></script>
 
 <!-- Sort products -->
 <script src="{% static 'products/js/sort_products.js' %}"></script>

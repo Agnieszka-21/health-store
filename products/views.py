@@ -23,14 +23,13 @@ def all_products(request):
     direction = None
 
     if request.method == "GET":
+        print('request.GET: ', request.GET)
         if 'sort' in request.GET:
             sortkey = request.GET['sort']
             sort = sortkey
             if sortkey == 'name':
                 sortkey = 'lower_name'
                 products = products.annotate(lower_name=Lower('name'))
-            if sortkey == 'category':
-                sortkey = 'category__name'
             if 'direction' in request.GET:
                 direction = request.GET['direction']
                 if direction == 'desc':
@@ -44,12 +43,12 @@ def all_products(request):
             categories = Category.objects.filter(name__in=categories)
             print('Categories: ', categories)
 
-        if 'brand' in request.GET:
-            brands = request.GET['brand'].split(',')
-            products = products.filter(brand__name__in=brands)
-            print('Products: ', products)
-            brands = Brand.objects.filter(name__in=brands)
-            print('Brands: ', brands)
+        # if 'brand' in request.GET:
+        #     brands = request.GET['brand'].split(',')
+        #     products = products.filter(brand__name__in=brands)
+        #     print('Products: ', products)
+        #     brands = Brand.objects.filter(name__in=brands)
+        #     print('Brands: ', brands)
 
         if 'q' in request.GET:
             query = request.GET['q']
@@ -203,6 +202,12 @@ def manage_reviews(request):
     }
 
     return render(request, template, context)
+
+
+# def filter_products(request):
+#     if request.POST and 'selected_filters' in request.POST:
+#         print('selectedFilters: ', selectedFilters)
+#         filtered_products = Products.objects.filter(category=selectedFilters)
 
 
 @login_required
