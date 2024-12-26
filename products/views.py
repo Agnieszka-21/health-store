@@ -7,6 +7,7 @@ from django.db.models.functions import Lower
 
 from .models import Category, Brand, Product, Image, Wishlist, Review
 from .forms import ProductForm, ImageForm, ReviewForm
+from .utils import paginateProducts
 
 
 def all_products(request):
@@ -17,8 +18,7 @@ def all_products(request):
     all_brands = Brand.objects.all()
     query = None
     categories = None
-    brands = None
-        
+    brands = None    
     sort = None
     direction = None
 
@@ -61,6 +61,7 @@ def all_products(request):
             products = products.filter(queries)
 
     current_sorting = f'{sort}_{direction}'
+    custom_range, products = paginateProducts(request, products, 3)
 
     context = {
         'products': products,
@@ -70,6 +71,7 @@ def all_products(request):
         'current_categories': categories,
         'search_term': query,
         'current_sorting': current_sorting,
+        'custom_range': custom_range,
     }
 
     return render(request, 'products/products.html', context)

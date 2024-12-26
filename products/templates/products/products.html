@@ -27,7 +27,7 @@
                             Filter
                         </button>
 
-                            <!-- Adjusted from https://getbootstrap.com/docs/5.0/components/accordion/ -->
+                        <!-- Adjusted from https://getbootstrap.com/docs/5.0/components/accordion/ -->
                         <div class="accordion collapse" id="filterProducts">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingOne">
@@ -154,6 +154,7 @@
                 {% endfor %}
             </div>
         </div>
+        {% include 'products/includes/pagination.html' with query_set=products custom_range=custom_range query=search_query %}
     </div>
 </div>
 <div class="btt-button shadow-sm rounded-0 border border-black">
