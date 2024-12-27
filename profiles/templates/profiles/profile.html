@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="row">
-            <h3>Your wishlist</h3>
+            <h3>Wishlist</h3>
 
             {% for product in wishlist_items %}
             <div id="wishlist-product" class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
@@ -111,16 +111,53 @@
                 </div> 
             </div>
             {% empty %}
-            <div>
+            <div id="empty-wishlist">
                 <p>There are no products on your wishlist</p>
             </div>
+            {% endfor %}
+
+            <h3>Bookmarked articles</h3>
+            {% for article in saved_articles %}
+            <div id="reading-list" class="row blog-thumbnail">
+                <button class="remove-article text-end pe-3" style="border:none; background:none;" data-article-item="{{ article.id }}">
+                    <i class="fa-solid fa-bookmark"></i>
+                </button>
+                {% if article.banner_img %}
+                <img class="col-lg-4" src="{{ article.banner_img.url }}" alt="{{ article.img_title }}">
+                {% else %}
+                <img class="col-lg-4" src="{{ MEDIA_URL }}noimage.png" alt="{{ article.title }}">
+                {% endif %}
+                <a class="col-lg-6" href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
+            </div>
+            {% empty %}
+            <p>You don't have any bookmarked articles</p>
+            {% endfor %}
+
+            <h3>Bookmarked recipes</h3>
+            {% for recipe in saved_recipes %}
+            <div class="row blog-thumbnail">
+                {% if recipe.banner_img %}
+                <img class="col-lg-4" src="{{ recipe.banner_img.url }}" alt="{{ recipe.img_title }}" style="width:200px">
+                {% else %}
+                <img class="col-lg-4" src="{{ MEDIA_URL }}noimage.png" alt="{{ article.title }}">
+                {% endif %}
+                <a class="col-lg-6" href="{% url 'recipe_detail' recipe.slug %}">{{ recipe.title }}</a>
+            </div>
+            {% empty %}
+            <p>You don't have any bookmarked recipes</p>
             {% endfor %}
         </div>
     </div>
 {% endblock %}
 
 {% block postloadjs %}
-    {{ block.super }}
-    <script type="text/javascript" src="{% static 'profiles/js/countryfield.js' %}"></script>
-    {% include 'profiles/includes/wishlist_script.html' %}
+{{ block.super }}
+<!-- Handle the for field Country - display a user-friendly list of all available options -->
+<script type="text/javascript" src="{% static 'profiles/js/countryfield.js' %}"></script>
+
+<!-- Remove product from wishlist when user clicks the heart icon -->
+<script type="text/javascript" src="{% static 'profiles/js/remove_from_wishlist.js' %}"></script>
+
+<!-- Remove bookmarked article when user clicks the bookmark icon -->
+<script type="text/javascript" src="{% static 'profiles/js/remove_article_bookmark.js' %}"></script>
 {% endblock %}

@@ -235,28 +235,29 @@ def add_to_wishlist(request, product_id):
     return redirect(reverse('products'))
 
 
-@login_required
-def remove_from_wishlist(request, product_id):
+# @login_required
+# def remove_from_wishlist(request, product_id):
 
-    if request.POST and 'attr_id' in request.POST:
-        print('Remove from wishlist - ajax post request')
-        print('attr_id: ', request.POST['attr_id'])
+#     if request.POST and 'attr_id' in request.POST:
+#         print('Remove from wishlist - ajax post request')
+#         print('attr_id: ', request.POST['attr_id'])
 
-        wishlist = Wishlist.objects.get(user_profile = request.user.profile)
-        print('Wishlist: ', wishlist)
+#         wishlist = Wishlist.objects.get(user_profile = request.user.profile)
+#         print('Wishlist: ', wishlist)
 
-        wishlist.favourite_products.remove(request.POST['attr_id'])
-        updated_wishlist = wishlist.favourite_products.all()
-        wishlist_items = updated_wishlist
+#         wishlist.favourite_products.remove(request.POST['attr_id'])
+#         updated_wishlist = wishlist.favourite_products.all()
+#         wishlist_items = updated_wishlist
 
-        print('Wishlist items: ', wishlist_items)
-        return render(request, 'profiles/profile.html', {'wishlist_items': wishlist_items})
+#         print('Wishlist items: ', wishlist_items)
+            
+#         return render(request, 'profiles/profile.html', {'wishlist_items': wishlist_items})
 
-    else:
-        messages.error(request, 'Sorry, something went wrong')
-        print('Sorry, something went wrong')
+#     else:
+#         messages.error(request, 'Sorry, something went wrong')
+#         print('Sorry, something went wrong')
 
-    return render(request, 'profiles/profile.html')
+#     return render(request, 'profiles/profile.html')
 
 
 def add_to_basket(request, item_id):
