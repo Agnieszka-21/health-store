@@ -135,7 +135,10 @@
 
             <h3>Bookmarked recipes</h3>
             {% for recipe in saved_recipes %}
-            <div class="row blog-thumbnail">
+            <div id="recipe-list" class="row blog-thumbnail">
+                <button class="remove-recipe text-end pe-3" style="border:none; background:none;" data-recipe-item="{{ recipe.id }}">
+                    <i class="fa-solid fa-bookmark"></i>
+                </button>
                 {% if recipe.banner_img %}
                 <img class="col-lg-4" src="{{ recipe.banner_img.url }}" alt="{{ recipe.img_title }}" style="width:200px">
                 {% else %}
@@ -160,4 +163,7 @@
 
 <!-- Remove bookmarked article when user clicks the bookmark icon -->
 <script type="text/javascript" src="{% static 'profiles/js/remove_article_bookmark.js' %}"></script>
+
+<!-- Remove bookmarked recipe when user clicks the bookmark icon -->
+<script type="text/javascript" src="{% static 'profiles/js/remove_recipe_bookmark.js' %}"></script>
 {% endblock %}

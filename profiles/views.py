@@ -104,3 +104,25 @@ def remove_article_bookmark(request, article_id):
         print('Sorry, something went wrong with removing article from reading list')
 
     return render(request, 'profiles/profile.html')
+
+
+@login_required
+def remove_recipe_bookmark(request, recipe_id):
+
+    if request.POST and 'recipe_id' in request.POST:
+        recipe_list = FavouriteRecipe.objects.get(user_profile=request.user.profile)
+        print('recipe_list: ', recipe_list)
+
+        recipe_list.bookmarked_recipes.remove(request.POST['recipe_id'])
+        updated_recipe_list = recipe_list.bookmarked_recipes.all()
+        saved_recipes = updated_recipe_list
+
+        print('saved_recipes: ', saved_recipes)
+            
+        return render(request, 'profiles/profile.html', {'saved_recipes': saved_recipes})
+
+    else:
+        messages.error(request, 'Sorry, something went wrong with removing recipe from recipe list')
+        print('Sorry, something went wrong with removing recipe from recipe list')
+
+    return render(request, 'profiles/profile.html')
