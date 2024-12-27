@@ -16,7 +16,11 @@
                 <h1 class="post-title">{{ article.title }}</h1>
                 <p class="post-subtitle">Published on {{ article.date_of_publication }}</p>
                 <p class="blog-icons">
-                    <span class="pe-3" id="save-article"><i class="fa-regular fa-bookmark"></i></span>
+                    {% if user.is_authenticated %}
+                    <span class="pe-3" id="save-article">
+                        <button class="bookmark-article text-end pe-3" style="border:none; background:none;" data-article-item="{{ article.id }}"><i class="fa-regular fa-bookmark"></i></button>
+                    </span>
+                    {% endif %}
                     <span id="copy-link-article"><i class="fa-solid fa-link"></i></span>
                     {% if request.user.is_staff %}
                         <small class="ms-3">
@@ -72,3 +76,12 @@
     </div>
 </div>
 {% endblock content %}
+
+
+{% block postloadjs %}
+{{ block.super }}
+    {% if user.is_authenticated %}
+    <!-- Update a user's reading list -->
+    <script src="{% static 'blog/js/bookmark_article.js' %}"></script>
+    {% endif %}
+{% endblock %}

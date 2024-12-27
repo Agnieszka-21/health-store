@@ -7,8 +7,11 @@ urlpatterns = [
     path('articles/', views.ArticleListView.as_view(), name='articles'),
     path('articles/create/', views.create_article, name='create_article'),
     path('articles/<slug:slug>/', views.article_detail, name='article_detail'),
+    path('articles/<slug:slug>/reading-list/', views.reading_list, name='reading_list'),
+
     path('articles/<int:article_id>/edit/', views.edit_article, name='edit_article'),
     path('articles/<int:article_id>/unpublish/', views.unpublish_article, name='unpublish_article'),
+
     path('recipes/', views.RecipeListView.as_view(), name='recipes'),
     path('recipes/create/', views.create_article, name='create_recipe'),
     path('recipes/<slug:slug>/', views.recipe_detail, name='recipe_detail'),

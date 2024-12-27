@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django_summernote.admin import SummernoteModelAdmin
 
-from .models import Article, Recipe
+from .models import Article, Recipe, Reading
 
 
 @admin.register(Article)
@@ -22,3 +22,6 @@ class RecipeAdmin(SummernoteModelAdmin):
     list_filter = ('published',)
     prepopulated_fields = {'slug': ('title',)}
     summernote_fields = ('description', 'ingredients', 'method')
+
+
+admin.site.register(Reading)

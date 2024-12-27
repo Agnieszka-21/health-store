@@ -6,7 +6,7 @@ from django.contrib import messages
 
 import datetime
 
-from .models import Article, Recipe
+from .models import Article, Recipe, Reading
 from .forms import ArticleForm, RestrictedArticleForm, RecipeForm, RestrictedRecipeForm
 
 
@@ -328,3 +328,35 @@ def delete_recipe(request, recipe_id):
     recipe.delete()
     messages.success(request, 'Recipe deleted!')
     return redirect(reverse('recipes'))
+
+
+@login_required
+def reading_list(request, slug):
+    if request.POST and 'article_id' in request.POST:
+        print('article_id: ', request.POST['article_id'])
+        print('icon_classlist_value - reading: ', request.POST['icon_classlist_value'])
+
+        reading_list = Reading.objects.get(user_profile=request.user.profile)
+        print('reading_list: ', reading_list)
+
+        if 'fa-regular' in request.POST['icon_classlist_value']:
+            try:
+                reading_list.bookmarked_articles.add(request.POST['article_id'])
+                reading_list.save()
+                messages.success(request, 'Article added to your reading list')
+            except Exception as e:
+                print('Exception: ', e)
+        elif 'fa-solid' in request.POST['icon_classlist_value']:
+            try:
+                reading_list.bookmarked_articles.remove(request.POST['article_id'])
+                reading_list.save()
+                messages.success(request, 'Article removed from your reading list')
+            except Exception as e:
+                print('e: ', e)
+
+        print('Reading list updated - articles: ', reading_list.bookmarked_articles.all())
+
+    else:
+        print('Sorry, something went wrong with bookmarking - no post request')
+
+    return redirect(reverse('articles'))
