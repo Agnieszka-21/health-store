@@ -6,7 +6,7 @@ from django.contrib import messages
 
 import datetime
 
-from .models import Article, Recipe, Reading
+from .models import Article, Recipe, Reading, FavouriteRecipe
 from .forms import ArticleForm, RestrictedArticleForm, RecipeForm, RestrictedRecipeForm
 
 
@@ -333,11 +333,8 @@ def delete_recipe(request, recipe_id):
 @login_required
 def reading_list(request, slug):
     if request.POST and 'article_id' in request.POST:
-        print('article_id: ', request.POST['article_id'])
-        print('icon_classlist_value - reading: ', request.POST['icon_classlist_value'])
 
         reading_list = Reading.objects.get(user_profile=request.user.profile)
-        print('reading_list: ', reading_list)
 
         if 'fa-regular' in request.POST['icon_classlist_value']:
             try:
@@ -360,3 +357,32 @@ def reading_list(request, slug):
         print('Sorry, something went wrong with bookmarking - no post request')
 
     return redirect(reverse('articles'))
+
+
+login_required
+def fav_recipe_list(request, slug):
+    if request.POST and 'recipe_id' in request.POST:
+
+        fav_recipe_list = FavouriteRecipe.objects.get(user_profile=request.user.profile)
+
+        if 'fa-regular' in request.POST['icon_classlist_value']:
+            try:
+                fav_recipe_list.bookmarked_recipes.add(request.POST['recipe_id'])
+                fav_recipe_list.save()
+                messages.success(request, 'Recipe added to your list')
+            except Exception as e:
+                print('Exception: ', e)
+        elif 'fa-solid' in request.POST['icon_classlist_value']:
+            try:
+                fav_recipe_list.bookmarked_recipes.remove(request.POST['recipe_id'])
+                fav_recipe_list.save()
+                messages.success(request, 'Recipe removed from your list')
+            except Exception as e:
+                print('e: ', e)
+
+        print('Recipe list updated - recipes: ', fav_recipe_list.bookmarked_recipes.all())
+
+    else:
+        print('Sorry, something went wrong with bookmarking recipes - no post request')
+    
+    return redirect(reverse('recipes'))

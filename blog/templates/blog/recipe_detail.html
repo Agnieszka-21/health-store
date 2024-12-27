@@ -19,7 +19,11 @@
                 <h1 class="post-title mt-md-0">{{ recipe.title }}</h1>
                 <p class="post-subtitle">Published on {{ recipe.date_of_publication }}</p>
                 <p class="blog-icons">
-                    <span class="pe-3" id="save-recipe"><i class="fa-regular fa-bookmark"></i></span>
+                    {% if user.is_authenticated %}
+                    <span class="pe-3" id="save-recipe">
+                        <button class="bookmark-recipe text-end pe-3" style="border:none; background:none;" data-recipe-item="{{ recipe.id }}"><i class="fa-regular fa-bookmark"></i></button>
+                    </span>
+                    {% endif %}
                     <span id="copy-link-recipe"><i class="fa-solid fa-link"></i></span>
 
                     {% if request.user.is_staff %}
@@ -83,3 +87,10 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block postloadjs %}
+{{ block.super }}
+    {% if user.is_authenticated %}
+    <script src="{% static 'blog/js/bookmark_recipe.js' %}"></script>
+    {% endif %}
+{% endblock %}
