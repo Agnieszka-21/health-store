@@ -65,13 +65,32 @@ class Reading(models.Model):
     user_profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='reading_list')
     bookmarked_articles = models.ManyToManyField(Article, blank=True)
 
+    class Meta:
+        verbose_name_plural = 'Favourite articles'
+
 
 @receiver(post_save, sender=UserProfile)
 def create_or_update_reading_list(sender, instance, created, **kwargs):
     """
     Create or update a personal reading list
     """
-    # if created:
-    Reading.objects.create(user_profile=instance)
+    if created:
+        Reading.objects.create(user_profile=instance)
     # Existing users: just save the wishlist
     instance.reading_list.save()
+
+
+class FavouriteRecipe(models.Model):
+    user_profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='fav_recipe_list')
+    bookmarked_recipes = models.ManyToManyField(Recipe, blank=True)
+        
+
+@receiver(post_save, sender=UserProfile)
+def create_or_update_recipe_list(sender, instance, created, **kwargs):
+    """
+    Create or update a personal recipe list
+    """
+    if created:
+        FavouriteRecipe.objects.create(user_profile=instance)
+    # Existing users: just save the wishlist
+    instance.fav_recipe_list.save()
