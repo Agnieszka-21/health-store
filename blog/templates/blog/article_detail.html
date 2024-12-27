@@ -21,7 +21,10 @@
                         <button class="bookmark-article text-end pe-3" style="border:none; background:none;" data-article-item="{{ article.id }}"><i class="fa-regular fa-bookmark"></i></button>
                     </span>
                     {% endif %}
-                    <span id="copy-link-article"><i class="fa-solid fa-link"></i></span>
+                    <span>
+                        <button class="share-link" style="border:none; background:none;"><i class="fa-solid fa-link"></i></button>
+                        <small class="confirmation-text d-none">Link copied!</small>
+                    </span>
                     {% if request.user.is_staff %}
                         <small class="ms-3">
                             <a href="{% url 'edit_article' article.id %}">Edit</a>
@@ -80,6 +83,9 @@
 
 {% block postloadjs %}
 {{ block.super }}
+<!-- Copy link to clipboard for easy sharing -->
+<script src="{% static 'blog/js/copy_link.js' %}"></script>
+
     {% if user.is_authenticated %}
     <!-- Update a user's reading list -->
     <script src="{% static 'blog/js/bookmark_article.js' %}"></script>
