@@ -51,6 +51,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    # The following function is based on this tutorial: https://www.youtube.com/watch?v=uOzgETtdVII
     def average_rating(self):
         ratings = Review.objects.filter(product=self, approved=True).aggregate(average=Avg('rating'))
         print('Ratings: ', ratings)

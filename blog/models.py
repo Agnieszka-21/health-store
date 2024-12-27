@@ -1,7 +1,10 @@
 from django.db import models
 from django.utils.text import slugify
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from products.models import Product
+from profiles.models import UserProfile
 
 import datetime
 
@@ -56,3 +59,19 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Reading(models.Model):
+    user_profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='reading_list')
+    bookmarked_articles = models.ManyToManyField(Article, blank=True)
+
+
+@receiver(post_save, sender=UserProfile)
+def create_or_update_reading_list(sender, instance, created, **kwargs):
+    """
+    Create or update a personal reading list
+    """
+    # if created:
+    Reading.objects.create(user_profile=instance)
+    # Existing users: just save the wishlist
+    instance.reading_list.save()
