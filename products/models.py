@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+from django.db.models import Avg
 
 from profiles.models import UserProfile
 
@@ -43,13 +44,20 @@ class Product(models.Model):
     description = models.TextField()
     ingredients = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    rating = models.DecimalField(max_digits=6, decimal_places=1, null=True, blank=True)
 
     class Meta:
         ordering = ['name']
 
     def __str__(self):
         return self.name
+
+    def average_rating(self):
+        ratings = Review.objects.filter(product=self, approved=True).aggregate(average=Avg('rating'))
+        print('Ratings: ', ratings)
+        avg = 0
+        if ratings['average'] is not None:
+            avg = float(ratings['average']) 
+        return avg
 
 
 class Image(models.Model):

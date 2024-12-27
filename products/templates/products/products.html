@@ -141,10 +141,16 @@
                                             </a>
                                         </p>
                                         {% endif %}
-                                        {% if product.rating %}
+                                        <!-- {% if product.rating %}
                                             <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
                                         {% else %}
                                             <small class="text-muted">No Rating</small>
+                                        {% endif %} -->
+
+                                        {% if product.average_rating %}
+                                        <small><i class="fas fa-star me-1"></i>{{ product.average_rating }} / 5</small>
+                                        {% else %}
+                                        <small class="text-muted">No Rating</small>
                                         {% endif %}
 
                                         {% if request.user.is_superuser %}
