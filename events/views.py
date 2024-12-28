@@ -113,6 +113,20 @@ def edit_event(request, event_id):
 @login_required
 def event_register(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
+    user = request.user.profile
+    print('User: ', user)
+
+    if request.method == 'POST':
+        try:
+            event.participants.add(user)
+            print('Add user')
+            event.save()
+            print('Event participants: ', event.participants)
+            messages.success(request, 'You have been registered')
+            return redirect(reverse('events'))
+        except Exception as e:
+            print('Exception: ', e)
+            messages.error(request, 'Sorry, something went wrong. Please try again later.')
 
     template = 'events/event_registration.html'
     context = {
