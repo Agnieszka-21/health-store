@@ -7,12 +7,17 @@ class Event(models.Model):
     title = models.CharField(max_length=254)
     description = models.TextField()
     speaker = models.CharField(max_length=254)
-    participants = models.ManyToManyField(UserProfile, related_name='event')
+    participants = models.ManyToManyField(UserProfile, blank=True, related_name='event')
     when = models.DateTimeField()
     registration_open = models.BooleanField(default=False)
+    cancelled = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["-when"]
 
     def __str__(self):
-        return f"{self.when} | {self.title}"
+        if self.cancelled is False:
+            string = f"{self.when} | {self.title}"
+            return string
+        else:
+            return f"CANCELLED: {self.when} | {self.title}"
