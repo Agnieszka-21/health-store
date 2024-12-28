@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="#">
+{% endblock %}
+
+{% block extra_title %}- Monthly online events to support your health and well-being{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div>
+            {% if request.user.is_superuser %}
+                <div class="my-5 text-center">
+                    <a class="btn btn-dark" href="{% url 'create_event' %}">
+                        <i class="fa-solid fa-plus pe-2"></i>
+                        Create a new event
+                    </a>
+                </div>
+            {% endif %}
+
+            {% for event in upcoming_events %}
+                <div class="row blog-thumbnail">
+
+                    <h5>{{ event.title }}</h5>
+                    <p>with {{ event.speaker }}</p>
+                    <p>When: {{ event.when }}</p>
+                    <p>{{ event.description }}</p>
+
+                    {% if request.user.is_authenticated %}
+                    <a class="col-lg-6" href="{% url 'event_detail' event.slug %}">Register</a>
+                    {% else %}
+                    <a class="col-lg-6" href="{% url 'account_login' %}">Log in to register</a>
+                    {% endif %}
+
+                    {% if request.user.is_superuser %}
+                    <small class="col-lg-2">
+                        <a href="{% url 'edit_event' event.id %}">Edit</a> | 
+                        <a href="{% url 'delete_event' event.id %}">Delete</a>
+                    </small>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <div>
+                    <p>No upcoming events.</p>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
