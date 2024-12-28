@@ -1,0 +1,19 @@
+Hello {{ user.name }},
+
+Thank you for registering for our upcoming online event!
+
+Event information is below:
+
+Event: {{ event.title }}
+When: {{ event.when }}
+Speaker: {{ event.speaker }}
+Duration: 60 minutes
+
+Our monthly online events are recorded and available to watch within 7 days of the event in case you cannot join live. 
+We'll send you an email with an access link 30 minutes before the event, and a link with the recording within 2 hours of the event ending.
+
+If you have any questions, feel free to contact us at {{ contact_email }}.
+
+Sincerely,
+
+Health Store

@@ -1,13 +1,12 @@
 from django.db import models
-
-from profiles.models import UserProfile
+from django.contrib.auth.models import User
 
 
 class Event(models.Model):
     title = models.CharField(max_length=254)
     description = models.TextField()
     speaker = models.CharField(max_length=254)
-    participants = models.ManyToManyField(UserProfile, blank=True, related_name='event')
+    participants = models.ManyToManyField(User, blank=True, related_name='event')
     when = models.DateTimeField()
     registration_open = models.BooleanField(default=False)
     cancelled = models.BooleanField(default=False)

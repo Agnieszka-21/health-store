@@ -13,3 +13,6 @@ class EventForm(forms.ModelForm):
             'description',
             'cancelled',
         ]
+        widgets = {
+            'when': forms.TextInput(attrs={'placeholder': 'yyyy-mm-dd hh:mm:ss'}),
+        }

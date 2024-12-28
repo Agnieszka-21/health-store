@@ -4,6 +4,9 @@ from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.utils.timezone import make_aware
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.conf import settings
 
 from .forms import EventForm
 from .models import Event
@@ -113,7 +116,7 @@ def edit_event(request, event_id):
 @login_required
 def event_register(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
-    user = request.user.profile
+    user = request.user
     print('User: ', user)
 
     if request.method == 'POST':
@@ -123,6 +126,8 @@ def event_register(request, event_id):
             event.save()
             print('Event participants: ', event.participants)
             messages.success(request, 'You have been registered')
+            send_confirmation_email(user, event)
+            print('Email sent')
             return redirect(reverse('events'))
         except Exception as e:
             print('Exception: ', e)
@@ -133,3 +138,22 @@ def event_register(request, event_id):
         'event': event,
     }
     return render(request, template, context)
+
+
+def send_confirmation_email(user, event):
+    """Send the user a confirmation email after they registered for an event"""
+    user_email = user.email
+    print(user_email)
+    subject = render_to_string(
+        'events/confirmation_emails/confirmation_email_subject.txt',
+    )
+    body = render_to_string(
+        'events/confirmation_emails/confirmation_email_body.txt',
+        {'event': event, 'user': user, 'contact_email': settings.DEFAULT_FROM_EMAIL})
+    
+    send_mail(
+        subject,
+        body,
+        settings.DEFAULT_FROM_EMAIL,
+        [user_email]
+    )
