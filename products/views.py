@@ -71,6 +71,7 @@ def all_products(request):
         'search_term': query,
         'current_sorting': current_sorting,
         'custom_range': custom_range,
+        'basket_update_toast': True,
     }
 
     return render(request, 'products/products.html', context)
@@ -120,6 +121,7 @@ def product_detail(request, product_id):
             'reviews': reviews,
             'review_count': review_count,
             'review_form': review_form,
+            'basket_update_toast': True,
         }
 
     return render(request, 'products/product_detail.html', context)

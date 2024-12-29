@@ -35,7 +35,7 @@ def profile(request):
         'wishlist_items': wishlist_items,
         'saved_articles': saved_articles,
         'saved_recipes': saved_recipes,
-        'on_profile_page': True
+        # 'on_profile_page': True
     }
 
     return render(request, template, context)
