@@ -2,6 +2,10 @@
 {% load static %}
 
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'products/css/products.css' %}">
+{% endblock %}
+
 {% block extra_title %}- Shop all products{% endblock %}
 
 <!-- Block content copied from CI's Boutique Ado and adjusted for this project -->
@@ -17,193 +21,125 @@
                 {% endfor %}
         </div>
     </div>
+
     <div class="row">
-        <div class="product-container col-10 offset-1">
+        <div class="product-container">
+
             <div class="row mt-1 mb-2">
-                <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
-                    <div class="filter-select-wrapper">
-                        <button class="btn btn-lg" type="button" data-bs-toggle="collapse" data-bs-target="#filterProducts" aria-controls="filterProducts" aria-expanded="false" aria-label="Toggle filter">
-                            Filter
-                        </button>
-
-                        <!-- Adjusted from https://getbootstrap.com/docs/5.0/components/accordion/ -->
-                        <div class="accordion collapse" id="filterProducts">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Category
-                                    </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#filterProducts">
-                                    <div class="accordion-body">
-                                        {% for c in all_categories %}
-                                        <a class="dropdown-item" href="{% url 'products' %}?category={{ c.name }}">{{ c.friendly_name }}</a>
-                                        {% endfor %}                               
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingTwo">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Brand
-                                    </button>
-                                </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#filterProducts">
-                                    <div class="accordion-body">
-                                        {% for b in all_brands %}
-                                        <a class="dropdown-item" href="{% url 'products' %}?brand={{ b.name }}">{{ b.friendly_name }}</a>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-<!-- 
-                    <div class="dropdown">
-                        <button id="filter-btn">Filter</button>
-                        <div id="dropdown-content" class="dropdown-content hide" data-checked-filters=''>
-                            <p class="fw-bold">Category</p>
-                            {% for c in all_categories %}
-                                <label><input type="checkbox" name="category" value="{{ c.name }}"> {{ c.friendly_name }}</label><br>
-                            {% endfor %}
-                            <hr>
-                            <p class="fw-bold">Brand</p>
-                            {% for b in all_brands %}
-                                <label><input type="checkbox" name="brand" value="{{ b.name }}"> {{ b.friendly_name }}</label><br>
-                            {% endfor %}
-                        </div>
-                    </div> -->
-
-                    <div class="sort-select-wrapper w-50">
-                        <select id="category-selector" class="custom-select custom-select-sm rounded-0 border border-{% if current_category != 'None_None' %}info{% else %}black{% endif %}">
-                            <option value="reset" {% if current_category == 'None_None' %}selected{% endif %}>Filter</option>
-                            <!-- <option value="aromatherapy" {% if current_category == 'aromatherapy' %}selected{% endif %}>Aromatherapy</option>
-                            <option value="home_gift" {% if current_category == 'home_gift' %}selected{% endif %}>Home & Gift</option>
-                            <option value="supplements" {% if current_category == 'supplements' %}selected{% endif %}>Supplements</option>
-                            <option value="food_drink" {% if current_category == 'name_asc' %}selected{% endif %}>Food & Drink</option>
-                            <option value="beauty" {% if current_category == 'beauty' %}selected{% endif %}>Beauty</option> -->
-                            {% for c in all_categories %}
-                            <option value="{{ c.name }}" {% if current_category == '{{ c.name }}' %}selected{% endif %}>{{ c.friendly_name }}</option>
-                            {% endfor %}
-
-                        </select>
-                    </div>
-                    <div class="sort-select-wrapper w-50">
-                        <select id="sort-selector" class="custom-select custom-select-sm rounded-0 border border-{% if current_sorting != 'None_None' %}info{% else %}black{% endif %}">
-                            <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort</option>
-                            <option value="price_asc" {% if current_sorting == 'price_asc' %}selected{% endif %}>Price (low to high)</option>
-                            <option value="price_desc" {% if current_sorting == 'price_desc' %}selected{% endif %}>Price (high to low)</option>
-                            <option value="rating_desc" {% if current_sorting == 'rating_desc' %}selected{% endif %}>Rating (high to low)</option>
-                            <option value="name_asc" {% if current_sorting == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
-                            <option value="name_desc" {% if current_sorting == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
-                        </select>
-                    </div>
+                <!-- <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end"> -->
+                <!-- Filter products -->
+                <div class="filter-select-wrapper col-6 col-md-3">
+                    <select id="category-selector" class="w-100 rounded-0 border border-{% if current_category != 'None_None' %}info{% else %}black{% endif %}">
+                        <option value="reset" {% if current_category == 'None_None' %}selected{% endif %}>Filter</option>
+                        {% for c in all_categories %}
+                        <option value="{{ c.name }}" {% if current_category == '{{ c.name }}' %}selected{% endif %}>{{ c.friendly_name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
+                <!-- Sort products -->
+                <div class="sort-select-wrapper col-6 col-md-3">
+                    <select id="sort-selector" class="w-100 rounded-0 border border-{% if current_sorting != 'None_None' %}info{% else %}black{% endif %}">
+                        <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort</option>
+                        <option value="price_asc" {% if current_sorting == 'price_asc' %}selected{% endif %}>Price (low to high)</option>
+                        <option value="price_desc" {% if current_sorting == 'price_desc' %}selected{% endif %}>Price (high to low)</option>
+                        <option value="rating_desc" {% if current_sorting == 'rating_desc' %}selected{% endif %}>Rating (high to low)</option>
+                        <option value="name_asc" {% if current_sorting == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
+                        <option value="name_desc" {% if current_sorting == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
+                    </select>
+                </div>
+                <!-- </div> -->
+                <!-- Number of displayed products / Link back to all products -->
                 <div class="col-12 col-md-6 order-md-first">
                     <p class="text-muted mt-3 text-center text-md-left">
                         {% if search_term or current_categories or current_sorting != 'None_None' %}
-                            <span class="small"><a href="{% url 'products' %}">Products Home</a> | </span>
+                        <span class="small"><a href="{% url 'products' %}">Products Home</a> | </span>
                         {% endif %}
                         {{ products|length }} Products {% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
                     </p>
                 </div>
             </div>
-            <div class="row">
+
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4">
                 {% for product in products %}
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="card h-100 border-0">
+                <div class="col mb-3">
+                    <div class="card h-100 border-1">
 
-                            {% if request.user.is_authenticated %}
-                            <button class="add-to-wishlist text-end pe-3" style="border:none; background:none;" data-product-item="{{ product.id }}"><i class="fa-regular fa-heart"></i></button>
-                            {% endif %}
-
-                            {% for image in product.images.all %}
+                        {% if request.user.is_authenticated %}
+                        <button class="add-to-wishlist text-end pe-3" style="border:none; background:none;" data-product-item="{{ product.id }}">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                        {% endif %}
+                        
+                        {% for image in product.images.all %}
+                        <div class="px-1">
                             <a href="{% url 'product_detail' product.id %}">
                                 <img class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ image.name_primary_img }}">
                             </a>
-                            {% empty %}
+                        </div>    
+                        {% empty %}
+                        <div>
                             <a href="{% url 'product_detail' product.id %}">
                                 <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
                             </a>
-                            {% endfor %}
+                        </div>
+                        {% endfor %}
                         
-                            <div class="card-body pb-0">
-                                <p class="mb-0">{{ product.name }}</p>
-                            </div>
-                            <div class="card-footer bg-white pt-0 border-0 text-left">
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="lead mb-0 text-left font-weight-bold">€{{ product.price }}</p>
+                        <div class="card-body pb-0">
+                            <p class="mb-0">{{ product.name }}</p>
+                        </div>
+                        <div class="card-footer bg-white pt-0 border-0 text-left">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="lead mb-0 text-left fw-bold">€{{ product.price }}</p>
 
-                                        <form class="form" action="{% url 'add_to_basket' product.id %}" method="POST">
-                                            {% csrf_token %}
-                                            <div class="form-row">
-                                                <div class="col-12">
-                                                    <div class="form-group w-50 d-none">
-                                                        <div class="input-group input-group-{{ product.id }}">
-                                                            <input class="form-control qty_input id_qty_{{ product.id }}" type="number"
-                                                                name="quantity" value="1" data-item_id="{{ product.id }}">
-                                                        </div>
+                                    {% if product.category %}
+                                    <p class="small mt-1 mb-0">
+                                        <a class="text-muted" href="{% url 'products' %}?category={{ product.category.name }}">
+                                            <i class="fas fa-tag mr-1"></i>{{ product.category.friendly_name }}
+                                        </a>
+                                    </p>
+                                    {% endif %}
+
+                                    {% if product.average_rating %}
+                                    <small><i class="fas fa-star me-1"></i>{{ product.average_rating }} / 5</small>
+                                    {% else %}
+                                    <small class="text-muted">No Rating</small>
+                                    {% endif %}
+
+                                    {% if request.user.is_superuser %}
+                                    <div id="admin-btn-products" class="d-flex justify-content-between">
+                                        <a href="{% url 'edit_product' product.id %}" class="btn btn-light">Edit</a>
+                                        <a href="{% url 'delete_product' product.id %}" class="btn btn-light">Delete</a>
+                                    </div>
+                                    {% endif %}
+
+                                    <form class="form" action="{% url 'add_to_basket' product.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <div class="form-row">
+                                            <div class="col-12">
+                                                <div class="form-group w-50 d-none">
+                                                    <div class="input-group input-group-{{ product.id }}">
+                                                        <input class="form-control qty_input id_qty_{{ product.id }}" type="number"
+                                                            name="quantity" value="1" data-item_id="{{ product.id }}">
                                                     </div>
                                                 </div>
-                                                <div class="col{% if s %}-12 mt-2{% endif %}">
-                                                    <input type="submit" class="btn btn-dark rounded-0 text-uppercase mt-5" value="Add to Basket">
-                                                </div>
-                                                <input type="hidden" name="redirect_url" value="{{ request.path }}">
                                             </div>
-                                        </form>
+                                            <div class="col{% if s %}-12 mt-2{% endif %}">
+                                                <button type="submit" class="btn btn-dark w-100 rounded-2 text-uppercase my-3">
+                                                    Add <span class="d-none d-lg-inline" >to Basket</span>
+                                                </button>
+                                            </div>
+                                            <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                                        </div>
+                                    </form>
 
-                                        {% if product.category %}
-                                        <p class="small mt-1 mb-0">
-                                            <a class="text-muted" href="{% url 'products' %}?category={{ product.category.name }}">
-                                                <i class="fas fa-tag mr-1"></i>{{ product.category.friendly_name }}
-                                            </a>
-                                        </p>
-                                        {% endif %}
-                                        <!-- {% if product.rating %}
-                                            <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
-                                        {% else %}
-                                            <small class="text-muted">No Rating</small>
-                                        {% endif %} -->
-
-                                        {% if product.average_rating %}
-                                        <small><i class="fas fa-star me-1"></i>{{ product.average_rating }} / 5</small>
-                                        {% else %}
-                                        <small class="text-muted">No Rating</small>
-                                        {% endif %}
-
-                                        {% if request.user.is_superuser %}
-                                            <small class="ml-3">
-                                                <a href="{% url 'edit_product' product.id %}">Edit</a> | 
-                                                <a class="text-danger" href="{% url 'delete_product' product.id %}">Delete</a>
-                                            </small>
-                                        {% endif %}
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {% if forloop.counter|divisibleby:1 %}
-                        <div class="col-12 d-sm-none mb-5">
-                            <hr>
-                        </div>
-                    {% endif %}                        
-                    {% if forloop.counter|divisibleby:2 %}
-                        <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
-                            <hr>
-                        </div>
-                    {% endif %}
-                    {% if forloop.counter|divisibleby:3 %}
-                        <div class="col-12 d-none d-lg-block d-xl-none mb-5">
-                            <hr>
-                        </div>
-                    {% endif %}
-                    {% if forloop.counter|divisibleby:4 %}
-                        <div class="col-12 d-none d-xl-block mb-5">
-                            <hr>
-                        </div>
-                    {% endif %}
+                </div>
                 {% endfor %}
+
             </div>
         </div>
         {% include 'products/includes/pagination.html' with query_set=products custom_range=custom_range query=search_query %}

@@ -1,0 +1,31 @@
+
+#category-selector, 
+#sort-selector  {
+    font-size: .8rem;
+}
+
+#admin-btn-products > .btn {
+    font-size: .875em;
+    padding: .375rem .3rem;
+}
+
+
+@media (min-width: 375px) {
+    #admin-btn-products > .btn {
+        padding: .375rem .75rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .product-container {
+        max-width: 80vw;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1920px) {
+    .product-container {
+        max-width: 70vw;
+        margin: 0 auto;
+    }
+}
