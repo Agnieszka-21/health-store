@@ -157,3 +157,27 @@ def send_confirmation_email(user, event):
         settings.DEFAULT_FROM_EMAIL,
         [user_email]
     )
+
+
+@login_required
+def delete_event(request, event_id):
+    """ Delete an online event """
+
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store managers can delete an online event.')
+        return redirect(reverse('home'))
+
+    event = get_object_or_404(Event, pk=event_id)
+
+    if request.method == 'POST':
+        try:
+            event.delete()
+            messages.success(request, 'Event deleted!')
+            return redirect(reverse('events'))
+        except Exception:
+            messages.error(request, 'Sorry, the event could not be deleted')
+
+    template = 'events/delete_event.html'
+    context = {'event': event}
+
+    return render(request, template, context)

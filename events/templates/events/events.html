@@ -43,6 +43,7 @@
                     {% if request.user.is_superuser %}
                     <small class="col-lg-2">
                         <a href="{% url 'edit_event' event.id %}">Edit</a> | 
+                        <a href="{% url 'delete_event' event.id %}">Delete</a>
                     </small>
                     {% endif %}
                 </div>
