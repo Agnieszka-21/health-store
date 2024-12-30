@@ -56,15 +56,17 @@
     <body class="d-flex flex-column h-100">
         <header>
             {% block promo_banner %}
-            <div id="promo-banner">
-                <p class="my-1 text-center">Get 10% off your first order — <a href="#">sign up</a> to our newsletter</p>                
+            <div id="promo-banner" class="bg-light-sage p-1">
+                <small>Get 10% off your first order — 
+                    <a href="#">sign up</a> to our newsletter
+                </small>                
             </div>
             {% endblock %}
 
             {% block navigation %}
-            <div id="main-nav">
-                <!-- from Bootstrap docs: https://getbootstrap.com/docs/5.0/components/navbar/ -->
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div id="main-nav" class="bg-dark-green">
+                <!-- Adjusted from Bootstrap docs: https://getbootstrap.com/docs/5.0/components/navbar/ -->
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark-green">
                     <div class="container-fluid d-flex justify-content-between">
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -93,7 +95,7 @@
                                     <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa-solid fa-user"></i>
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                         {% if request.user.is_authenticated %}
                                             {% if request.user.is_superuser %}
                                             <li><a href="{% url 'admin_panel' %}" class="dropdown-item">Admin Panel</a></li>
@@ -124,13 +126,15 @@
             {% endblock %}
 
             {% block searchbar %}
-            <div id="search" class="w-100 mx-auto p-3">
+            <div id="search" class="mx-auto p-3 bg-dark-green">
                 <form method="GET" action="{% url 'products' %}" class="d-flex">
                     {% csrf_token %}
                     <div class="input-group">
-                        <input name="q" class="form-control me-2" type="text" placeholder="Search" aria-label="What product would you like to find? Type its name here">
+                        <input name="q" class="form-control me-2" type="text" placeholder="Search the shop" aria-label="What product would you like to find? Type a keyword here">
                         <div class="input-group-text p-0">
-                            <button class="btn btn-outline-success form-control" type="submit" aria-label="Search now"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+                            <button class="btn btn-light form-control" type="submit" aria-label="Search the shop">
+                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -157,7 +161,7 @@
         </div>
         {% endif %}
 
-        <main class="flex-grow-1">
+        <main class="flex-grow-1 wrapper">
             {% block page_header %}
             {% endblock %}
 
@@ -169,39 +173,30 @@
         </main>
 
         {% block footer %}
-        <!-- Source: https://mdbootstrap.com/docs/standard/extended/social-media-icons-footer/ -->
-        <footer class="bg-dark text-center text-white">
+        <!-- Based on: https://mdbootstrap.com/docs/standard/extended/social-media-icons-footer/ -->
+        <footer class="bg-dark-green text-center text-white">
             <!-- Grid container -->
-            <div class="container p-4 pb-0">
-                <!-- Section: Social media -->
-                <section class="mb-4">
-                    <!-- Facebook -->
-                    <a data-mdb-ripple-init class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-                        ><i class="fab fa-facebook-f"></i
-                    ></a>
-                
-                    <!-- Twitter X -->
-                    <a data-mdb-ripple-init class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-                        ><i class="fa-brands fa-x-twitter"></i
-                    ></a>
-                
-                    <!-- YouTube -->
-                    <a data-mdb-ripple-init class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-                        ><i class="fa-brands fa-youtube"></i
-                    ></a>
-                
-                    <!-- Instagram -->
-                    <a data-mdb-ripple-init class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-                        ><i class="fab fa-instagram"></i
-                    ></a>
-                <!-- Section: Social media -->
+            <div class="container p-4 pb-md-2">
+                <div class="row">
+                <!-- Section: Social media links -->
+                    <section class=" col-12 col-md-6 mb-3 mb-md-0" id="social-links">
+                        <a data-mdb-ripple-init class="btn btn-outline-light btn-floating border-0 mx-1 align-middle" href="https://www.facebook.com/" target="_blank" role="button">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a data-mdb-ripple-init class="btn btn-outline-light btn-floating border-0 mx-1 align-middle" href="https://www.youtube.com/" target="_blank" role="button">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                        <a data-mdb-ripple-init class="btn btn-outline-light btn-floating border-0 mx-1 align-middle" href="https://www.instagram.com/" target="_blank" role="button">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </section>
+                    <!-- Copyright -->
+                    <section class="col-12 col-md-6" id="copyright">
+                        <small class="align-middle">© 2024 Copyright: Health Store Ltd.</small>
+                    </section>
+                </div>
             </div>
-            <!-- Grid container -->
           
-            <!-- Copyright -->
-            <div class="text-center p-3" id="copyright">
-            © 2024 Copyright: Health Store Ltd.</div>
-            <!-- Copyright -->
         </footer>
         {% endblock %}
 
