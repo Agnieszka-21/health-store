@@ -38,17 +38,11 @@ def all_products(request):
 
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')
+            print('category: ', categories)
             products = products.filter(category__name__in=categories)
             print('Products: ', products)
             categories = Category.objects.filter(name__in=categories)
             print('Categories: ', categories)
-
-        # if 'brand' in request.GET:
-        #     brands = request.GET['brand'].split(',')
-        #     products = products.filter(brand__name__in=brands)
-        #     print('Products: ', products)
-        #     brands = Brand.objects.filter(name__in=brands)
-        #     print('Brands: ', brands)
 
         if 'q' in request.GET:
             query = request.GET['q']
@@ -59,7 +53,9 @@ def all_products(request):
             queries = Q(name__icontains=query) | Q(description__icontains=query) | Q(ingredients__icontains=query)
             products = products.filter(queries)
 
+    current_filtering = categories
     current_sorting = f'{sort}_{direction}'
+    products_number = len(products) 
     custom_range, products = paginateProducts(request, products, 3)
 
     context = {
@@ -67,11 +63,12 @@ def all_products(request):
         'all_brands': all_brands,
         'current_brands': brands,
         'all_categories': all_categories,
-        'current_categories': categories,
+        'current_filtering': current_filtering,
         'search_term': query,
         'current_sorting': current_sorting,
         'custom_range': custom_range,
         'basket_update_toast': True,
+        'products_number': products_number,
     }
 
     return render(request, 'products/products.html', context)
