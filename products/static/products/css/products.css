@@ -4,9 +4,18 @@
     font-size: .8rem;
 } */
 
-#products-number a {
+#products-number a,
+.text-link {
     color: #013a20;
     font-weight: 700;
+}
+
+#products-number a:hover,
+#products-number a:focus,
+.text-link:hover,
+.text-link:hover {
+    color: #013a20;
+    text-decoration: none;
 }
 
 #pagination {
@@ -41,13 +50,36 @@
     border-style: double;
 }
 
+.add-to-wishlist {
+    border: none;
+    background: none;
+}
+
+.approval {
+    color: #013a20;
+    font-weight: 600;
+}
+
+#reviewForm {
+    margin-top: 1.3em;
+}
+
 
 /* Buttons */
 .card-footer .btn-dark {
     font-size: .9rem;
 }
 
-.card-footer .btn-dark:hover {
+.product-main-buttons .btn:hover,
+.product-main-buttons .btn:focus,
+.input-group .btn:hover,
+.input-group .btn:focus,
+.card-footer .btn-dark:hover,
+.card-footer .btn-dark:focus,
+.product-reviews .btn:hover,
+.product-reviews .btn:focus,
+#submitButton:hover,
+#submitButton:focus {
     background-color: #CDD193;
     color: #1C0F13;
     font-weight: 500;
@@ -61,6 +93,24 @@
     text-decoration: underline; 
 }
 
+.btn-pagination:hover,
+.btn-pagination:focus {
+    background-color: #ffffff;
+    color: #013a20;
+}
+
+.input-group-prepend button {
+    border-radius: 0;
+    border-top-left-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+}
+
+.input-group-append button {
+    border-radius: 0;
+    border-top-right-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+}
+
 .btn-admin {
     border-color: #1C0F13;
     border-width: .5px;
@@ -72,7 +122,7 @@
     padding: .375rem .3rem;
 }
 
-
+/* Media queries */
 @media (min-width: 375px) {
     #admin-btn-products > .btn {
         padding: .375rem .75rem;

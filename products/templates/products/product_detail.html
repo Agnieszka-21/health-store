@@ -2,6 +2,10 @@
 {% load static %}
 
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'products/css/products.css' %}">
+{% endblock %}
+
 {% block extra_title %}- Shop {{ product.name }}{% endblock %}
 
 {% block content %}
@@ -40,56 +44,61 @@
         </div>
         <div class="col-12 col-md-6 col-lg-4">
             <div class="product-details-container mb-5 mt-md-5">
-                <p class="mb-0">{{ product.name }}
+                <h5 class="mb-0">{{ product.name }}
                     {% if request.user.is_authenticated %}
                     <span>
-                        <button class="add-to-wishlist text-end pe-3" style="border:none; background:none;" data-product-item="{{ product.id }}"><i class="fa-regular fa-heart"></i></button>
+                        <button class="add-to-wishlist text-end pe-3" data-product-item="{{ product.id }}">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
                     </span>
                     {% endif %}
-                </p>
-                <p class="lead mb-0 text-left font-weight-bold">€{{ product.price }}</p>
+                </h5>
+
+                <p class="lead mb-0 fw-bold mt-2 mb-3">€{{ product.price }}</p>
+
+                {% if product.average_rating %}
+                    <small><i class="fas fa-star me-1"></i>{{ product.average_rating }} / 5</small>
+                {% else %}
+                    <small>No Rating</small>
+                {% endif %}
+
                 {% if product.category %}
                 <p class="small mt-1 mb-0">
-                    <a class="text-muted" href="{% url 'products' %}?category={{ product.category.name }}">
+                    <a class="text-link" href="{% url 'products' %}?category={{ product.category.name }}">
                         <i class="fas fa-tag me-1"></i>{{ product.category.friendly_name }}
                     </a>
                 </p>
                 {% endif %}
-                {% if product.average_rating %}
-                    <small class="text-muted"><i class="fas fa-star me-1"></i>{{ product.average_rating }} / 5</small>
-                {% else %}
-                    <small class="text-muted">No Rating</small>
-                {% endif %}
 
                 {% if request.user.is_superuser %}
-                    <small class="ml-3">
-                        <a href="{% url 'edit_product' product.id %}">Edit</a> | 
-                        <a class="text-danger" href="{% url 'delete_product' product.id %}">Delete</a>
-                    </small>
+                    <div class="my-2">
+                        <a class="btn btn-light btn-admin" href="{% url 'edit_product' product.id %}">Edit</a> 
+                        <a class="btn btn-light btn-admin" href="{% url 'delete_product' product.id %}">Delete</a>
+                    </div>
                 {% endif %}
                 <p class="mt-3">{{ product.description }}</p>
-                <p class="mt-3">Ingredients: {{ product.ingredients }}</p>
+                <p class="mt-3"><span class="fw-bold">Ingredients: </span>{{ product.ingredients }}</p>
 
                 <form class="form" action="{% url 'add_to_basket' product.id %}" method="POST">
                     {% csrf_token %}
                     <div class="form-row">
                         <div class="col-12">
-                            <p class="mt-3"><strong>Quantity:</strong></p>
+                            <p class="mt-3 fw-bold">Quantity:</p>
                             <div class="form-group w-50">
                                 <div class="input-group input-group-{{ product.id }}">
                                     <div class="input-group-prepend">
-                                        <button class="decrement-qty btn btn-black rounded-0 decrement-qty_{{ product.id }}" 
+                                        <button class="decrement-qty btn btn-dark bg-dark-green decrement-qty_{{ product.id }}" 
                                             data-item_id="{{ product.id }}">
                                             <span class="icon">
                                                 <i class="fas fa-minus"></i>
                                             </span>
                                         </button>
                                     </div>
-                                    <input class="form-control qty_input id_qty_{{ product.id }}" type="number"
+                                    <input class="form-control py-0 qty_input id_qty_{{ product.id }}" type="number"
                                         name="quantity" value="1" min="1" max="9"
                                         data-item_id="{{ product.id }}">
                                     <div class="input-group-append">
-                                        <button class="increment-qty btn btn-black rounded-0 increment-qty_{{ product.id }}"
+                                        <button class="increment-qty btn btn-dark bg-dark-green increment-qty_{{ product.id }}"
                                             data-item_id="{{ product.id }}">
                                             <span class="icon">
                                                 <i class="fas fa-plus"></i>
@@ -99,14 +108,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col{% if s %}-12 mt-2{% endif %}">
-                            <a href="{% url 'products' %}" class="btn btn-light rounded-0 mt-5">
+                        <!-- <div class="col{% if s %}-12 mt-2{% endif %}"> -->
+                        <div class="col-12 mt-2 product-main-buttons">
+                            <a href="{% url 'products' %}" class="btn btn-dark bg-dark-green mt-5 me-2">
                                 <span class="icon">
                                     <i class="fas fa-chevron-left"></i>
                                 </span>
-                                <span class="text-uppercase">Keep Shopping</span>
+                                <span class="text-uppercase">Back</span>
                             </a>
-                            <input type="submit" class="btn btn-dark rounded-0 text-uppercase mt-5" value="Add to Basket">
+                            <input type="submit" class="btn btn-dark bg-dark-green text-uppercase mt-5" value="Add to Basket">
                         </div>
                         <input type="hidden" name="redirect_url" value="{{ request.path }}">
                     </div>
@@ -114,37 +124,38 @@
             </div>
         </div>
     </div>
+    <hr>
 
-    <!-- Displaying count of reviews -->
-    <div class="row">
-        <div class="col-md-8 card mb-4 mt-3 ">
-            <div class="card-body">
-                <h3>Reviews</h3>
+    <!-- Displaying reviews -->
+    <div class="row product-reviews">
+        <div class="col-md-8 card border-0 mb-4 mt-3 ">
+            <div class="card-body px-0 px-md-2">
+                <h3>Product reviews</h3>
                 {% for review in reviews %}
-                <div
-                    class="p-2 reviews{% if not review.approved and review.author == user %} faded{% elif not review.approved %} d-none{% endif %}">
-                    <p class="star-rating" id="{{ review.id }}" data-review-rating="{{ review.rating }}">
+                <div class="py-3 reviews{% if not review.approved and review.author == user %} faded{% elif not review.approved %} d-none{% endif %}">
+                    <p class="fw-normal mb-1">
+                        {{ review.created_on }},
+                        <span class="fw-bold">
+                            {{ review.author }}
+                        </span> wrote:
+                    </p>
+                    <p class="star-rating mb-1" id="{{ review.id }}" data-review-rating="{{ review.rating }}">
                         <i class="fa-regular fa-star" id="review{{ review.id }}-star1"></i>
                         <i class="fa-regular fa-star" id="review{{ review.id }}-star2"></i>
                         <i class="fa-regular fa-star" id="review{{ review.id }}-star3"></i>
                         <i class="fa-regular fa-star" id="review{{ review.id }}-star4"></i>
                         <i class="fa-regular fa-star" id="review{{ review.id }}-star5"></i>
                     </p>
-                    <p class="font-weight-bold">
-                        {{ review.created_on }},
-                        <span class="font-weight-normal">
-                            {{ review.author }}
-                        </span> wrote:
-                    </p>
+
                     <div id="review{{ review.id }}">
                         {{ review.text | linebreaks }}
                     </div>
                     {% if not review.approved and review.author == user %}
-                    <p class="approval">This review is awaiting approval</p>
+                    <p class="approval"><span class="bg-light-sage px-2">This review is awaiting approval</span></p>
                     {% endif %}
                     {% if user.is_authenticated and review.author == user %}
-                    <button class="btn btn-delete" data-review-id="{{ review.id }}">Delete</button>
-                    <button class="btn btn-edit" data-review-id="{{ review.id }}">Edit</button>
+                    <button class="btn btn-dark bg-dark-green btn-edit" data-review-id="{{ review.id }}">Delete</button>
+                    <button class="btn btn-dark bg-dark-green btn-delete" data-review-id="{{ review.id }}">Edit</button>
                     {% endif %}
                 </div>
                 {% empty %}
@@ -153,13 +164,13 @@
             </div>
         </div>
         <!-- Creating New Reviews -->
-        <div class="col-md-4 card mb-4 mt-3 ">
-            <div class="card-body">
+        <div class="col-md-4 card border-0 mb-4 mt-3 ">
+            <div class="card-body px-0 px-md-2">
                 {% if user.is_authenticated %}
                 <h3>Leave a review</h3>
                 <p>Posting as {{ user.username }}</p>
 
-                <form id="reviewForm" method="post" style="margin-top: 1.3em;">
+                <form id="reviewForm" method="POST">
                     {% csrf_token %}
                     <label for="stars-rating">Star rating</label><br>
                     <input type="number" id="stars-rating" name="stars-rating" value="" class="d-none">
@@ -172,7 +183,7 @@
                     </p>
                     
                     {{ review_form | crispy }}
-                    <button id="submitButton" type="submit" class="btn btn-signup btn-lg">Submit</button>
+                    <button id="submitButton" type="submit" class="btn btn-dark bg-dark-green btn-lg mt-3">Submit</button>
                 </form>
                 {% else %}
                 <p>Log in to leave a review</p>
@@ -216,7 +227,7 @@
     <script src="{% static 'products/js/star_rating.js' %}"></script>
     {% endif %}
 
-<!-- WORK IN PROGRESS -->
+<!-- Handle reviews -->
 <script src="{% static 'products/js/reviews.js' %}"></script>
 
 
