@@ -98,13 +98,15 @@ def product_detail(request, product_id):
             review.product = product
             review.rating = request.POST['stars-rating']
             print('Request.POST: ', request.POST['stars-rating'])
+            if review.text == '':
+                review.approved = True
 
             try:
                 print('Try block in def product_detail')
                 review.save()
                 print('Review was saved')
                 messages.success(
-                    request, 'Thank you! Review submitted and awaiting approval'
+                    request, 'Thank you! Review has been submitted'
                 )
             except Exception as e:
                 print('Exception:', e)
@@ -174,9 +176,6 @@ def manage_reviews(request):
         return redirect(reverse('home'))
 
     new_reviews = Review.objects.filter(approved=False)
-    print('new_reviews: ', new_reviews)
-    for review in new_reviews:
-        print('review: ', review)
 
     if request.method == "POST":
         try:
