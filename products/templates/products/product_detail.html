@@ -154,8 +154,8 @@
                     <p class="approval"><span class="bg-light-sage px-2">This review is awaiting approval</span></p>
                     {% endif %}
                     {% if user.is_authenticated and review.author == user %}
-                    <button class="btn btn-dark bg-dark-green btn-edit" data-review-id="{{ review.id }}">Delete</button>
-                    <button class="btn btn-dark bg-dark-green btn-delete" data-review-id="{{ review.id }}">Edit</button>
+                    <button class="btn btn-dark bg-dark-green btn-delete" data-review-id="{{ review.id }}">Delete</button>
+                    <button class="btn btn-dark bg-dark-green btn-edit" data-review-id="{{ review.id }}">Edit</button>
                     {% endif %}
                 </div>
                 {% empty %}
@@ -205,7 +205,7 @@
                 Are you sure you want to delete your review? This action cannot be undone.
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-dark bg-daark-green" data-bs-dismiss="modal">Close</button>
                 <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
             </div>
         </div>
