@@ -1,3 +1,4 @@
+/* General styles for the base template */
 html {
     height: 100%;
 }
@@ -74,7 +75,6 @@ body {
 }
 
 /* Messages (toasts) */
-
 .message-container {
     position: fixed;
     top: 10rem;
@@ -161,7 +161,22 @@ body {
     color: #ffffff;
 }
 
+/* Index page */
+.btn-dark {
+    border: 0;
+}
 
+#shop-now > input:hover {
+    color: #ffffff;
+}
+
+#shop-now > input:hover {
+    background-color: #CDD193;
+    color: #1C0F13;
+    font-weight: 600;
+}
+
+/* Media queries */
 @media (min-width: 768px) {
     #social-links {
         text-align: start;
@@ -171,6 +186,10 @@ body {
         text-align: end;
         vertical-align: middle;
     }
+    #search .input-group {
+        width: 70% !important;
+        margin: 0 auto;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -179,32 +198,20 @@ body {
         margin: 0 auto;
     }
 
-    .carousel {
-        height: 80vh;
-    }
-
     .carousel-inner {
-        height: 100%;
+        max-height: 50vh;
     }
 }
 
 @media (min-width: 1440px) {
-    .carousel {
-        height: 65vh;
-    }
-
     .carousel-inner {
-        height: 100%;
+        max-height: 45vh;
     }
 }
 
 @media (min-width: 1920px) {
-    .carousel {
-        height: 45vh;
-    }
-
     .carousel-inner {
-        height: 100%;
+        max-height: 40vh;
     }
     
     .wrapper {
