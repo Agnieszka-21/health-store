@@ -1,10 +1,13 @@
+/* Code copied from Code Institute's Boutique Ado walkthrough project */
+
 .StripeElement,
 .stripe-style-input {
     box-sizing: border-box;
     height: 40px;
     padding: 10px 12px;
+    margin-bottom: 10px;
     border: 1px solid transparent;
-    border-radius: 0px;
+    border-radius: .25rem;
     background-color: white;
     box-shadow: 0 1px 3px 0 #e6ebf1;
     -webkit-transition: box-shadow 150ms ease;
@@ -53,7 +56,7 @@ select option[value=""] {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(23, 162, 184, .85);
+    background: rgb(1, 58, 32, .9); /* color changed to match the current project */
     z-index: 9999;
 }
 
@@ -63,4 +66,17 @@ select option[value=""] {
     justify-content: center;
     margin: 0;
     height: 100%;
+}
+
+.submit-button > .btn-dark {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+
+@media (min-width: 678px) {
+    .submit-button > .btn-dark {
+        width: 48%;
+        display: inline-block;
+    }
 }
