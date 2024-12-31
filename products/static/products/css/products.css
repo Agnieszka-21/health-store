@@ -122,6 +122,12 @@
     padding: .375rem .3rem;
 }
 
+/* Basket page */
+.hidden-link {
+    text-decoration: none;
+    color: #1C0F13;
+}
+
 /* Admin pages */
 .form > div {
     padding: .3rem 0;
