@@ -9,6 +9,7 @@ class CarouselForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CarouselForm, self).__init__(*args, **kwargs)
+        self.fields['title'].required = True
         self.fields['banner_img1'].required = True
         self.fields['banner_img2'].required = True
         self.fields['banner_img3'].required = True

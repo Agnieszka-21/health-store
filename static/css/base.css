@@ -204,6 +204,18 @@ body {
     color: #1C0F13;
 }
 
+/* Carousel form */
+.carousel-form > div {
+    padding: .3rem 0;
+}
+
+#div_id_name_banner_img1,
+#div_id_name_banner_img2,
+#div_id_name_banner_img3,
+#div_id_name_banner_img4 {
+    width: 100%;
+}
+
 /* Media queries */
 @media (min-width: 768px) {
     #social-links {
