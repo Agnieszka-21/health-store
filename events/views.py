@@ -25,18 +25,17 @@ class EventListView(ListView):
 
     :template:`events/events.html`
     """
-    queryset = Event.objects.all()
-    template_name = 'events/events.html'
+    model = Event
+    ordering = ['when']
     paginate_by = 5
+    template_name = 'events/events.html'
 
     def get_context_data(self, **kwargs):
 
         context = super().get_context_data(**kwargs)
         open_for_registration()
         upcoming_events = Event.objects.filter(registration_open=True)
-        cancelled = upcoming_events.filter(cancelled=True)
         context['upcoming_events'] = upcoming_events
-        context['cancelled'] = cancelled
 
         return context
 
@@ -92,11 +91,13 @@ def edit_event(request, event_id):
         return redirect(reverse('home'))
 
     event = get_object_or_404(Event, pk=event_id)
+    print('Event for editing - cancelled?: ', event.cancelled)
     if request.method == 'POST':
         event_form = EventForm(request.POST, request.FILES, instance=event)
 
         if event_form.is_valid():
             edited_event = event_form.save()
+            print('Event after saving updates - cancelled?: ', edited_event.cancelled)
             messages.success(request, 'Successfully updated the event')
             return redirect(reverse('events'))
         else:
