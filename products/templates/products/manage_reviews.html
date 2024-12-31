@@ -1,47 +1,47 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'products/css/products.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container mt-4 mb-3">
     <div class="row">
-        <div class="col-12 col-md-6">
-            <hr>
+        <div class="col-12">
             <h2 class="logo-font mb-4">Review Management</h2>
-            <h5 class="text-muted">Approve or Delete a Review</h5>
-            <hr>
+            <h5 class="text-muted">Approve/delete a review</h5>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-12 col-md-6">
-
+        <div class="col-12 col-md-8 col-lg-6">
+            <hr>
             <form method="POST" action="{% url 'manage_reviews' %}" class="form mb-2">
                 {% csrf_token %}
 
                 {% for review in new_reviews %}
-                <div class="row">
+                <div class="row mb-5">
                     <div class="col-md-8">
-                        <p>Review for {{ review.product }}</p>
-                        <p class="fw-bold">{{ review.text }}</p>
+                        <p class="fw-bold">Review for {{ review.product }}</p>
+                        <p>{{ review.text }}</p>
                         <p>Submitted by {{ review.author }} on {{ review.created_on }}</p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 ">
                         <input type="radio" id="approve{{ review.id }}" name="review{{ review.id }}-admin" value="approve" required checked>
                         <label for="approve{{ review.id }}">Approve</label><br>
                         <input type="radio" id="delete{{ review.id }}" name="review{{ review.id }}-admin" value="delete">
                         <label for="delete{{ review.id }}">Delete</label>
                     </div>
-                    <hr>
                 </div>
                 {% endfor %}
 
-                <div class="text-right">
-                    <a class="btn btn-light rounded-0" href="{% url 'products' %}">Cancel</a>
-                    <button class="btn btn-dark rounded-0" type="submit">Save Updates</button>
+                <div class="mt-4 mb-5">
+                    <a class="btn btn-admin" href="{% url 'products' %}">Cancel</a>
+                    <button class="btn btn-admin ms-4" type="submit">Save updates</button>
                 </div>
             </form>
-        </div>            
+        </div>
     </div>
 </div>
 {% endblock %}

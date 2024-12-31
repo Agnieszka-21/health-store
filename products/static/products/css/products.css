@@ -122,6 +122,17 @@
     padding: .375rem .3rem;
 }
 
+/* Admin pages */
+.form > div {
+    padding: .3rem 0;
+}
+
+#id_primary_img,
+#id_secondary_img,
+#id_tertiary_img {
+    width: 100%;
+}
+
 /* Media queries */
 @media (min-width: 375px) {
     #admin-btn-products > .btn {
