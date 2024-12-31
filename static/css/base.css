@@ -185,6 +185,25 @@ body {
     font-weight: 600;
 }
 
+/* Admin panel */
+.btn-admin {
+    border-color: #1C0F13;
+    border-width: .5px;
+    background-color: #FCFFD9;
+}
+
+.btn-admin:hover,
+.btn-admin:focus {
+    background-color: #CDD193;
+    color: #1C0F13;
+    font-weight: 500;
+}
+
+.btn-admin a {
+    text-decoration: none;
+    color: #1C0F13;
+}
+
 /* Media queries */
 @media (min-width: 768px) {
     #social-links {
