@@ -173,9 +173,20 @@ body {
     color: #ffffff;
 }
 
+.text-dark-green {
+    color: #013a20;
+}
+
 /* Index page */
-.btn-dark {
+#shop-now .btn-dark {
     border: 0;
+}
+
+.btn-dark:hover,
+.btn-dark:focus {
+    background-color: #CDD193;
+    color: #1C0F13;
+    font-weight: 600;
 }
 
 #shop-now > input:hover,

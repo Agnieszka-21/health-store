@@ -2,19 +2,16 @@
 {% load static %}
 
 
-{% block extra_css %}
-<link rel="stylesheet" href="#">
-{% endblock %}
-
-{% block extra_title %}- Monthly online events to support your health and well-being{% endblock %}
+{% block extra_title %}- Monthly webinars to support your health and well-being{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container mt-4 mb-3">
     <div class="row">
         <div class="col-12 col-lg-10 offset-lg-1">
+            <h5 class="pb-4">Upcoming online events</h5>
             {% if request.user.is_superuser %}
-            <div class="my-5 text-center">
-                <a class="btn btn-dark" href="{% url 'create_event' %}">
+            <div class="mb-4 text-center">
+                <a class="btn btn-admin" href="{% url 'create_event' %}">
                     <i class="fa-solid fa-plus pe-2"></i>
                     Create a new event
                 </a>
@@ -22,11 +19,11 @@
             {% endif %}
 
             {% for event in upcoming_events %}
-            <div class="card mb-5">
-                <div class="card-header">
+            <div class="card mb-5 border-3">
+                <div class="card-header bg-light-sage">
                     <h5>{{ event.title }}</h5>
-                    <p>with {{ event.speaker }}</p>
-                    <p><i class="fa-solid fa-calendar"></i> {{ event.when }}</p>
+                    <p class="fw-bolder">with {{ event.speaker }}</p>
+                    <p class="fw-bolder"><i class="fa-solid fa-calendar pe-2"></i> {{ event.when }}</p>
                 </div>
 
                 <div class="card-body row">
@@ -35,9 +32,9 @@
                     </div>
                     
                     <div class="col-lg-4">
-                        {% if cancelled %}
+                        {% if event.cancelled %}
                         <p>
-                            <span class="bg-light-sage fw-bold">Event cancelled</span>
+                            <span class="bg-light-sage text-dark-green fw-bold px-2">Event cancelled</span>
                         </p>
                         {% else %}
                             {% if request.user.is_authenticated %}

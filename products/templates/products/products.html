@@ -105,8 +105,8 @@
 
                                     {% if request.user.is_superuser %}
                                     <div id="admin-btn-products" class="d-flex justify-content-between mt-3">
-                                        <a href="{% url 'edit_product' product.id %}" class="btn btn-light btn-admin">Edit</a>
-                                        <a href="{% url 'delete_product' product.id %}" class="btn btn-light btn-admin">Delete</a>
+                                        <a href="{% url 'edit_product' product.id %}" class="btn btn-admin">Edit</a>
+                                        <a href="{% url 'delete_product' product.id %}" class="btn btn-admin">Delete</a>
                                     </div>
                                     {% endif %}
 

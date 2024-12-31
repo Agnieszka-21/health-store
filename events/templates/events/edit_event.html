@@ -3,24 +3,23 @@
 
 
 {% block content %}
-<div class="container">
+<div class="container mt-4 mb-3">
     <div class="row">
         <div class="col-12 col-md-6">
-            <hr>
             <h2 class="logo-font mb-4">Event Management</h2>
-            <h5 class="text-muted">Edit an Online Event</h5>
-            <hr>
+            <h5 class="text-muted">Edit an online event</h5>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-8 col-lg-6">
+            <hr>
             <form method="POST" action="{% url 'edit_event' event.id %}" class="form mb-2" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ event_form | crispy }}
-                <div class="text-right">
-                    <a class="btn btn-outline-black rounded-0" href="{% url 'events' %}">Cancel</a>
-                    <button class="btn btn-black rounded-0" type="submit">Update Event</button>
+                <div class="my-4">
+                    <a class="btn btn-admin" href="{% url 'events' %}">Cancel</a>
+                    <button class="btn btn-admin" type="submit">Update Event</button>
                 </div>
             </form>
         </div>            
