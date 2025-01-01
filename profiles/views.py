@@ -25,18 +25,9 @@ def profile(request):
     else:
         form = UserProfileForm(instance=profile)
     
-    # orders = profile.orders.all()
-    # wishlist_items = profile.wishlist.favourite_products.all()
-    # saved_articles = profile.reading_list.bookmarked_articles.all()
-    # saved_recipes = profile.fav_recipe_list.bookmarked_recipes.all()
     template = 'profiles/profile.html'
     context = {
         'form': form,
-        # 'orders': orders,
-        # 'wishlist_items': wishlist_items,
-        # 'saved_articles': saved_articles,
-        # 'saved_recipes': saved_recipes,
-        # 'on_profile_page': True
     }
 
     return render(request, template, context)

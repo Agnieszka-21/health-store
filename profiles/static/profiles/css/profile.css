@@ -7,6 +7,27 @@
     color: #000;
 }
 
+#profile-update-form input,
+#profile-update-form select {
+    box-sizing: border-box;
+    height: 40px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    background-color: white;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+}
+
+#profile-update-form input:focus,
+#profile-update-form input:active,
+#profile-update-form select:focus,
+#profile-update-form select:active  {
+    box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
 #profile-update-form input::placeholder {
     color: #aab7c4;
 }
@@ -18,4 +39,9 @@
 
 #id_default_country option:first-child {
     color: #aab7c4;
+}
+
+#profile-update-form .form-control {
+    color: #000;
+    border: 1px solid #000;
 }
