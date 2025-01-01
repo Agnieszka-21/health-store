@@ -177,6 +177,17 @@ body {
     color: #013a20;
 }
 
+.text-link {
+    color: #013a20;
+    font-weight: 700;
+}
+
+.text-link:hover,
+.text-link:hover {
+    color: #013a20;
+    text-decoration: none;
+}
+
 /* Index page */
 #shop-now .btn-dark {
     border: 0;

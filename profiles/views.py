@@ -25,17 +25,17 @@ def profile(request):
     else:
         form = UserProfileForm(instance=profile)
     
-    orders = profile.orders.all()
-    wishlist_items = profile.wishlist.favourite_products.all()
-    saved_articles = profile.reading_list.bookmarked_articles.all()
-    saved_recipes = profile.fav_recipe_list.bookmarked_recipes.all()
+    # orders = profile.orders.all()
+    # wishlist_items = profile.wishlist.favourite_products.all()
+    # saved_articles = profile.reading_list.bookmarked_articles.all()
+    # saved_recipes = profile.fav_recipe_list.bookmarked_recipes.all()
     template = 'profiles/profile.html'
     context = {
         'form': form,
-        'orders': orders,
-        'wishlist_items': wishlist_items,
-        'saved_articles': saved_articles,
-        'saved_recipes': saved_recipes,
+        # 'orders': orders,
+        # 'wishlist_items': wishlist_items,
+        # 'saved_articles': saved_articles,
+        # 'saved_recipes': saved_recipes,
         # 'on_profile_page': True
     }
 
@@ -53,20 +53,6 @@ def orders(request):
     return render(request, template, context)
 
 
-@login_required
-def wishlist_items(request):
-    """ Display the user's wishlist items """
-    profile = get_object_or_404(UserProfile, user=request.user)
-    wishlist_items = profile.wishlist.favourite_products.all()
-    template = 'profiles/wishlist.html'
-    context = {
-        'wishlist_items': wishlist_items,
-    }
-
-    return render(request, template, context)
-
-
-
 def order_history(request, order_number):
     """ Display the user's oder history """
 
@@ -80,6 +66,19 @@ def order_history(request, order_number):
     context = {
         'order': order,
         'from_profile': True,
+    }
+
+    return render(request, template, context)
+
+
+@login_required
+def wishlist_items(request):
+    """ Display the user's wishlist items """
+    profile = get_object_or_404(UserProfile, user=request.user)
+    wishlist_items = profile.wishlist.favourite_products.all()
+    template = 'profiles/wishlist.html'
+    context = {
+        'wishlist_items': wishlist_items,
     }
 
     return render(request, template, context)
@@ -108,6 +107,21 @@ def remove_from_wishlist(request, product_id):
         print('Sorry, something went wrong')
 
     return render(request, 'profiles/profile.html')
+
+
+@login_required
+def bookmarked(request):
+    """ Display the user's bookmarked articles and recipes """
+    profile = get_object_or_404(UserProfile, user=request.user)
+    saved_articles = profile.reading_list.bookmarked_articles.all()
+    saved_recipes = profile.fav_recipe_list.bookmarked_recipes.all()
+    template = 'profiles/bookmarked.html'
+    context = {
+        'saved_articles': saved_articles,
+        'saved_recipes': saved_recipes,
+    }
+
+    return render(request, template, context)
 
 
 @login_required

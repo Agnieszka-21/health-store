@@ -9,146 +9,36 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col">
-                <hr>
-                <h2 class="logo-font mb-4">My Profile</h2>
-                <hr>
+            <div class="col mt-4 mb-3">
+                <h2 class="logo-font mb-4">My profile</h2>
             </div>
         </div>
         <div class="row">
             <div class="col-12 col-lg-6">
-                <p class="text-muted">Default Delivery Information</p>
+                <p class="text-muted">Default delivery information</p>
                 <form class="mt-3" action="{% url 'profile' %}" method="POST" id="profile-update-form">
                     {% csrf_token %}
                     {{ form|crispy }}
-                    <button class="btn btn-black rounded-0 text-uppercase float-right">Update Information</button>
+                    <button class="btn btn-dark bg-dark-green text-uppercase float-end my-3">Update Information</button>
                 </form>
             </div>
-            <div class="col-12 col-lg-6">
-                <p class="text-muted"><a href="{% url 'orders' %}">Order History</a></p>
-                <div class="order-history table-responsive">
-                    <table class="table table-sm table-borderless">
-                        <thead>
-                            <tr>
-                                <th>Order Number</th>
-                                <th>Date</th>
-                                <th>Items</th>
-                                <th>Order Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for order in orders %}
-                                <tr>
-                                    <td>
-                                        <a href="{% url 'order_history' order.order_number %}"
-                                        title="{{ order.order_number }}">
-                                            {{ order.order_number|truncatechars:6 }}
-                                        </a>
-                                    </td>
-                                    <td>{{ order.date }}</td>
-                                    <td>
-                                        <ul class="list-unstyled">
-                                            {% for item in order.lineitems.all %}
-                                                <li class="small">
-                                                    {{ item.product.name }} x{{ item.quantity }}
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </td>
-                                    <td>${{ order.grand_total }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+            <div class="col-12 col-lg-5 offset-lg-1 mb-5 mt-lg-5">
+                <div class="card mt-5 p-3 text-center bg-light-sage">
+                    <h5>
+                        <a href="{% url 'orders' %}" class="text-link">Order history</a>
+                    </h5>
+                </div>
+                <div class="card mt-2 p-3 text-center bg-light-sage">
+                    <h5>
+                        <a href="{% url 'wishlist_items' %}" class="text-link">Wishlist</a>
+                    </h5>
+                </div>
+                <div class="card mt-2 p-3 text-center bg-light-sage">
+                    <h5>
+                        <a href="{% url 'bookmarked' %}" class="text-link">Bookmarked articles & recipes</a>
+                    </h5>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <h3><a href="{% url 'wishlist_items' %}">Wishlist</a></h3>
-
-            {% for product in wishlist_items %}
-            <div id="wishlist-product" class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                <div class="card h-100 border-0">
-                    <button class="add-to-wishlist text-end pe-3" style="border:none; background:none;" data-product-item="{{ product.id }}">
-                        <i class="fa-solid fa-heart"></i>
-                    </button>
-
-                    {% for image in product.images.all %}
-                    <a href="{% url 'product_detail' product.id %}">
-                        <img class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ image.name_primary_img }}">
-                    </a>
-                    {% empty %}
-                    <a href="{% url 'product_detail' product.id %}">
-                        <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
-                    </a>
-                    {% endfor %}
-
-                    <div class="card-body pb-0">
-                        <p>{{ product.name }}</p>
-                    </div>
-                    
-
-                    {% if forloop.counter|divisibleby:1 %}
-                        <div class="col-12 d-sm-none mb-5">
-                            <hr>
-                        </div>
-                    {% endif %}                        
-                    {% if forloop.counter|divisibleby:2 %}
-                        <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
-                            <hr>
-                        </div>
-                    {% endif %}
-                    {% if forloop.counter|divisibleby:3 %}
-                        <div class="col-12 d-none d-lg-block d-xl-none mb-5">
-                            <hr>
-                        </div>
-                    {% endif %}
-                    {% if forloop.counter|divisibleby:4 %}
-                        <div class="col-12 d-none d-xl-block mb-5">
-                            <hr>
-                        </div>
-                    {% endif %}
-                </div> 
-            </div>
-            {% empty %}
-            <div id="empty-wishlist">
-                <p>There are no products on your wishlist</p>
-            </div>
-            {% endfor %}
-
-            <h3>Bookmarked articles</h3>
-            {% for article in saved_articles %}
-            <div id="reading-list" class="row blog-thumbnail">
-                <button class="remove-article text-end pe-3" style="border:none; background:none;" data-article-item="{{ article.id }}">
-                    <i class="fa-solid fa-bookmark"></i>
-                </button>
-                {% if article.banner_img %}
-                <img class="col-lg-4" src="{{ article.banner_img.url }}" alt="{{ article.img_title }}">
-                {% else %}
-                <img class="col-lg-4" src="{{ MEDIA_URL }}noimage.png" alt="{{ article.title }}">
-                {% endif %}
-                <a class="col-lg-6" href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
-            </div>
-            {% empty %}
-            <p>You don't have any bookmarked articles</p>
-            {% endfor %}
-
-            <h3>Bookmarked recipes</h3>
-            {% for recipe in saved_recipes %}
-            <div id="recipe-list" class="row blog-thumbnail">
-                <button class="remove-recipe text-end pe-3" style="border:none; background:none;" data-recipe-item="{{ recipe.id }}">
-                    <i class="fa-solid fa-bookmark"></i>
-                </button>
-                {% if recipe.banner_img %}
-                <img class="col-lg-4" src="{{ recipe.banner_img.url }}" alt="{{ recipe.img_title }}" style="width:200px">
-                {% else %}
-                <img class="col-lg-4" src="{{ MEDIA_URL }}noimage.png" alt="{{ article.title }}">
-                {% endif %}
-                <a class="col-lg-6" href="{% url 'recipe_detail' recipe.slug %}">{{ recipe.title }}</a>
-            </div>
-            {% empty %}
-            <p>You don't have any bookmarked recipes</p>
-            {% endfor %}
         </div>
     </div>
 {% endblock %}
@@ -157,13 +47,4 @@
 {{ block.super }}
 <!-- Handle the for field Country - display a user-friendly list of all available options -->
 <script type="text/javascript" src="{% static 'profiles/js/countryfield.js' %}"></script>
-
-<!-- Remove product from wishlist when user clicks the heart icon -->
-<script type="text/javascript" src="{% static 'profiles/js/remove_from_wishlist.js' %}"></script>
-
-<!-- Remove bookmarked article when user clicks the bookmark icon -->
-<script type="text/javascript" src="{% static 'profiles/js/remove_article_bookmark.js' %}"></script>
-
-<!-- Remove bookmarked recipe when user clicks the bookmark icon -->
-<script type="text/javascript" src="{% static 'profiles/js/remove_recipe_bookmark.js' %}"></script>
 {% endblock %}

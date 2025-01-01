@@ -59,9 +59,17 @@
     position: relative;
 }
 
+#reading-list button,
+#recipe-list button {
+    border: none;
+    background: none;
+    align-self: flex-start;
+}
+
 .blog-thumbnail > img {
     max-height: 15vh;
     object-fit: contain;
+    align-self: flex-start;
 }
 
 .blog-image{
