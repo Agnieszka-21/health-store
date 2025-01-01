@@ -43,6 +43,17 @@ def profile(request):
 
 
 @login_required
+def orders(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    orders = profile.orders.all()
+    template = 'profiles/orders.html'
+    context = {
+        'orders': orders
+    }
+    return render(request, template, context)
+
+
+@login_required
 def wishlist_items(request):
     """ Display the user's wishlist items """
     profile = get_object_or_404(UserProfile, user=request.user)
