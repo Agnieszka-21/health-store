@@ -20,6 +20,9 @@ class ArticleForm(forms.ModelForm):
             'date_of_publication',
             'related_products',
         ]
+        help_texts = {
+            'keywords': 'Separate keywords (words and/or phrases) with a comma',
+        }
         widgets = {
             'content': SummernoteWidget(),
             'date_of_publication': forms.TextInput(attrs={'placeholder': 'yyyy-mm-dd'}),
@@ -47,6 +50,9 @@ class RecipeForm(forms.ModelForm):
             'date_of_publication',
             'related_products',
         ]
+        help_texts = {
+            'keywords': 'Separate keywords (words and/or phrases) with a comma',
+        }
         widgets = {
             'description': SummernoteWidget(),
             'ingredients': SummernoteWidget(),
