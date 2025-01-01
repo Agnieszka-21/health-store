@@ -2,25 +2,28 @@
 {% load static %}
 
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-12 col-md-6">
-            <hr>
-            <h2 class="logo-font mb-4">Blog Management</h2>
-            <h5 class="text-muted">Edit an Article</h5>
-            <hr>
+        <div class="col-12 mt-4 mb-3">
+            <h2 class="mb-4">Blog Management</h2>
+            <h5 class="text-muted">Edit an article</h5>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-lg-8">
+            <hr>
             <form method="POST" action="{% url 'edit_article' article.id %}" class="form mb-2" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ article_form | crispy }}
-                <div class="text-right">
-                    <a class="btn btn-outline-black rounded-0" href="{% url 'articles' %}">Cancel</a>
-                    <button class="btn btn-black rounded-0" type="submit">Update Article</button>
+                <div class="text-end mt-3 mb-5">
+                    <a class="btn btn-admin" href="{% url 'articles' %}">Cancel</a>
+                    <button class="btn btn-admin ms-1" type="submit">Update article</button>
                 </div>
             </form>
         </div>            

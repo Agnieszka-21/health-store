@@ -99,3 +99,7 @@ h3 {
     border: none;
     background: none;
 }
+
+.form-group {
+    padding-bottom: .8rem;
+}
