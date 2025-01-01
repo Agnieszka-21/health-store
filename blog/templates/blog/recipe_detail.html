@@ -9,46 +9,46 @@
 {% block extra_title %}- {{ recipe.title }}{% endblock %}
 
 {% block content %}
-<div class="masthead">
-    <div class="container">
-        <div class="row g-0">
-            <div class="col-12 col-md-5 blog-image px-3">
-                <img src="{{ recipe.banner_img.url }}" class="scale" alt="{{ article.img_title }}">
-            </div>
-            <div class="col-12 col-md-7 px-3">
-                <h1 class="post-title mt-md-0">{{ recipe.title }}</h1>
-                <p class="post-subtitle">Published on {{ recipe.date_of_publication }}</p>
-                <p class="blog-icons">
+<div class="container pt-5">
+    <div class="row g-0">
+        <div class="col-12 col-md-5 blog-image px-3">
+            <img src="{{ recipe.banner_img.url }}" class="scale" alt="{{ article.img_title }}">
+        </div>
+        <div class="col-12 col-md-7 px-3">
+            <h1 class="post-title mt-md-0">{{ recipe.title }}</h1>
+            <p class="post-subtitle">Published on {{ recipe.date_of_publication }}</p>
+            <div class="blog-icons d-flex justify-content-between mb-3">
+                <div>
                     {% if user.is_authenticated %}
-                    <span class="pe-3" id="save-recipe">
-                        <button class="bookmark-recipe text-end pe-3" style="border:none; background:none;" data-recipe-item="{{ recipe.id }}"><i class="fa-regular fa-bookmark"></i></button>
+                    <span class="pe-2" id="save-recipe">
+                        <button class="bookmark-recipe text-end pe-2" data-recipe-item="{{ recipe.id }}">
+                            <i class="fa-regular fa-bookmark"></i>
+                        </button>
                     </span>
                     {% endif %}
                     <span>
-                        <button class="share-link" style="border:none; background:none;"><i class="fa-solid fa-link"></i></button>
+                        <button class="share-link"><i class="fa-solid fa-link"></i></button>
                         <small class="confirmation-text d-none">Link copied!</small>
                     </span>
-
-                    {% if request.user.is_staff %}
-                    <small class="ms-3">
-                        <a href="{% url 'edit_recipe' recipe.id %}">Edit</a>
-                        {% if request.user.is_superuser %}
-                        <a class="text-danger" href="{% url 'unpublish_recipe' recipe.id %}">Unpublish</a>
-                        {% endif %}
-                    </small>
-                    {% endif %}
-                </p>
-                <div class="d-none d-lg-block blog-content">
-                    <p>{{ recipe.description | safe }}</p>
                 </div>
+
+                {% if request.user.is_staff %}
+                <small class="ms-3">
+                    <a class="btn btn-sm btn-admin" href="{% url 'edit_recipe' recipe.id %}">Edit</a>
+                    {% if request.user.is_superuser %}
+                    <a class="btn btn-sm btn-admin ms-1" href="{% url 'unpublish_recipe' recipe.id %}">Unpublish</a>
+                    {% endif %}
+                </small>
+                {% endif %}
+            </div>
+            <div class="d-none d-lg-block blog-content">
+                <p>{{ recipe.description | safe }}</p>
             </div>
         </div>
     </div>
-</div>
 
-<div class="container">
     <div class="row">
-        <div class="col card mb-4  mt-3 left  top">
+        <div class="col card mb-4 mt-3">
             <div class="card-body">
                 <article class="card-text blog-content row mb-5">
                     <div class="d-lg-none col-12">{{ recipe.description | safe }}</div>
@@ -63,29 +63,47 @@
                         {{ recipe.method | safe }}
                     </div>
                 </article>
+
                 <div class="mt-5">
                     {% if recipe.related_products.all %}
                         <hr>
-                        <h4>Recommended products:</h4>
+                        <h5>Recommended products:</h5>
+                        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4">
                         {% for product in recipe.related_products.all %}
-                            <div class="rel-product-img">
-                                {% for image in product.images.all %}
-                                <a href="{% url 'product_detail' product.id %}">
-                                    <img class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ image.name_primary_img }}">
-                                </a>
-                                {% empty %}
-                                <a href="{% url 'product_detail' product.id %}">
-                                    <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
-                                </a>
-                                {% endfor %}
-                                <a href="{% url 'product_detail' product.id %}">
-                                    <p>{{ product.name }}</p>
-                                </a>
+                            <div class="col mb-3">
+                                <div class="card h-100 border-1">
+                                    <div class="rel-product-img">
+                                        {% for image in product.images.all %}
+                                        <a href="{% url 'product_detail' product.id %}">
+                                            <img class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ image.name_primary_img }}">
+                                        </a>
+                                        {% empty %}
+                                        <a href="{% url 'product_detail' product.id %}">
+                                            <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                                        </a>
+                                        {% endfor %}
+                                        <a class="text-link fw-normal" href="{% url 'product_detail' product.id %}">
+                                            <p>{{ product.name }}</p>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         {% endfor %}
+                        </div>
                     {% endif %}
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 text-end">
+            <a href="{% url 'recipes' %}" class="btn btn-dark bg-dark-green my-5">
+                <span class="icon mr-2">
+                    <i class="fas fa-angle-left"></i>
+                </span>
+                <span class="text-uppercase">Back to recipes</span>
+            </a>
         </div>
     </div>
 </div>

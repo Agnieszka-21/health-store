@@ -9,72 +9,88 @@
 {% block extra_title %}- {{ article.title }}{% endblock %}
 
 {% block content %}
-<div class="masthead">
-    <div class="container">
-        <div class="row g-0">
-            <div class="col-12 px-3">
-                <h1 class="post-title">{{ article.title }}</h1>
-                <p class="post-subtitle">Published on {{ article.date_of_publication }}</p>
-                <p class="blog-icons">
+<div class="container">
+    <div class="row g-0">
+        <div class="col-12 col-lg-8 offset-lg-2 px-md-3">
+            <h1 class="post-title">{{ article.title }}</h1>
+            <p class="post-subtitle">Published on {{ article.date_of_publication }}</p>
+            <div class="blog-icons d-flex justify-content-between mb-3">
+                <div>
                     {% if user.is_authenticated %}
                     <span class="pe-3" id="save-article">
-                        <button class="bookmark-article text-end pe-3" style="border:none; background:none;" data-article-item="{{ article.id }}"><i class="fa-regular fa-bookmark"></i></button>
+                        <button class="bookmark-article text-end pe-2" data-article-item="{{ article.id }}">
+                            <i class="fa-regular fa-bookmark"></i>
+                        </button>
                     </span>
                     {% endif %}
                     <span>
-                        <button class="share-link" style="border:none; background:none;"><i class="fa-solid fa-link"></i></button>
+                        <button class="share-link"><i class="fa-solid fa-link"></i></button>
                         <small class="confirmation-text d-none">Link copied!</small>
                     </span>
-                    {% if request.user.is_staff %}
-                        <small class="ms-3">
-                            <a href="{% url 'edit_article' article.id %}">Edit</a>
-                            {% if request.user.is_superuser %}
-                            <a class="text-danger" href="{% url 'unpublish_article' article.id %}">Unpublish</a>
-                            {% endif %}
-                        </small>
-                    {% endif %}
-                </p>
-
-            </div>
-            {% if article.banner_img %}
-                <div class="col-12 blog-image px-3">
-                    <img src="{{ article.banner_img.url }}" class="scale" alt="{{ article.img_title }}">
                 </div>
-            {% endif %}
+                {% if request.user.is_staff %}
+                <small>
+                    <a class="btn btn-sm btn-admin" href="{% url 'edit_article' article.id %}">Edit</a>
+                    {% if request.user.is_superuser %}
+                    <a class="btn btn-sm btn-admin ms-1" href="{% url 'unpublish_article' article.id %}">Unpublish</a>
+                    {% endif %}
+                </small>
+                {% endif %}
+            </div>
         </div>
+        {% if article.banner_img %}
+        <div class="col-12 col-lg-8 offset-lg-2 blog-image px-md-3">
+            <img src="{{ article.banner_img.url }}" class="scale" alt="{{ article.img_title }}">
+        </div>
+        {% endif %}
     </div>
-</div>
 
-<div class="container">
     <div class="row">
-        <div class="col card mb-4  mt-3 left  top">
-            <div class="card-body">
+        <div class="col-12 col-lg-8 offset-lg-2 card mb-4 mt-3">
+            <div class="card-body px-0 px-md-3">
                 <article class="card-text blog-content mb-5">
                     {{ article.content | safe }}
                 </article>
                 <div class="mt-5">
                     {% if article.related_products.all %}
                         <hr>
-                        <h4>Recommended products:</h4>
+                        <h5>Recommended products:</h5>
+                        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4">
                         {% for product in article.related_products.all %}
-                            <div class="rel-product-img">
-                                {% for image in product.images.all %}
-                                <a href="{% url 'product_detail' product.id %}">
-                                    <img class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ image.name_primary_img }}">
-                                </a>
-                                {% empty %}
-                                <a href="{% url 'product_detail' product.id %}">
-                                    <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
-                                </a>
-                                {% endfor %}
-                                <a href="{% url 'product_detail' product.id %}">
-                                    <p>{{ product.name }}</p>
-                                </a>
+                            <div class="col mb-3">
+                                <div class="card h-100 border-1">
+                                    <div class="rel-product-img">
+                                        {% for image in product.images.all %}
+                                        <a href="{% url 'product_detail' product.id %}">
+                                            <img class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ image.name_primary_img }}">
+                                        </a>
+                                        {% empty %}
+                                        <a href="{% url 'product_detail' product.id %}">
+                                            <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                                        </a>
+                                        {% endfor %}
+                                        <a class="text-link fw-normal" href="{% url 'product_detail' product.id %}">
+                                            <p>{{ product.name }}</p>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         {% endfor %}
+                        </div>
                     {% endif %}
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 text-end">
+            <a href="{% url 'articles' %}" class="btn btn-dark bg-dark-green my-5">
+                <span class="icon mr-2">
+                    <i class="fas fa-angle-left"></i>
+                </span>
+                <span class="text-uppercase">Back to articles</span>
+            </a>
         </div>
     </div>
 </div>

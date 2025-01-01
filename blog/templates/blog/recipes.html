@@ -1,95 +1,100 @@
 {% extends "base.html" %}
 {% load static %}
 
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
 {% endblock %}
 
-
 {% block extra_title %}- Healthy recipes: plant-based, vegan-friendly, delicious{% endblock %}
-
 
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-12">
-            <h1>Check out our most delicious vegan recipes</h1>
+        <div class="col-12 col-lg-10 offset-lg-1">
+            {% if request.user.is_staff %}
+            <div class="my-5 text-center">
+                <a class="btn btn-admin" href="{% url 'create_recipe' %}">
+                    <i class="fa-solid fa-plus pe-2"></i>Create a new recipe for the blog
+                </a>
+            </div>
 
-            <ul>
-            {% for recipe in published_recipes %}
-                <li class="list-unstyled">
-                    {% if recipe.banner_img %}
-                    <img src="{{ recipe.banner_img.url }}" alt="{{ recipe.img_title }}" style="width:200px">
+            <div class="row blog-thumbnail">
+                <h4 class="pb-3">Approved and scheduled for publishing</h4>
+
+                {% for recipe in scheduled_for_publication %}
+                {% if recipe.banner_img %}
+                <img class="col-3" src="{{ recipe.banner_img.url }}" alt="{{ recipe.img_title }}">
+                {% else %}
+                <img class="col-3" src="{{ MEDIA_URL }}noimage.png" alt="{{ recipe.title }}">
+                {% endif %}
+
+                <a class="col-9 col-md-6 text-link" href="{% url 'recipe_detail' recipe.slug %}">{{ recipe.title }}</a>
+                <p>Scheduled for: {{ recipe.date_of_publication }}</p>
+
+                <small class="col-md-3 text-end my-3 my-md-0">
+                    <a class="btn btn-sm btn-admin" href="{% url 'edit_recipe' recipe.id %}">Edit</a>
+                </small>
+                {% empty %}
+                <div>
+                    <p>No recipes scheduled for publication</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="row blog-thumbnail mt-5">
+                <h4 class="pb-3">Waiting for admin's approval</h4>
+
+                {% for recipe in unpublished_recipes %}
+                {% if recipe.banner_img %}
+                <img class="col-3" src="{{ recipe.banner_img.url }}" alt="{{ recipe.img_title }}">
+                {% else %}
+                <img class="col-3" src="{{ MEDIA_URL }}noimage.png" alt="{{ recipe.title }}">
+                {% endif %}
+
+                <a class="col-9 col-md-6 text-link" href="{% url 'recipe_detail' recipe.slug %}">{{ recipe.title }}</a>
+
+                <small class="col-md-3 text-end my-3 my-md-0">
+                    <a class="btn btn-sm btn-admin" href="{% url 'edit_recipe' recipe.id %}">Edit</a>
+                    {% if request.user.is_superuser %}
+                    <a class="btn btn-sm btn-admin" class="text-danger" href="{% url 'edit_recipe' recipe.id %}">Delete</a>
                     {% endif %}
-                    <a href="{% url 'recipe_detail' recipe.slug %}">{{ recipe.title }}</a>
-                </li>
+                </small>
+                {% endfor %}
+                <div class="mt-5">
+                    <p>All recipes below the line have been published on the blog.</p>
+                </div>
+                <hr>
+            </div>
+            {% endif %}
+           
+            {% for recipe in published_recipes %}
+            <div class="row blog-thumbnail my-5">
+                {% if recipe.banner_img %}
+                <img class="col-3" src="{{ recipe.banner_img.url }}" alt="{{ recipe.img_title }}">
+                {% else %}
+                <img class="col-3" src="{{ MEDIA_URL }}noimage.png" alt="{{ recipe.title }}">
+                {% endif %}
+                
+                <a class="col-9 col-md-6 text-link" href="{% url 'recipe_detail' recipe.slug %}">{{ recipe.title }}</a>
 
                 {% if request.user.is_staff %}
-                <small class="ml-3">
-                    <a href="{% url 'edit_recipe' recipe.id %}">Edit</a>
+                <small class="col col-md-3 text-end my-3 my-md-0">
+                    <a class="btn btn-sm btn-admin" href="{% url 'edit_recipe' recipe.id %}">Edit</a>
                     {% if request.user.is_superuser %} 
-                    | <a class="text-danger" href="{% url 'unpublish_recipe' recipe.id %}">Unpublish</a>
+                    <a class="btn btn-sm btn-admin ms-1" href="{% url 'unpublish_recipe' recipe.id %}">Unpublish</a>
                     {% endif %}
                 </small>
                 {% endif %}
 
             {% empty %}
-                <li class="list-unstyled">No recipes yet.</li>
+                <div>
+                    <p>No recipes yet.</p>
+                </div>
+            </div>
             {% endfor %}
-            </ul>
-        </div>
-
-        <div class="col-12">
-        {% if request.user.is_authenticated %}
-            {% if request.user.is_staff %}
-                <a href="{% url 'create_recipe' %}">Create a new recipe for the blog</a>
-            
-                <h1>Recipes visible only for staff</h1>
-
-                <ul>
-                    <h3>These recipes are approved and scheduled to be published</h3>
-
-                    {% for recipe in scheduled_for_publication %}
-                    <li class="list-unstyled">
-                        {% if recipe.banner_img %}
-                        <img src="{{ recipe.banner_img.url }}" alt="{{ recipe.img_title }}" style="width:200px">
-                        {% endif %}
-                        <a href="{% url 'recipe_detail' recipe.slug %}" class="fw-bold">{{ recipe.title }}</a>
-                        <p>Scheduled for: {{ recipe.date_of_publication }}</p>
-                    </li>
-
-                    <small class="ml-3">
-                        <a href="{% url 'edit_recipe' recipe.id %}">Edit</a>
-                    </small>
-                    {% endfor %}
-
-                    <h3>These recipes have not been approved yet</h3>
-
-                    {% for recipe in unpublished_recipes %}
-                    <li class="list-unstyled">
-                        {% if recipe.banner_img %}
-                        <img src="{{ recipe.banner_img.url }}" alt="{{ recipe.img_title }}" style="width:200px">
-                        {% endif %}
-                        <a href="{% url 'recipe_detail' recipe.slug %}">{{ recipe.title }}</a>
-                    </li>
-
-                    <small class="ml-3">
-                        <a href="{% url 'edit_recipe' recipe.id %}">Edit</a>
-                    </small>
-
-                        {% if request.user.is_superuser %}
-                        <small class="ml-3">
-                            | <a class="text-danger" href="{% url 'edit_recipe' recipe.id %}">Delete</a>
-                        </small>
-                        {% endif %}
-
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endif %}
         </div>
     </div>
 </div>
-
 {% endblock %}
 

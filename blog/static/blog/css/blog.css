@@ -2,10 +2,19 @@
     height: 60vh;
 }
 
+.blog-options a {
+    border: 2px solid white;
+    border-radius: .25rem;
+}
+
+.blog-options a:hover {
+    border: 4px double white;
+}
+
 .blog-options-title {
     color: white;
     text-align: center;
-    margin-top: 45%;
+    padding: 20px 15px;
 }
 
 .articles-bg-img {
@@ -20,12 +29,10 @@
     background-size: cover;
 }
 
-
 #blog-content ~ div {
     width: 80vw;
 }
 
-/* .blog-content > font, */
 .blog-content > * {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
@@ -45,20 +52,6 @@
     height: auto;
 }
 
-.masthead {
-    margin-top: 10px;
-    overflow: hidden;
-    position: relative;
-    display: inline-block;
-    width: 100%;
-}
-
-.masthead-text {
-    background-color: #445261;
-    color: white;
-    position: relative;
-}
-
 #reading-list button,
 #recipe-list button {
     border: none;
@@ -76,16 +69,6 @@
     position: relative;
     overflow: hidden;
 }
-
-/* .post-link {
-    text-decoration: none;
-    color: #445261;
-}
-
-.post-link:hover,
-.page-link {
-    color: #E84610;
-} */
 
 .post-title {
     margin-top: 10%;
@@ -108,4 +91,11 @@ h3 {
 
 .rel-product-img img {
     width: 200px;
+}
+
+.bookmark-article,
+.bookmark-recipe,
+.share-link {
+    border: none;
+    background: none;
 }
