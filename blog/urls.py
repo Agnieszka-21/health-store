@@ -20,4 +20,5 @@ urlpatterns = [
     path('recipes/<int:recipe_id>/edit/', views.edit_recipe, name='edit_recipe'),
     path('recipes/<int:recipe_id>/unpublish/', views.unpublish_recipe, name='unpublish_recipe'),
     path('', views.choose_articles_or_recipes, name='blog_options'),
+    
 ]

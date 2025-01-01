@@ -272,7 +272,7 @@ def edit_recipe(request, recipe_id):
 
 @login_required
 def unpublish_article(request, article_id):
-    """ Delete an article from the blog """
+    """ Unpublish an article from the blog """
 
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store managers can unpublish a blog article.')
@@ -288,7 +288,7 @@ def unpublish_article(request, article_id):
 
 @login_required
 def unpublish_recipe(request, recipe_id):
-    """ Delete a recipe from the blog """
+    """ Unpublish a recipe from the blog """
 
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store managers can unpublish a recipe.')

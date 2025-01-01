@@ -3,7 +3,7 @@
 
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="row">
-            <h3>Wishlist</h3>
+            <h3><a href="{% url 'wishlist_items' %}">Wishlist</a></h3>
 
             {% for product in wishlist_items %}
             <div id="wishlist-product" class="col-sm-6 col-md-6 col-lg-4 col-xl-3">

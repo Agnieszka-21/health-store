@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
+from django.views.generic.list import ListView
 
 from .models import UserProfile
 from .forms import UserProfileForm
@@ -39,6 +40,20 @@ def profile(request):
     }
 
     return render(request, template, context)
+
+
+@login_required
+def wishlist_items(request):
+    """ Display the user's wishlist items """
+    profile = get_object_or_404(UserProfile, user=request.user)
+    wishlist_items = profile.wishlist.favourite_products.all()
+    template = 'profiles/wishlist.html'
+    context = {
+        'wishlist_items': wishlist_items,
+    }
+
+    return render(request, template, context)
+
 
 
 def order_history(request, order_number):

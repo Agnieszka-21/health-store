@@ -5,7 +5,7 @@ $(document).ready(function(){
                 let that = $(this);
                 let wishlist_product = that.parents('#wishlist-product');
                 var csrftoken = Cookies.get('csrftoken');
-                let action_url_remove = `${product_id}/remove-from-wishlist/`;
+                let action_url_remove = `${product_id}/remove/`;
 
                 console.log('Product id is: ', product_id);
                 console.log('That is: ', that);
