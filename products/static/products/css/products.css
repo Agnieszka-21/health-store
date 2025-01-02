@@ -4,6 +4,12 @@
     font-size: .8rem;
 } */
 
+#product-name-link {
+    color: #1C0F13;
+    text-decoration: none;
+    font-weight: 500;
+}
+
 #products-number a,
 .text-link {
     color: #013a20;
