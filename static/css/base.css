@@ -13,15 +13,21 @@
     color: #ffffff;
     background-color: #013A20;
     border: 1px solid white;
+    border-radius: .25rem;
     margin-bottom: 2rem;
     font-family: 'Montserrat', sans-serif;
 }
 
-#mc-embedded-subscribe,
 #mc_embed_signup .button {
     background-color: #CDD193;
     color: #1C0F13;
     font-weight: 600;
+}
+
+#mc_embed_signup .button:hover,
+#mc_embed_signup .button:focus {
+    background-color: #ffffff;
+    color: #013A20;
 }
 
 /* General styles for the base template */

@@ -19,6 +19,28 @@ def home(request):
     return render(request, 'home/index.html', context)
 
 
+def error404(request):
+    """
+    Renders a custom template when error 404 occurs
+
+    **Template:**
+
+    :template:`home/error404.html`
+    """
+    return render(request, 'home/error404.html')
+
+
+def error500(request):
+    """
+    Renders a custom template when error 500 occurs
+
+    **Template:**
+
+    :template:`home/error500.html`
+    """
+    return render(request, 'home/error500.html')
+
+
 @login_required
 def admin_panel(request):
     if not request.user.is_superuser:
