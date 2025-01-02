@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Carousel(models.Model):
-    title = models.CharField(max_length=254, null=True, blank=True)
+    title = models.CharField(max_length=254, null=True, blank=True, unique=True)
     banner_img1 = models.ImageField(null=True, blank=True)
     name_banner_img1 = models.CharField(max_length=254, default='Banner image number one')
     banner_img2 = models.ImageField(null=True, blank=True)
