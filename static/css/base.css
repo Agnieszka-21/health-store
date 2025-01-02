@@ -1,3 +1,29 @@
+/* Mailchimp newsletter signup form default styling */
+#mc_embed_signup {
+    background: #fff;
+    /* false; */
+    clear: left;
+    font: 14px Helvetica, Arial, sans-serif;
+    width: 600px;
+}
+
+/* Customize the newsletter form */
+#mc_embed_signup {
+    width: 100%;
+    color: #ffffff;
+    background-color: #013A20;
+    border: 1px solid white;
+    margin-bottom: 2rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#mc-embedded-subscribe,
+#mc_embed_signup .button {
+    background-color: #CDD193;
+    color: #1C0F13;
+    font-weight: 600;
+}
+
 /* General styles for the base template */
 html {
     height: 100%;
@@ -251,6 +277,9 @@ body {
     #search .input-group {
         width: 70% !important;
         margin: 0 auto;
+    }
+    #mc_embed_signup {
+        width: 50%;
     }
 }
 
