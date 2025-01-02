@@ -11,7 +11,7 @@ def home(request):
     try:
         carousel = Carousel.objects.get(display=True)
     except Exception:
-        carousel = get_object_or_404(Carousel, id=1)
+        carousel = None
 
     context = {
         'carousel': carousel,

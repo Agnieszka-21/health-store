@@ -15,16 +15,32 @@
     </div>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="{{ carousel.banner_img1.url }}" class="d-block w-100" alt="{{ carousel.name_banner_img1 }}">
+            {% if carousel %}
+            <img src="{{ carousel.banner_img1.url }}" alt="{{ carousel.name_banner_img1 }}" class="d-block w-100">
+            {% else %}
+            <img src="{{ MEDIA_URL }}home_prunes.jpg" alt="Dried fruit" class="d-block w-100">
+            {% endif %}
         </div>
         <div class="carousel-item">
-            <img src="{{ carousel.banner_img2.url }}" class="d-block w-100" alt="{{ carousel.name_banner_img1 }}">
+            {% if carousel %}
+            <img src="{{ carousel.banner_img2.url }}" alt="{{ carousel.name_banner_img1 }}" class="d-block w-100">
+            {% else %}
+            <img src="{{ MEDIA_URL }}home_supplements.jpg" alt="Capsules and vitamin supplements" class="d-block w-100">
+            {% endif %}
         </div>
         <div class="carousel-item">
-            <img src="{{ carousel.banner_img3.url }}" class="d-block w-100" alt="{{ carousel.name_banner_img1 }}">
+            {% if carousel %}
+            <img src="{{ carousel.banner_img3.url }}" alt="{{ carousel.name_banner_img1 }}" class="d-block w-100">
+            {% else %}
+            <img src="{{ MEDIA_URL }}home_aroma.jpg" alt="Lavender essential oil"  class="d-block w-100">
+            {% endif %}
         </div>
         <div class="carousel-item">
-            <img src="{{ carousel.banner_img4.url }}" class="d-block w-100" alt="{{ carousel.name_banner_img1 }}">
+            {% if carousel %}
+            <img src="{{ carousel.banner_img4.url }}" alt="{{ carousel.name_banner_img1 }}" class="d-block w-100">
+            {% else %}
+            <img src="{{ MEDIA_URL }}home_gift.jpg" alt="Exo-friendly gifts" class="d-block w-100">
+            {% endif %}
         </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
