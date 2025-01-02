@@ -48,10 +48,16 @@ def choose_carousel(request):
         carousel_id = chosen_carousel.id
 
         if 'edit_carousel' in request.POST:
-            return redirect(reverse('edit_carousel', args=[carousel_id]))
+            if chosen_carousel_title == 'Default carousel':
+                messages.error(request, 'Sorry, the default carousel cannot be edited')
+            else:
+                return redirect(reverse('edit_carousel', args=[carousel_id]))
 
         elif 'delete_carousel' in request.POST:
-            return redirect(reverse('delete_carousel', args=[carousel_id]))
+            if chosen_carousel_title == 'Default carousel':
+                messages.error(request, 'Sorry, the default carousel cannot be deleted')
+            else:
+                return redirect(reverse('delete_carousel', args=[carousel_id]))
 
         elif 'activate_carousel' in request.POST:
             try:
@@ -94,7 +100,7 @@ def delete_carousel(request, carousel_id):
     template = 'home/delete_carousel.html'
 
     return render(request, template, context)
-    
+
 
 @login_required
 def edit_carousel(request, carousel_id):
