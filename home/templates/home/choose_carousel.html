@@ -12,7 +12,8 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-10 col-lg-8">
+            <hr>
             <form method="POST" action="{% url 'choose_carousel' %}" class="form mb-2">
                 {% csrf_token %}
                 <label class="form-label" for="available-carousels">Available carousels</label>
@@ -21,9 +22,11 @@
                         <option value="{{ carousel.title }}">{{ carousel.title }} | Created on {{ carousel.created_on }}</option>
                     {% endfor %}
                 </select>
-                <div class="mt-4">
-                    <a class="btn btn-admin" href="{% url 'admin_panel' %}">Cancel</a>
-                    <button class="btn btn-admin ms-4" type="submit">Activate Carousel</button>
+                <div class="mt-2 mb-5">
+                    <a href="{% url 'admin_panel' %}" class="btn btn-admin mt-3 mx-1">Cancel</a>
+                    <input type="submit" value="Activate carousel" name="activate_carousel" class="btn btn-admin mx-1 mt-3">
+                    <input type="submit" value="Edit" name="edit_carousel" class="btn btn-admin mx-1 mt-3">
+                    <input type="submit" value="Delete" name="delete_carousel" class="btn btn-admin mx-1 mt-3">
                 </div>
             </form>
         </div>            

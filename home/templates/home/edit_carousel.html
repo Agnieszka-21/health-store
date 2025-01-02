@@ -7,19 +7,19 @@
     <div class="row mt-4 mb-3">
         <div class="col-12">
             <h2 class="logo-font mb-4">Homepage Management</h2>
-            <h5 class="text-muted"> Create Carousel</h5>
+            <h5 class="text-muted"> Edit Carousel</h5>
         </div>
     </div>
 
     <div class="row">
         <div class="col-12 col-md-10 col-lg-8">
             <hr>
-            <form method="POST" action="{% url 'create_carousel' %}" class="form carousel-form mb-2" enctype="multipart/form-data">
+            <form method="POST" action="{% url 'edit_carousel' carousel.id %}" class="form carousel-form mb-2" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ carousel_form | crispy }}
                 <div class="mt-4 mb-5">
                     <a class="btn btn-admin" href="{% url 'admin_panel' %}">Cancel</a>
-                    <button class="btn btn-admin ms-4" type="submit">Add carousel</button>
+                    <button class="btn btn-admin ms-4" type="submit">Edit carousel</button>
                 </div>
             </form>
         </div>

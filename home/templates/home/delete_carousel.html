@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<div class="container mt-4 mb-3">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">Homepage Management</h2>
+            <h5 class="text-muted">Delete a carousel</h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-8 col-lg-6">
+            <hr>
+            <form method="POST" action="{% url 'delete_carousel' carousel.id %}" class="form mb-2">
+                {% csrf_token %}
+                <div>
+                    <p>Are you sure you want to delete <span class="fw-bold">{{ carousel.title }}?</span></p>
+                    <p class="text-danger fw-bold">This action cannot be undone</p>
+                    <div class="mt-4 mb-5">
+                        <a class="btn btn-admin" href="{% url 'admin_panel' %}">Cancel</a>
+                        <button class="btn btn-admin ms-4" type="submit">Delete carousel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
