@@ -19,13 +19,13 @@
 
 .articles-bg-img {
     background-color: darkgreen;
-    background: url('/media/options_articles.jpg') no-repeat center center fixed;
+    background: url('/media/blog_articles.webp') no-repeat center center fixed;
     background-size: cover;
 }
 
 .recipes-bg-img {
     background-color: black;
-    background: url('/media/options_recipes.jpg') no-repeat center center fixed;
+    background: url('/media/blog_recipes.webp') no-repeat center center fixed;
     background-size: cover;
 }
 
