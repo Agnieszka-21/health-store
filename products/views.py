@@ -330,6 +330,7 @@ def edit_product(request, product_id):
 
     product = get_object_or_404(Product, pk=product_id)
     product_images = Image.objects.filter(product=product)
+    print('product_images: ', product_images)
 
     if request.method == 'POST':
         product_form = ProductForm(request.POST, request.FILES, instance=product)
@@ -345,26 +346,52 @@ def edit_product(request, product_id):
             if image_form.is_valid():
                 edited_images = image_form.save(commit=False)
                 print('edited images - primary: ', edited_images.primary_img)
+                print('edited images - secondary: ', edited_images.secondary_img)
+                print('edited images - tertiary: ', edited_images.tertiary_img)
+                print('product_images: ', product_images)
+
                 if edited_images.primary_img:
+                    print('There is a primary image in the form')
                     edited_images.product = edited_product
                     edited_images.name_primary_img = f'{edited_product.name } main image'
+
                     if edited_images.secondary_img:
                         edited_images.name_secondary_img = f'{edited_product.name } additional image 1'
-                        if edited_images.tertiary_img:
-                            edited_images.name_tertiary_img = f'{edited_product.name} additional image 2'
+
+                    if edited_images.tertiary_img:
+                        edited_images.name_tertiary_img = f'{edited_product.name} additional image 2'
+                    
                     edited_images.save()
                     messages.success(request, 'Successfully updated product!')
                     return redirect(reverse('product_detail', args=[edited_product.id]))
 
-                elif (edited_images.primary_img == None) and (
-                    edited_images.secondary_img == None) and (edited_images.tertiary_img == None):
-                    print('No images added')
-                    messages.success(request, 'Successfully updated product!')
-                    return redirect(reverse('product_detail', args=[edited_product.id]))
-                else:
-                    messages.error(request, 'A primary image is required if you want to add a secondary image. A secondary image is required if you want to add a tertiary image')
-                    return redirect(reverse('edit_product', args=[edited_product.id]))
+                elif not edited_images.primary_img:
+                    print('Not edited_images primary img : ', edited_images.primary_img)
+                    product
 
+                    if (edited_images.primary_img  == None) and (
+                        edited_images.secondary_img == None) and (edited_images.tertiary_img == None):
+                        print('No images in the form')
+                        messages.success(request, 'Successfully updated product!')
+                        return redirect(reverse('product_detail', args=[edited_product.id]))
+
+                    # If user removes the main image, delete the entire Image object so that the default image can be used instead
+                    elif product_images:
+                        print('This product had images - about to delete Image object')
+                        existing_product_img = Image.objects.get(product=product)
+                        existing_product_img.delete()
+                        messages.success(request, 'Successfully updated product and removed images')
+                        return redirect(reverse('product_detail', args=[edited_product.id]))
+
+                    else:
+                        messages.error(
+                            request, 'A primary image is required if you want to add a secondary image. A secondary image is required if you want to add a tertiary image')
+
+                else:
+                    messages.error(request, 'Oops, an unknown error occurred. Please try again later')
+                    return redirect(reverse('edit_product', args=[edited_product.id]))
+            else:
+                messages.error(request, 'Failed to update product. Please ensure the form is valid.')
         else:
             messages.error(request, 'Failed to update product. Please ensure the form is valid.')
     else:
