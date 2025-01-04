@@ -58,7 +58,7 @@
                 <div class="mt-5">
                     {% if article.related_products.all %}
                         <hr>
-                        <h5>Recommended products:</h5>
+                        <h5 class="mb-4">Recommended products:</h5>
                         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4">
                         {% for product in article.related_products.all %}
                             <div class="col mb-3">

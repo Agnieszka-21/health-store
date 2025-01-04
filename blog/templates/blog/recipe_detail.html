@@ -3,7 +3,7 @@
 
 
 {% block extra_keywords %}
-{{ article.keywords }}
+{{ recipe.keywords }}
 {% endblock %}
 
 {% block extra_css %}
@@ -16,7 +16,9 @@
 <div class="container pt-5">
     <div class="row g-0">
         <div class="col-12 col-md-5 blog-image px-3">
-            <img src="{{ recipe.banner_img.url }}" class="scale" alt="{{ article.img_title }}">
+            {% if recipe.banner_img %}
+            <img src="{{ recipe.banner_img.url }}" class="scale" alt="{{ recipe.img_title }}">
+            {% endif %}
         </div>
         <div class="col-12 col-md-7 px-3">
             <h1 class="post-title mt-md-0">{{ recipe.title }}</h1>
@@ -71,18 +73,18 @@
                 <div class="mt-5">
                     {% if recipe.related_products.all %}
                         <hr>
-                        <h5>Recommended products:</h5>
+                        <h5 class="mb-4">Recommended products:</h5>
                         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4">
                         {% for product in recipe.related_products.all %}
                             <div class="col mb-3">
                                 <div class="card h-100 border-1">
                                     <div class="rel-product-img">
                                         {% for image in product.images.all %}
-                                        <a href="{% url 'product_detail' product.id %}">
+                                        <a class="h-100" href="{% url 'product_detail' product.id %}">
                                             <img class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ image.name_primary_img }}">
                                         </a>
                                         {% empty %}
-                                        <a href="{% url 'product_detail' product.id %}">
+                                        <a class="h-100" href="{% url 'product_detail' product.id %}">
                                             <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
                                         </a>
                                         {% endfor %}
