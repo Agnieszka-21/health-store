@@ -1,29 +1,28 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.db.models.functions import Lower
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, reverse, get_object_or_404
-from django.db.models.functions import Lower
 
-from .models import Category, Brand, Product, Image, Wishlist, Review
 from .forms import ProductForm, ImageForm, ReviewForm
+from .models import Category, Brand, Product, Image, Wishlist, Review
 from .utils import paginateProducts
 
 
 def all_products(request):
-    """ Show all products, including sorting and search queries """
+    """ Displays all products, including sorting and search queries """
 
     products = Product.objects.all()
     all_categories = Category.objects.all()
     all_brands = Brand.objects.all()
     query = None
     categories = None
-    brands = None    
+    brands = None
     sort = None
     direction = None
 
     if request.method == "GET":
-        print('request.GET: ', request.GET)
         if 'sort' in request.GET:
             sortkey = request.GET['sort']
             sort = sortkey
@@ -38,24 +37,23 @@ def all_products(request):
 
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')
-            print('category: ', categories)
             products = products.filter(category__name__in=categories)
-            print('Products: ', products)
             categories = Category.objects.filter(name__in=categories)
-            print('Categories: ', categories)
 
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
-                messages.error(request, 'Please enter a keyword to find a product')
+                messages.error(
+                    request, 'Please enter a keyword to find a product')
                 return redirect(reverse('products'))
 
-            queries = Q(name__icontains=query) | Q(description__icontains=query) | Q(ingredients__icontains=query)
+            queries = Q(name__icontains=query) | Q(
+                description__icontains=query) | Q(ingredients__icontains=query)
             products = products.filter(queries)
 
     current_filtering = categories
     current_sorting = f'{sort}_{direction}'
-    products_number = len(products) 
+    products_number = len(products)
     custom_range, products = paginateProducts(request, products, 5)
 
     context = {
@@ -75,7 +73,7 @@ def all_products(request):
 
 
 def product_detail(request, product_id):
-    """ Show individual product details """
+    """ Displays individual product details """
 
     product = get_object_or_404(Product, pk=product_id)
     product_images = Image.objects.filter(product=product)
@@ -97,20 +95,21 @@ def product_detail(request, product_id):
             review.author = request.user
             review.product = product
             review.rating = request.POST['stars-rating']
-            print('Request.POST: ', request.POST['stars-rating'])
             if review.text == '':
                 review.approved = True
 
             try:
-                print('Try block in def product_detail')
                 review.save()
-                print('Review was saved')
                 messages.success(
                     request, 'Thank you! Review has been submitted'
                 )
-            except Exception as e:
-                print('Exception:', e)
-            return HttpResponseRedirect(reverse('product_detail', args=[product_id]))
+            except Exception:
+                messages.error(
+                    request,
+                    'Sorry, an error occurred. Please try again later')
+
+            return HttpResponseRedirect(
+                reverse('product_detail', args=[product_id]))
 
     else:
         review_form = ReviewForm()
@@ -129,7 +128,7 @@ def product_detail(request, product_id):
 @login_required
 def edit_review(request, product_id, review_id):
     """
-    Edit a review
+    Edits a review (available to review author only)
     """
     if request.method == "POST":
         product = get_object_or_404(Product, pk=product_id)
@@ -152,7 +151,7 @@ def edit_review(request, product_id, review_id):
 @login_required
 def delete_review(request, product_id, review_id):
     """
-    view to delete review
+    Deletes a review (available to review author only)
     """
     product = get_object_or_404(Product, pk=product_id)
     review = get_object_or_404(Review, pk=review_id)
@@ -169,7 +168,7 @@ def delete_review(request, product_id, review_id):
 @login_required
 def manage_reviews(request):
     """
-    Approve or delete reviews - for managers only
+    Approves or deletes reviews - for managers only
     """
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store managers approve reviews.')
@@ -181,7 +180,6 @@ def manage_reviews(request):
         try:
             for review in new_reviews:
                 review_id = review.id
-                print('request.POSTreview-admin: ', request.POST[f'review{review_id}-admin'])
                 if request.POST[f'review{review_id}-admin'] == 'approve':
                     review.approved = True
                     review.save()
@@ -192,7 +190,6 @@ def manage_reviews(request):
 
         except Exception as e:
             messages.error(request, 'Sorry, something went wrong')
-            print('Exception: ', e)
 
     template = 'products/manage_reviews.html'
     context = {
@@ -202,29 +199,18 @@ def manage_reviews(request):
     return render(request, template, context)
 
 
-# def filter_products(request):
-#     if request.POST and 'selected_filters' in request.POST:
-#         print('selectedFilters: ', selectedFilters)
-#         filtered_products = Products.objects.filter(category=selectedFilters)
-
-
 @login_required
 def add_to_wishlist(request, product_id):
+    """ Updates the authenticated user's wishlist by adding (1 click)
+    or removing (double click) favourite products """
 
     if request.POST and 'attr_id' in request.POST:
-        print('Add to wishlist - ajax post request')
-        print('attr_id: ', request.POST['attr_id'])
-        print('icon_classlist_value: ', request.POST['icon_classlist_value'])
-
-        wishlist = Wishlist.objects.get(user_profile = request.user.profile)
-        print('Wishlist: ', wishlist)
+        wishlist = Wishlist.objects.get(user_profile=request.user.profile)
 
         if 'fa-regular' in request.POST['icon_classlist_value']:
             wishlist.favourite_products.add(request.POST['attr_id'])
         elif 'fa-solid' in request.POST['icon_classlist_value']:
             wishlist.favourite_products.remove(request.POST['attr_id'])
-
-        print('Wishlist updated - products: ', wishlist.favourite_products.all())
 
     else:
         messages.error(request, 'Sorry, something went wrong')
@@ -233,33 +219,8 @@ def add_to_wishlist(request, product_id):
     return redirect(reverse('products'))
 
 
-# @login_required
-# def remove_from_wishlist(request, product_id):
-
-#     if request.POST and 'attr_id' in request.POST:
-#         print('Remove from wishlist - ajax post request')
-#         print('attr_id: ', request.POST['attr_id'])
-
-#         wishlist = Wishlist.objects.get(user_profile = request.user.profile)
-#         print('Wishlist: ', wishlist)
-
-#         wishlist.favourite_products.remove(request.POST['attr_id'])
-#         updated_wishlist = wishlist.favourite_products.all()
-#         wishlist_items = updated_wishlist
-
-#         print('Wishlist items: ', wishlist_items)
-            
-#         return render(request, 'profiles/profile.html', {'wishlist_items': wishlist_items})
-
-#     else:
-#         messages.error(request, 'Sorry, something went wrong')
-#         print('Sorry, something went wrong')
-
-#     return render(request, 'profiles/profile.html')
-
-
 def add_to_basket(request, item_id):
-    """ Add a quantity of the specified product to the shopping bag """
+    """ Adds a quantity of the specified product to the shopping basket """
 
     product = get_object_or_404(Product, pk=item_id)
     quantity = int(request.POST.get('quantity'))
@@ -268,7 +229,8 @@ def add_to_basket(request, item_id):
 
     if item_id in list(basket.keys()):
         basket[item_id] += quantity
-        messages.success(request, f'Updated {product.name} quantity in your basket')
+        messages.success(
+            request, f'Updated {product.name} quantity in your basket')
     else:
         basket[item_id] = quantity
         messages.success(request, f'Added {product.name} to your basket')
@@ -279,10 +241,11 @@ def add_to_basket(request, item_id):
 
 @login_required
 def add_product(request):
-    """ Add a product to the store """
+    """ Adds a product to the store - for managers only"""
 
     if not request.user.is_superuser:
-        messages.error(request, 'Sorry, only store managers can add a product.')
+        messages.error(
+            request, 'Sorry, only store managers can add a product.')
         return redirect(reverse('home'))
 
     if request.method == 'POST':
@@ -295,22 +258,30 @@ def add_product(request):
                 added_images = image_form.save(commit=False)
                 if added_images.primary_img:
                     added_images.product = added_product
-                    added_images.name_primary_img = f'{added_product.name } main image'
+                    added_images.name_primary_img = f'\
+                        {added_product.name} main image'
                     if added_images.secondary_img:
-                        added_images.name_secondary_img = f'{added_product.name } additional image 1'
+                        added_images.name_secondary_img = f'\
+                            {added_product.name} additional image 1'
                         if added_images.tertiary_img:
-                            added_images.name_tertiary_img = f'{added_product.name} additional image 2'
+                            added_images.name_tertiary_img = f'\
+                                {added_product.name} additional image 2'
                     added_images.save()
                 messages.success(request, 'Successfully added product!')
-                return redirect(reverse('product_detail', args=[added_product.id]))
+                return redirect(
+                    reverse('product_detail', args=[added_product.id]))
             else:
-                messages.error(request, 'Sorry, the form is not valid. Please check your images')
+                messages.error(
+                    request,
+                    'Sorry, the form is not valid. Please check your images')
         else:
-            messages.error(request, 'Failed to add product. Please ensure the form is valid.')
+            messages.error(
+                request,
+                'Failed to add product. Please ensure the form is valid.')
     else:
         product_form = ProductForm()
         image_form = ImageForm()
-        
+
     template = 'products/add_product.html'
     context = {
         'product_form': product_form,
@@ -322,10 +293,11 @@ def add_product(request):
 
 @login_required
 def edit_product(request, product_id):
-    """ Edit a product in the store """
+    """ Edits a product in the store - for managers only """
 
     if not request.user.is_superuser:
-        messages.error(request, 'Sorry, only store managers can edit a product.')
+        messages.error(
+            request, 'Sorry, only store managers can edit a product.')
         return redirect(reverse('home'))
 
     product = get_object_or_404(Product, pk=product_id)
@@ -333,10 +305,12 @@ def edit_product(request, product_id):
     print('product_images: ', product_images)
 
     if request.method == 'POST':
-        product_form = ProductForm(request.POST, request.FILES, instance=product)
+        product_form = ProductForm(
+            request.POST, request.FILES, instance=product)
         if product_images:
             existing_product_img = Image.objects.get(product=product)
-            image_form = ImageForm(request.POST, request.FILES, instance=existing_product_img)
+            image_form = ImageForm(
+                request.POST, request.FILES, instance=existing_product_img)
         else:
             image_form = ImageForm(request.POST, request.FILES)
 
@@ -345,55 +319,69 @@ def edit_product(request, product_id):
 
             if image_form.is_valid():
                 edited_images = image_form.save(commit=False)
-                print('edited images - primary: ', edited_images.primary_img)
-                print('edited images - secondary: ', edited_images.secondary_img)
-                print('edited images - tertiary: ', edited_images.tertiary_img)
-                print('product_images: ', product_images)
 
                 if edited_images.primary_img:
-                    print('There is a primary image in the form')
                     edited_images.product = edited_product
-                    edited_images.name_primary_img = f'{edited_product.name } main image'
+                    edited_images.name_primary_img = f'\
+                        {edited_product.name } main image'
 
                     if edited_images.secondary_img:
-                        edited_images.name_secondary_img = f'{edited_product.name } additional image 1'
+                        edited_images.name_secondary_img = f'\
+                            {edited_product.name } additional image 1'
 
                     if edited_images.tertiary_img:
-                        edited_images.name_tertiary_img = f'{edited_product.name} additional image 2'
-                    
+                        edited_images.name_tertiary_img = f'\
+                            {edited_product.name} additional image 2'
+
                     edited_images.save()
                     messages.success(request, 'Successfully updated product!')
-                    return redirect(reverse('product_detail', args=[edited_product.id]))
+                    return redirect(
+                        reverse('product_detail', args=[edited_product.id]))
 
                 elif not edited_images.primary_img:
-                    print('Not edited_images primary img : ', edited_images.primary_img)
-                    product
+                    # No images in the form
+                    if (edited_images.primary_img == None) and (
+                        edited_images.secondary_img == None) and (
+                            edited_images.tertiary_img == None):
+                        messages.success(
+                            request, 'Successfully updated product!')
+                        return redirect(reverse(
+                            'product_detail', args=[edited_product.id]))
 
-                    if (edited_images.primary_img  == None) and (
-                        edited_images.secondary_img == None) and (edited_images.tertiary_img == None):
-                        print('No images in the form')
-                        messages.success(request, 'Successfully updated product!')
-                        return redirect(reverse('product_detail', args=[edited_product.id]))
-
-                    # If user removes the main image, delete the entire Image object so that the default image can be used instead
+                    # If user removes the main image, delete the entire Image
+                    # object so that the default image can be used instead
                     elif product_images:
-                        print('This product had images - about to delete Image object')
-                        existing_product_img = Image.objects.get(product=product)
+                        existing_product_img = Image.objects.get(
+                            product=product)
                         existing_product_img.delete()
-                        messages.success(request, 'Successfully updated product and removed images')
-                        return redirect(reverse('product_detail', args=[edited_product.id]))
+                        messages.success(
+                            request,
+                            'Successfully updated product and removed images')
+                        return redirect(
+                            reverse(
+                                'product_detail', args=[edited_product.id]))
 
                     else:
                         messages.error(
-                            request, 'A primary image is required if you want to add a secondary image. A secondary image is required if you want to add a tertiary image')
-
+                            request,
+                            'A primary image is required if you want to \
+                            add a secondary/tertiary image')
                 else:
-                    messages.error(request, 'Oops, an unknown error occurred. Please try again later')
-                    return redirect(reverse('edit_product', args=[edited_product.id]))
+                    messages.error(
+                        request,
+                        'Oops, an unknown error occurred. \
+                        Please try again later')
+                    return redirect(
+                        reverse('edit_product', args=[edited_product.id]))
             else:
-                messages.error(request, 'Failed to update product. Please ensure the form is valid.')
+                messages.error(
+                    request,
+                    'Failed to update product. \
+                    Please ensure the form is valid.')
         else:
-            messages.error(request, 'Failed to update product. Please ensure the form is valid.')
+            messages.error(
+                request,
+                'Failed to update product. Please ensure the form is valid.')
     else:
         product_form = ProductForm(instance=product)
         if product_images:
@@ -416,10 +404,11 @@ def edit_product(request, product_id):
 
 @login_required
 def delete_product(request, product_id):
-    """ Delete a product from the store """
+    """ Deletes a product from the store - for managers only """
 
     if not request.user.is_superuser:
-        messages.error(request, 'Sorry, only store managers can delete a product.')
+        messages.error(
+            request, 'Sorry, only store managers can delete a product.')
         return redirect(reverse('home'))
 
     product = get_object_or_404(Product, pk=product_id)

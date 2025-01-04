@@ -1,8 +1,8 @@
+from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Avg
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.contrib.auth.models import User
-from django.db.models import Avg
 
 from profiles.models import UserProfile
 
@@ -37,8 +37,10 @@ class Brand(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
-    brand = models.ForeignKey('Brand', null=True, blank=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey('Category', null=True, blank=True,
+                                 on_delete=models.SET_NULL)
+    brand = models.ForeignKey('Brand', null=True,
+                              blank=True, on_delete=models.SET_NULL)
     sku = models.CharField(max_length=254, null=True, blank=True)
     name = models.CharField(max_length=254)
     description = models.TextField()
@@ -51,22 +53,27 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-    # The following function is based on this tutorial: https://www.youtube.com/watch?v=uOzgETtdVII
+    # The following function is based on this tutorial:
+    # https://www.youtube.com/watch?v=uOzgETtdVII
     def average_rating(self):
-        ratings = Review.objects.filter(product=self, approved=True).aggregate(average=Avg('rating'))
+        ratings = Review.objects.filter(
+            product=self, approved=True).aggregate(average=Avg('rating'))
         print('Ratings: ', ratings)
         avg = 0
         if ratings['average'] is not None:
-            avg = float(ratings['average']) 
+            avg = float(ratings['average'])
         return avg
 
 
 class Image(models.Model):
-    product = models.ForeignKey(Product, null=False, blank=False, on_delete=models.CASCADE, related_name='images')
+    product = models.ForeignKey(
+        Product, null=False, blank=False, on_delete=models.CASCADE,
+        related_name='images')
     primary_img = models.ImageField(null=True, blank=True)
     name_primary_img = models.CharField(max_length=254, null=True, blank=True)
     secondary_img = models.ImageField(null=True, blank=True)
-    name_secondary_img = models.CharField(max_length=254, null=True, blank=True)
+    name_secondary_img = models.CharField(
+        max_length=254, null=True, blank=True)
     tertiary_img = models.ImageField(null=True, blank=True)
     name_tertiary_img = models.CharField(max_length=254, null=True, blank=True)
 
@@ -75,7 +82,8 @@ class Image(models.Model):
 
 
 class Wishlist(models.Model):
-    user_profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='wishlist')
+    user_profile = models.OneToOneField(
+        UserProfile, on_delete=models.CASCADE, related_name='wishlist')
     favourite_products = models.ManyToManyField(Product, blank=True)
 
 
@@ -99,7 +107,7 @@ class Review(models.Model):
         Product, on_delete=models.CASCADE, related_name="reviews")
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="reviewer")
-    rating = models.IntegerField(default=0)    
+    rating = models.IntegerField(default=0)
     text = models.TextField(null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)

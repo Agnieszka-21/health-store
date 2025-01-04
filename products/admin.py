@@ -35,4 +35,3 @@ admin.site.register(Image)
 admin.site.register(Brand, BrandAdmin)
 admin.site.register(Wishlist)
 admin.site.register(Review)
-

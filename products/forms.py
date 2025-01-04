@@ -1,6 +1,7 @@
-from django import forms
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
+
+from django import forms
 
 from .models import Product, Category, Image, Review
 
@@ -32,12 +33,14 @@ class ImageForm(forms.ModelForm):
         ]
         help_texts = {
             'primary_img': mark_safe(_(
-                '<small style="color:red">Please be advised that if you delete (clear) your custom primary image and do not provide a replacement, all images for this product will be permanently deleted.</small>')),
+                '<small style="color:red">Please be advised that if you \
+                delete (clear) your custom primary image and do not provide \
+                a replacement, all images for this product will be \
+                permanently deleted.</small>')),
         }
 
 
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['text',]
-        
+        fields = ['text']

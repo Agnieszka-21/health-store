@@ -1,10 +1,13 @@
+# This file has been copied from the following project:
+# https://github.com/MattBCoding/druid-pp5/blob/main/products/utils.py
+
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def paginateProducts(request, products, results):
-    '''
-    returns a paginated range and the query
-    '''
+    """
+    Returns a paginated range and the query
+    """
     page = request.GET.get('page')
     paginator = Paginator(products, results)
     try:
