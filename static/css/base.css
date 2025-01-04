@@ -272,10 +272,7 @@ body {
 
 /* Media queries */
 @media (min-width: 768px) {
-    #social-links {
-        text-align: start;
-        vertical-align: middle;
-    }
+    #social-links,
     #copyright {
         text-align: end;
         vertical-align: middle;
@@ -283,9 +280,6 @@ body {
     #search .input-group {
         width: 70% !important;
         margin: 0 auto;
-    }
-    #mc_embed_signup {
-        width: 50%;
     }
 }
 
