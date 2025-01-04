@@ -14,5 +14,6 @@ class EventForm(forms.ModelForm):
             'cancelled',
         ]
         widgets = {
-            'when': forms.TextInput(attrs={'placeholder': 'yyyy-mm-dd hh:mm:ss'}),
+            'when': forms.TextInput(attrs={
+                'placeholder': 'yyyy-mm-dd hh:mm:ss'}),
         }

@@ -1,12 +1,12 @@
 from django.db import models
-from django.utils.text import slugify
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.text import slugify
+
+import datetime
 
 from products.models import Product
 from profiles.models import UserProfile
-
-import datetime
 
 
 class Article(models.Model):
@@ -17,7 +17,8 @@ class Article(models.Model):
     content = models.TextField()
     keywords = models.CharField(max_length=300)
     date_of_publication = models.DateField(null=True, blank=True)
-    related_products = models.ManyToManyField(Product, related_name='articles', blank=True)
+    related_products = models.ManyToManyField(
+        Product, related_name='articles', blank=True)
     approved = models.BooleanField(default=False)
     published = models.BooleanField(default=False)
 
@@ -26,7 +27,8 @@ class Article(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        if self.approved and (self.date_of_publication <= datetime.date.today()):
+        if self.approved and (
+                self.date_of_publication <= datetime.date.today()):
             self.published = True
         super(Article, self).save(*args, **kwargs)
 
@@ -44,7 +46,8 @@ class Recipe(models.Model):
     method = models.TextField()
     keywords = models.CharField(max_length=300)
     date_of_publication = models.DateField(default=datetime.date.today)
-    related_products = models.ManyToManyField(Product, related_name='recipes', blank=True)
+    related_products = models.ManyToManyField(
+        Product, related_name='recipes', blank=True)
     approved = models.BooleanField(default=False)
     published = models.BooleanField(default=False)
 
@@ -53,7 +56,8 @@ class Recipe(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        if self.approved and (self.date_of_publication <= datetime.date.today()):
+        if self.approved and (
+                self.date_of_publication <= datetime.date.today()):
             self.published = True
         super(Recipe, self).save(*args, **kwargs)
 
@@ -62,7 +66,8 @@ class Recipe(models.Model):
 
 
 class Reading(models.Model):
-    user_profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='reading_list')
+    user_profile = models.OneToOneField(
+        UserProfile, on_delete=models.CASCADE, related_name='reading_list')
     bookmarked_articles = models.ManyToManyField(Article, blank=True)
 
     class Meta:
@@ -72,7 +77,7 @@ class Reading(models.Model):
 @receiver(post_save, sender=UserProfile)
 def create_or_update_reading_list(sender, instance, created, **kwargs):
     """
-    Create or update a personal reading list
+    Creates or updates a personal reading list
     """
     if created:
         Reading.objects.create(user_profile=instance)
@@ -81,14 +86,15 @@ def create_or_update_reading_list(sender, instance, created, **kwargs):
 
 
 class FavouriteRecipe(models.Model):
-    user_profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='fav_recipe_list')
+    user_profile = models.OneToOneField(
+        UserProfile, on_delete=models.CASCADE, related_name='fav_recipe_list')
     bookmarked_recipes = models.ManyToManyField(Recipe, blank=True)
-        
+
 
 @receiver(post_save, sender=UserProfile)
 def create_or_update_recipe_list(sender, instance, created, **kwargs):
     """
-    Create or update a personal recipe list
+    Creates or updates a personal recipe list
     """
     if created:
         FavouriteRecipe.objects.create(user_profile=instance)
