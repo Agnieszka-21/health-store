@@ -12,6 +12,9 @@ class Event(models.Model):
     registration_open = models.BooleanField(default=False)
     cancelled = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ['-when']
+
     def __str__(self):
         if self.cancelled is False:
             string = f"{self.when} | {self.title}"

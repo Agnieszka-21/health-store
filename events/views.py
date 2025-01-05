@@ -12,53 +12,65 @@ from .forms import EventForm
 from .models import Event
 
 
-class EventListView(ListView):
+def open_for_registration():
     """
-    Returns all events in :model:`events.Event`
+    Marks an event as open for registration
+    if the event starts in the future
+    """
+    all_events = Event.objects.all()
+    print('all_events: ', all_events)
+    upcoming_events = []
+    current_datetime = datetime.now()
+    print('aware current_datetime is: ', make_aware(current_datetime))
+    for event in all_events:
+        print('Event in the for loop: ', event)
+        if event.when > make_aware(current_datetime):
+            event.registration_open = True
+            event.save()
+            upcoming_events.append(event)
+        else:
+            event.registration_open = False
+            event.save()
+    return upcoming_events
 
-    **Context**
 
-    ``queryset``
-        All  instances of :model:`events.Event`
+def sort_events(upcoming_events):
+    """
+    Sorts upcoming events based on their datetime
+    (Event model field 'when')
+    """
+    sorted_upcoming_event_datetimes = []
+    for event in upcoming_events:
+        sorted_upcoming_event_datetimes.append(event.when)
+    sorted_upcoming_event_datetimes.sort()
+    # Sort upcoming events by their datetime (field 'when')
+    sorted_upcoming_events = []
+    for sorted_datetime in sorted_upcoming_event_datetimes:
+        for event in upcoming_events:
+            if event.when == sorted_datetime:
+                sorted_upcoming_events.append(event)
+                break
+    return sorted_upcoming_events
+
+
+def display_events(request):
+    """
+    Displays upcoming online events in a specified order
+
+    **Context:**
+    
+    ``upcoming_events``
 
     **Template:**
 
     :template:`events/events.html`
     """
-    model = Event
-    ordering = ['when']
-    paginate_by = 5
-    template_name = 'events/events.html'
+    upcoming_events = open_for_registration()
+    sorted_upcoming_events = sort_events(upcoming_events)
+    upcoming_events = sorted_upcoming_events
+    context = {'upcoming_events': upcoming_events}
 
-    def get_context_data(self, **kwargs):
-        """
-        Updates the context by finding upcoming events
-        (ones that are open for registration)
-        """
-        context = super().get_context_data(**kwargs)
-        open_for_registration()
-        upcoming_events = Event.objects.filter(
-            registration_open=True)
-        context['upcoming_events'] = upcoming_events
-
-        return context
-
-
-def open_for_registration():
-    """
-    Automatically marks an event as open for registration
-    if the event starts in the future
-    """
-    all_events = Event.objects.all()
-    current_datetime = datetime.now()
-    for event in all_events:
-        if event.when > make_aware(current_datetime):
-            event.registration_open = True
-            event.save()
-        else:
-            event.registration_open = False
-            event.save()
-        return event
+    return render(request, 'events/events.html', context)
 
 
 @login_required
