@@ -11,8 +11,9 @@ from .utils import paginateProducts
 
 
 def all_products(request):
-    """ Displays all products, including sorting and search queries """
-
+    """
+    Displays all products, including sorting and search queries
+    """
     products = Product.objects.all()
     all_categories = Category.objects.all()
     all_brands = Brand.objects.all()
@@ -73,8 +74,9 @@ def all_products(request):
 
 
 def product_detail(request, product_id):
-    """ Displays individual product details """
-
+    """
+    Displays individual product details
+    """
     product = get_object_or_404(Product, pk=product_id)
     product_images = Image.objects.filter(product=product)
     reviews = product.reviews.all().order_by("-created_on")
@@ -201,9 +203,10 @@ def manage_reviews(request):
 
 @login_required
 def add_to_wishlist(request, product_id):
-    """ Updates the authenticated user's wishlist by adding (1 click)
-    or removing (double click) favourite products """
-
+    """
+    Updates the authenticated user's wishlist by adding (1 click)
+    or removing (double click) favourite products
+    """
     if request.POST and 'attr_id' in request.POST:
         wishlist = Wishlist.objects.get(user_profile=request.user.profile)
 
@@ -220,8 +223,9 @@ def add_to_wishlist(request, product_id):
 
 
 def add_to_basket(request, item_id):
-    """ Adds a quantity of the specified product to the shopping basket """
-
+    """
+    Adds a quantity of the specified product to the shopping basket
+    """
     product = get_object_or_404(Product, pk=item_id)
     quantity = int(request.POST.get('quantity'))
     redirect_url = request.POST.get('redirect_url')
@@ -241,8 +245,9 @@ def add_to_basket(request, item_id):
 
 @login_required
 def add_product(request):
-    """ Adds a product to the store - for managers only"""
-
+    """
+    Adds a product to the store - for managers only
+    """
     if not request.user.is_superuser:
         messages.error(
             request, 'Sorry, only store managers can add a product.')
@@ -293,8 +298,9 @@ def add_product(request):
 
 @login_required
 def edit_product(request, product_id):
-    """ Edits a product in the store - for managers only """
-
+    """
+    Edits a product in the store - for managers only
+    """
     if not request.user.is_superuser:
         messages.error(
             request, 'Sorry, only store managers can edit a product.')
@@ -404,8 +410,9 @@ def edit_product(request, product_id):
 
 @login_required
 def delete_product(request, product_id):
-    """ Deletes a product from the store - for managers only """
-
+    """
+    Deletes a product from the store - for managers only
+    """
     if not request.user.is_superuser:
         messages.error(
             request, 'Sorry, only store managers can delete a product.')
