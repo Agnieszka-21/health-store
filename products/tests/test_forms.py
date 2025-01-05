@@ -83,3 +83,4 @@ class ReviewFormTest(SimpleTestCase):
         """
         form = ReviewForm()
         self.assertTrue(form.Meta.fields, ['text'])
+        
