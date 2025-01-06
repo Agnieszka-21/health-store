@@ -55,7 +55,7 @@ def all_products(request):
     current_filtering = categories
     current_sorting = f'{sort}_{direction}'
     products_number = len(products)
-    custom_range, products = paginateProducts(request, products, 5)
+    custom_range, products = paginateProducts(request, products, 8)
 
     context = {
         'products': products,

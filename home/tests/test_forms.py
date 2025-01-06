@@ -5,6 +5,25 @@ from ..forms import CarouselForm
 
 class CarouselFormTest(SimpleTestCase):
 
+    def test_form_fields(self):
+        """
+        Tests which fields this form has
+        """
+        form = CarouselForm()
+        self.assertTrue(form.Meta.fields, [
+            'title',
+            'banner_img1',
+            'name_banner_img1',
+            'banner_img2',
+            'name_banner_img2',
+            'banner_img3',
+            'name_banner_img3',
+            'banner_img4',
+            'name_banner_img4',
+            'created_on',
+            'display',
+        ])
+
     def test_title_is_required(self):
         """
         Tests whether the field 'title' is required
@@ -32,4 +51,11 @@ class CarouselFormTest(SimpleTestCase):
         """
         form = CarouselForm()
         self.assertTrue(form.fields['banner_img3'].required)
+
+    def test_banner_img4_is_required(self):
+        """
+        Tests whether the field 'banner_img4' is required
+        """
+        form = CarouselForm()
+        self.assertTrue(form.fields['banner_img4'].required)
         

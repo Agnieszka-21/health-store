@@ -146,4 +146,3 @@ class CarouselModelTest(TestCase):
         carousel = Carousel.objects.get(id=1)
         expected_object_name = f'{carousel.title}'
         self.assertEqual(str(carousel), expected_object_name)
-
