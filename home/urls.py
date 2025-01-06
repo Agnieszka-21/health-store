@@ -13,6 +13,4 @@ urlpatterns = [
          views.edit_carousel, name='edit_carousel'),
     path('delete_carousel/<int:carousel_id>',
          views.delete_carousel, name='delete_carousel'),
-    path('404/', views.error404, name='error404'),
-    path('500/', views.error500, name='error500'),
 ]

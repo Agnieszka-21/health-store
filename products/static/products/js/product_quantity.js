@@ -1,4 +1,4 @@
-// Code copied and adjusted from Code Institute's walkthrough project Boutique Ado
+// Code in this file has been copied and adjusted from Code Institute's walkthrough project Boutique Ado
 
     // Disable +/- buttons outside 1-9 range
     function handleEnableDisable(itemId) {
