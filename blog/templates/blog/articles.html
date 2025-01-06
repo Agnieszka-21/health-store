@@ -54,7 +54,7 @@
                 <small class="col col-md-3 text-end my-3 my-md-0">
                     <a class="btn btn-sm btn-admin" href="{% url 'edit_article' article.id %}">Edit</a>
                     {% if request.user.is_superuser %}
-                    <a class="btn btn-sm btn-admin ms-1" href="{% url 'edit_article' article.id %}">Delete</a>
+                    <a class="btn btn-sm btn-admin ms-1" href="{% url 'delete_article' article.id %}">Delete</a>
                     {% endif %}
                 </small>
                 {% empty %}
