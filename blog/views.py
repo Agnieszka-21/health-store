@@ -391,13 +391,23 @@ def unpublish_article(request, article_id):
         return redirect(reverse('home'))
 
     article = get_object_or_404(Article, pk=article_id)
-    article.approved = False
-    article.published = False
-    article.save()
-    messages.success(request, 'Article unpublished successfully. \
-        You can publish it again if needed - simply choose EDIT, \
-        check the box APPROVED, and confirm with UPDATE ARTICLE.')
-    return redirect(reverse('articles'))
+
+    if request.method == 'POST':
+        try:
+            article.approved = False
+            article.published = False
+            article.save()
+            messages.success(request, 'Article unpublished successfully.')
+            return redirect(reverse('articles'))
+        except Exception:
+            messages.error(request, 'Sorry, the article could not be unpublished')
+
+    template = 'blog/delete_article.html'
+    context = {
+        'article': article,
+    }
+
+    return render(request, template, context)
 
 
 @login_required
@@ -407,18 +417,29 @@ def unpublish_recipe(request, recipe_id):
     """
     if not request.user.is_superuser:
         messages.error(
-            request, 'Sorry, only store managers can unpublish a recipe.')
+            request,
+            'Sorry, only store managers can unpublish a blog recipe.')
         return redirect(reverse('home'))
 
     recipe = get_object_or_404(Recipe, pk=recipe_id)
-    recipe.approved = False
-    recipe.published = False
-    recipe.save()
-    messages.success(request, 'Recipe unpublished successfully. \
-        You can publish it again if needed - simply choose EDIT, \
-        check the box APPROVED, and confirm with UPDATE RECIPE.')
 
-    return redirect(reverse('recipes'))
+    if request.method == 'POST':
+        try:
+            recipe.approved = False
+            recipe.published = False
+            recipe.save()
+            messages.success(request, 'Recipe unpublished successfully.')
+            return redirect(reverse('recipes'))
+        except Exception as e:
+            print('Error recipe: ', e)
+            messages.error(request, 'Sorry, the recipe could not be unpublished')
+
+    template = 'blog/delete_recipe.html'
+    context = {
+        'recipe': recipe,
+    }
+
+    return render(request, template, context)
 
 
 @login_required
@@ -452,7 +473,10 @@ def delete_article(request, article_id):
             messages.error(request, 'Sorry, the article could not be deleted')
 
     template = 'blog/delete_article.html'
-    context = {'article': article}
+    context = {
+        'article': article,
+        'admin_delete': True,
+    }
 
     return render(request, template, context)
 
@@ -488,7 +512,10 @@ def delete_recipe(request, recipe_id):
             messages.error(request, 'Sorry, the recipe could not be deleted')
 
     template = 'blog/delete_recipe.html'
-    context = {'recipe': recipe}
+    context = {
+        'recipe': recipe,
+        'admin_delete': True,
+    }
 
     return render(request, template, context)
 
