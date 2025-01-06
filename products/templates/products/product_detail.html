@@ -17,7 +17,7 @@
                 {% for image in product_images %}
                     {% if image.primary_img %}
                     <div>
-                        <a href="{{ image.primary_img.url }}" target="_blank">
+                        <a id="main-image-link" href="{{ image.primary_img.url }}" target="_blank">
                             <img id="main-image" class="card-img-top img-fluid" src="{{ image.primary_img.url }}" alt="{{ image.name_primary_img }}">
                         </a>
                     </div>

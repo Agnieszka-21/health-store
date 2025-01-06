@@ -8,6 +8,7 @@ $(document).ready(function() {
 
         $('#main-image').attr({'src': thumbSrc});
         $('#main-image').attr({'alt': thumbAlt});
+        $('#main-image-link').attr({'href': thumbSrc});
         $('#img-thumbnail-1').attr({'src': mainSrc});
         $('#img-thumbnail-1').attr({'alt': mainAlt});
     });
@@ -21,6 +22,7 @@ $(document).ready(function() {
 
         $('#main-image').attr({'src': thumbSrc});
         $('#main-image').attr({'alt': thumbAlt});
+        $('#main-image-link').attr({'href': thumbSrc});
         $('#img-thumbnail-2').attr({'src': mainSrc});
         $('#img-thumbnail-2').attr({'alt': mainAlt});
     });
