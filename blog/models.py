@@ -27,9 +27,9 @@ class Article(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        if self.approved and (
-                self.date_of_publication <= datetime.date.today()):
-            self.published = True
+        if self.approved and self.date_of_publication:
+            if self.date_of_publication <= datetime.date.today():
+                self.published = True
         super(Article, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -56,9 +56,9 @@ class Recipe(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        if self.approved and (
-                self.date_of_publication <= datetime.date.today()):
-            self.published = True
+        if self.approved and self.date_of_publication:
+            if self.date_of_publication <= datetime.date.today():
+                self.published = True
         super(Recipe, self).save(*args, **kwargs)
 
     def __str__(self):

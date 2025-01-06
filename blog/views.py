@@ -46,6 +46,18 @@ class ArticleListView(ListView):
         published_articles = Article.objects.filter(published=True)
         scheduled_for_publication = Article.objects.filter(
             approved=True, published=False)
+
+        scheduled_list = list(scheduled_for_publication)
+        print('List: ', scheduled_list)
+
+        for article in scheduled_for_publication:
+            if article.date_of_publication is None:
+                print('Article to remove: ', article)
+                scheduled_list.remove(article)
+                print('scheduled_list after removal: ', scheduled_list)
+
+        scheduled_for_publication = scheduled_list
+
         unpublished_articles = Article.objects.filter(
             approved=False, published=False)
         context = {
@@ -235,31 +247,14 @@ def edit_article(request, article_id):
 
     article = get_object_or_404(Article, pk=article_id)
 
-    if not request.user.is_superuser:
-        if request.method == 'POST':
-            article_form = RestrictedArticleForm(
-                request.POST, request.FILES, instance=article)
-
-            if article_form.is_valid():
-                edited_article = article_form.save()
-                messages.success(request, 'Successfully updated the article')
-                return redirect(
-                    reverse('article_detail', args=[edited_article.slug]))
-            else:
-                messages.error(
-                    request, 'Failed to update article. \
-                    Please ensure the form is valid.')
-        else:
-            article_form = RestrictedArticleForm(instance=article)
-            messages.info(request, f'You are editing {article.title}')
-
-    elif request.user.is_superuser:
+    if request.user.is_superuser:
         if request.method == 'POST':
             article_form = ArticleForm(
                 request.POST, request.FILES, instance=article)
 
             if article_form.is_valid():
-                if not article_form['date_of_publication']:
+                edited_article = article_form.save(commit=False)
+                if edited_article.approved and edited_article.date_of_publication is None:
                     messages.error(
                         request,
                         'Please make sure to set a date of publication')
@@ -275,6 +270,27 @@ def edit_article(request, article_id):
                     Please ensure the form is valid.')
         else:
             article_form = ArticleForm(instance=article)
+            messages.info(request, f'You are editing {article.title}')
+
+    else:
+        if request.method == 'POST':
+            article_form = RestrictedArticleForm(
+                request.POST, request.FILES, instance=article)
+
+            if article_form.is_valid():
+                edited_article = article_form.save(commit=False)
+                edited_article.date_of_publication = None
+                edited_article.approved = False
+                edited_article.save()
+                messages.success(request, 'Successfully updated the article')
+                return redirect(
+                    reverse('article_detail', args=[edited_article.slug]))
+            else:
+                messages.error(
+                    request, 'Failed to update article. \
+                    Please ensure the form is valid.')
+        else:
+            article_form = RestrictedArticleForm(instance=article)
             messages.info(request, f'You are editing {article.title}')
 
     template = 'blog/edit_article.html'
@@ -309,13 +325,41 @@ def edit_recipe(request, recipe_id):
 
     recipe = get_object_or_404(Recipe, pk=recipe_id)
 
-    if not request.user.is_superuser:
+    if request.user.is_superuser:
+        if request.method == 'POST':
+            recipe_form = RecipeForm(
+                request.POST, request.FILES, instance=recipe)
+
+            if recipe_form.is_valid():
+                edited_recipe = recipe_form.save(commit=False)
+                if edited_recipe.approved and edited_recipe.date_of_publication is None:
+                    messages.error(
+                        request,
+                        'Please make sure to set a date of publication')
+                else:
+                    edited_recipe = recipe_form.save()
+                    messages.success(
+                        request, 'Successfully updated the recipe')
+                    return redirect(
+                        reverse('recipe_detail', args=[edited_recipe.slug]))
+            else:
+                messages.error(
+                    request, 'Failed to update recipe. \
+                    Please ensure the form is valid.')
+        else:
+            recipe_form = RecipeForm(instance=recipe)
+            messages.info(request, f'You are editing {recipe.title}')
+
+    else:
         if request.method == 'POST':
             recipe_form = RestrictedRecipeForm(
                 request.POST, request.FILES, instance=recipe)
 
             if recipe_form.is_valid():
-                edited_recipe = recipe_form.save()
+                edited_recipe = recipe_form.save(commit=False)
+                edited_recipe.date_of_publication = None
+                edited_recipe.approved = False
+                edited_recipe.save()
                 messages.success(request, 'Successfully updated the recipe')
                 return redirect(
                     reverse('recipe_detail', args=[edited_recipe.slug]))
@@ -325,30 +369,6 @@ def edit_recipe(request, recipe_id):
                     Please ensure the form is valid.')
         else:
             recipe_form = RestrictedRecipeForm(instance=recipe)
-            messages.info(request, f'You are editing {recipe.title}')
-
-    elif request.user.is_superuser:
-        if request.method == 'POST':
-            recipe_form = RecipeForm(
-                request.POST, request.FILES, instance=recipe)
-
-            if recipe_form.is_valid():
-                if not recipe_form['date_of_publication']:
-                    messages.error(
-                        request,
-                        'Please make sure to set a date of publication')
-                else:
-                    edited_recipe = recipe_form.save()
-                    messages.success(
-                        request, 'Successfully updated the article')
-                    return redirect(
-                        reverse('recipe_detail', args=[edited_recipe.slug]))
-            else:
-                messages.error(
-                    request, 'Failed to update recipe. \
-                    Please ensure the form is valid.')
-        else:
-            recipe_form = RecipeForm(instance=recipe)
             messages.info(request, f'You are editing {recipe.title}')
 
     template = 'blog/edit_recipe.html'
@@ -374,7 +394,9 @@ def unpublish_article(request, article_id):
     article.approved = False
     article.published = False
     article.save()
-    messages.success(request, 'Article unpublished successfully')
+    messages.success(request, 'Article unpublished successfully. \
+        You can publish it again if needed - simply choose EDIT, \
+        check the box APPROVED, and confirm with UPDATE ARTICLE.')
     return redirect(reverse('articles'))
 
 
@@ -392,7 +414,9 @@ def unpublish_recipe(request, recipe_id):
     recipe.approved = False
     recipe.published = False
     recipe.save()
-    messages.success(request, 'Recipe unpublished successfully')
+    messages.success(request, 'Recipe unpublished successfully. \
+        You can publish it again if needed - simply choose EDIT, \
+        check the box APPROVED, and confirm with UPDATE RECIPE.')
 
     return redirect(reverse('recipes'))
 
@@ -400,34 +424,73 @@ def unpublish_recipe(request, recipe_id):
 @login_required
 def delete_article(request, article_id):
     """
-    Deletes an article from the blog - for managers only
+    Deletes an article - for managers only
+
+    **Context**
+
+    ``article``
+    A specific instance of :model:`blog.Article`
+
+    **Template:**
+
+    :template:`blog/delete_article.html`
     """
+
     if not request.user.is_superuser:
         messages.error(
             request, 'Sorry, only store managers can delete an article.')
         return redirect(reverse('home'))
 
     article = get_object_or_404(Article, pk=article_id)
-    article.delete()
-    messages.success(request, 'Article deleted!')
 
-    return redirect(reverse('articles'))
+    if request.method == 'POST':
+        try:
+            article.delete()
+            messages.success(request, 'Article deleted!')
+            return redirect(reverse('articles'))
+        except Exception:
+            messages.error(request, 'Sorry, the article could not be deleted')
+
+    template = 'blog/delete_article.html'
+    context = {'article': article}
+
+    return render(request, template, context)
 
 
 @login_required
 def delete_recipe(request, recipe_id):
     """
-    Deletes a recipe from the blog - for managers only
+    Deletes a recipe - for managers only
+
+    **Context**
+
+    ``recipe``
+    A specific instance of :model:`blog.Recipe`
+
+    **Template:**
+
+    :template:`blog/delete_recipe.html`
     """
+
     if not request.user.is_superuser:
         messages.error(
             request, 'Sorry, only store managers can delete a recipe.')
         return redirect(reverse('home'))
 
     recipe = get_object_or_404(Recipe, pk=recipe_id)
-    recipe.delete()
-    messages.success(request, 'Recipe deleted!')
-    return redirect(reverse('recipes'))
+
+    if request.method == 'POST':
+        try:
+            article.delete()
+            messages.success(request, 'Recipe deleted!')
+            return redirect(reverse('recipes'))
+        except Exception:
+            messages.error(request, 'Sorry, the recipe could not be deleted')
+
+    template = 'blog/delete_recipe.html'
+    context = {'recipe': recipe}
+
+    return render(request, template, context)
 
 
 @login_required
