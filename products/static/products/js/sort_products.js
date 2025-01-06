@@ -1,6 +1,6 @@
 /* 
 Handle sorting for all products on the shop page
-Code copied from Code Institute's walkthrough project Boutique Ado
+Code in this file has been copied from Code Institute's walkthrough project Boutique Ado
 */
 
 $('#sort-selector').change(function() {
@@ -22,4 +22,4 @@ $('#sort-selector').change(function() {
 
         window.location.replace(currentUrl);
     }
-})
+});
