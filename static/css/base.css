@@ -273,6 +273,7 @@ body {
 /* Media queries */
 @media (min-width: 768px) {
     #social-links,
+    #privacy-policy,
     #copyright {
         text-align: end;
         vertical-align: middle;
