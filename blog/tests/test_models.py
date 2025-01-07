@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from ..models import Article, Recipe, Reading
+from ..models import Article, Recipe, Reading, FavouriteRecipe
+from profiles.models import UserProfile
 
 
 class ArticleModelTest(TestCase):
@@ -173,3 +174,38 @@ class ReadingModelTest(TestCase):
         reading_list = Reading.objects.get(id=1)
         verbose_name_plural = reading_list._meta.verbose_name_plural
         self.assertEqual(verbose_name_plural, 'Favourite articles')
+
+    def test_user_profile_has_reading_list(self):
+        """
+        Tests whether a user profile has its related
+        reading list
+        """
+        profile = UserProfile.objects.get(id=1)
+        reading_list = Reading.objects.get(id=1)
+        self.assertEqual(self.profile.reading_list, reading_list)
+        self.assertEqual(reading_list.user_profile, self.profile)
+
+
+class FavouriteRecipeModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        """
+        Sets up non-modified FavouriteRecipe object
+        used by all test methods
+        """
+        cls.user = User.objects.create_user(
+            id=12345, username='Jack Sparrow'
+        )
+        cls.profile = cls.user.profile
+        cls.favourite_recipes = cls.profile
+
+    def test_user_profile_has_favourite_recipes(self):
+        """
+        Tests whether a user profile has its related
+        list for favourite recipes
+        """
+        profile = UserProfile.objects.get(id=1)
+        favourite_recipes = FavouriteRecipe.objects.get(id=1)
+        self.assertEqual(self.profile.fav_recipe_list, favourite_recipes)
+        self.assertEqual(favourite_recipes.user_profile, self.profile)
+        self.assertTrue(self.profile.fav_recipe_list)

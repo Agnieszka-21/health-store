@@ -37,7 +37,6 @@ class ArticleListView(ListView):
     """
     queryset = Article.objects.all()
     template_name = 'blog/articles.html'
-    paginate_by = 3
 
     def get_context_data(self, **kwargs):
 
@@ -48,13 +47,10 @@ class ArticleListView(ListView):
             approved=True, published=False)
 
         scheduled_list = list(scheduled_for_publication)
-        print('List: ', scheduled_list)
 
         for article in scheduled_for_publication:
             if article.date_of_publication is None:
-                print('Article to remove: ', article)
                 scheduled_list.remove(article)
-                print('scheduled_list after removal: ', scheduled_list)
 
         scheduled_for_publication = scheduled_list
 

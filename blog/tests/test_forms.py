@@ -58,7 +58,7 @@ class RestrictedArticleFormTest(SimpleTestCase):
         Tests whether the model field 'approved' is excluded
         """
         form = RestrictedArticleForm()
-        self.assertEqual(form.Meta.exclude, ['approved'])
+        self.assertEqual(form.Meta.exclude, ['approved', 'date_of_publication'])
 
 
 class RecipeFormTest(SimpleTestCase):
@@ -135,4 +135,4 @@ class RestrictedRecipeFormTest(SimpleTestCase):
         Tests whether the model field 'approved' is excluded
         """
         form = RestrictedRecipeForm()
-        self.assertEqual(form.Meta.exclude, ['approved'])
+        self.assertEqual(form.Meta.exclude, ['approved', 'date_of_publication'])

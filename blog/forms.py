@@ -33,10 +33,6 @@ class ArticleForm(forms.ModelForm):
                 choices=RELATED_PRODUCT_CHOICES),
         }
 
-    # def __init__(self, *args, **kwargs):
-    #     super(ArticleForm, self).__init__(*args, **kwargs)
-    #     self.fields['date_of_publication'].required = True
-
 
 class RestrictedArticleForm(ArticleForm):
     class Meta(ArticleForm.Meta):
