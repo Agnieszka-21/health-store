@@ -338,29 +338,6 @@ class ArticleAdminViewsTest(TestCase):
         response = self.client.get(reverse('create_article'))
         self.assertTemplateUsed(response, 'blog/create_article.html')
 
-    # def test_staff_user_can_create_article(self):
-    #     """
-    #     Tests whether authenticated staff user can successfully
-    #     create a new article
-    #     """
-    #     test_staffuser = User.objects.get(username='teststaffuser')
-    #     logged_in = self.client.login(
-    #         username='teststaffuser', password='staFF-useR',
-    #     )
-    #     self.new_article = Article.objects.create(
-    #         title='New title',
-    #         banner_img='New banner',
-    #         content='New content',
-    #         keywords='keyword1, keyword2'
-    #     )
-    #     self.new_article.save()
-    #     response = self.client.post(reverse('create_article'), {'new_article': self.new_article})
-    #     print('response: ', response)
-        # self.assertEqual(response.status_code, 200) # ???
-        # self.assertRedirects(response, reverse(
-        #     'article_detail',
-        #     kwargs={'slug': self.new_article.slug}))
-
     def test_edit_redirects_if_not_logged_in(self):
         """
         Tests whether user is redirected if not logged in
@@ -438,6 +415,26 @@ class ArticleAdminViewsTest(TestCase):
         response = self.client.get(
             reverse('unpublish_article', args=[self.article.id]))
         self.assertEqual(response.status_code, 200)
+
+    def test_superuser_can_unpublish_article(self):
+        """
+        Tests whether superuser can unpublish an article and
+        whether they are redirected correctly upon success
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
+        logged_in = self.client.login(
+            username='testsuperuser', password='suPeR42315')
+        self.article.approved = False
+        self.article.published = False
+        self.article.save()
+        response = self.client.post(
+            reverse('unpublish_article', args=[self.article.id]))
+        self.assertRedirects(response, reverse('articles'))
+        # Ensure the article does not show up under published articles
+        response = self.client.get(reverse('articles'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['published_articles']), 0)
+        self.assertEqual(len(response.context['unpublished_articles']), 1)
 
     def test_delete_unauthenticated_user_redirected(self):
         """
@@ -535,6 +532,8 @@ class RecipeAdminViewsTest(TestCase):
             ingredients='Test ingredients',
             method='Test method',
             keywords='test, keywords',
+            date_of_publication=datetime.date(2024, 11, 11),
+            approved=True,
         )
 
     def test_create_unauthenticated_user_redirected(self):
@@ -663,6 +662,27 @@ class RecipeAdminViewsTest(TestCase):
         response = self.client.get(
             reverse('unpublish_recipe', args=[self.recipe.id]))
         self.assertEqual(response.status_code, 200)
+
+    def test_superuser_can_unpublish_recipe(self):
+        """
+        Tests whether superuser can unpublish a recipe and
+        whether they are redirected correctly upon success
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
+        logged_in = self.client.login(
+            username='testsuperuser', password='suPeR42315')
+        self.recipe.approved = False
+        self.recipe.published=False
+        self.recipe.save()
+        response = self.client.post(
+            reverse('unpublish_recipe', args=[self.recipe.id]))
+        self.assertRedirects(response, reverse('recipes'))
+        # Ensure the recipe does not show up under published recipes
+        response = self.client.get(reverse('recipes'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['published_recipes']), 0)
+        self.assertEqual(len(response.context['unpublished_recipes']), 1)
+
 
     def test_delete_unauthenticated_user_redirected(self):
         """

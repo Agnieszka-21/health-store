@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core import mail
 from datetime import date, timedelta 
 from django.test import TestCase
 from django.urls import reverse
@@ -110,6 +111,7 @@ class EventAdminViewsTest(TestCase):
         response = self.client.get(reverse(
             'create_event'))
         self.assertEqual(response.status_code, 302)
+        self.assertTrue(response.url.startswith('/accounts/login/'))
 
     def test_create_non_staff_user_redirected(self):
         """
@@ -124,6 +126,7 @@ class EventAdminViewsTest(TestCase):
         self.assertFalse(test_customer.is_staff)
         response = self.client.get('/events/create/')
         self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('home'))
 
     def test_create_staffuser_redirected(self):
         """
@@ -232,6 +235,7 @@ class EventAdminViewsTest(TestCase):
         response = self.client.get(reverse(
             'delete_event', args=[self.event.id]))
         self.assertEqual(response.status_code, 302)
+        self.assertTrue(response.url.startswith('/accounts/login/'))
 
     def test_delete_staffuser_redirected(self):
         """
@@ -268,6 +272,9 @@ class EventAdminViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_superuser_can_delete_event(self):
+        """
+        Tests whether superuser can delete an event
+        """
         test_superuser = User.objects.get(username='testsuperuser')
         logged_in = self.client.login(
             username='testsuperuser', password='suPeR42315')
@@ -275,3 +282,82 @@ class EventAdminViewsTest(TestCase):
             reverse('delete_event', args=[self.event.id]))
         self.event.delete()
         self.assertRedirects(response, reverse('events'))
+
+
+class EventRegisterViewTest(TestCase):
+    def setUp(self):
+        """
+        Sets up data for the event register view tests
+        """
+        today = date.today()
+        self.event = Event.objects.create(
+            title='Test Event',
+            description='Test description here',
+            speaker='Dr Jane Goodall',
+            when=today + timedelta(days=50),
+        )
+        test_user = User.objects.create_user(
+            username='testuser',
+            email='testuser@email.com',
+            password='1X<ISRUkw+tuK',
+            is_staff=False,
+        )
+        test_user.save()
+
+    def test_unauthenticated_user_redirected(self):
+        """
+        Tests whether an authenticated user is redirected
+        """
+        test_user = User.objects.get(username='testuser')
+        response = self.client.get(reverse(
+            'event_register', args=[self.event.id]))
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(response.url.startswith('/accounts/login/'))
+
+    def test_authenticated_user_can_access(self):
+        """
+        Tests whether an authenticated user can access
+        the registration page and if the correct template
+        is used
+        """
+        test_user = User.objects.get(username='testuser')
+        logged_in = self.client.login(
+            username='testuser', password='1X<ISRUkw+tuK')
+        response = self.client.get(reverse(
+            'event_register', args=[self.event.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(
+            response, 'events/event_registration.html')
+
+    def test_authenticated_user_can_register(self):
+        """
+        Tests whether an authenticated user can register for
+        an event
+        """
+        test_user = User.objects.get(username='testuser')
+        logged_in = self.client.login(
+            username='testuser', password='1X<ISRUkw+tuK')
+        response = self.client.get(reverse(
+            'event_register', args=[self.event.id]))
+        self.event.participants.add(test_user)
+        self.event.save()
+        self.assertTrue(test_user in self.event.participants.all())
+        self.assertEqual(response.status_code, 200)
+
+
+class SendConfirmationEmailViewTest(TestCase):
+
+    def test_send_email(self):
+        """
+        Tests if the view sends a confirmation email to
+        anyone who registers for an online event
+        """
+        mail.send_mail(
+            'Email subject',
+            'Email content',
+            'from@healthstore.com',
+            ['to@customer.com'],
+            fail_silently=False,
+        )
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].subject, 'Email subject')
