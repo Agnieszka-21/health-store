@@ -18,12 +18,9 @@ def open_for_registration():
     if the event starts in the future
     """
     all_events = Event.objects.all()
-    print('all_events: ', all_events)
     upcoming_events = []
     current_datetime = datetime.now()
-    print('aware current_datetime is: ', make_aware(current_datetime))
     for event in all_events:
-        print('Event in the for loop: ', event)
         if event.when > make_aware(current_datetime):
             event.registration_open = True
             event.save()
@@ -178,7 +175,6 @@ def send_confirmation_email(user, event):
     registered for an event
     """
     user_email = user.email
-    print(user_email)
     subject = render_to_string(
         'events/confirmation_emails/confirmation_email_subject.txt',
     )

@@ -80,7 +80,6 @@ class RecipeListView(ListView):
     """
     queryset = Recipe.objects.all()
     template_name = 'blog/recipes.html'
-    paginate_by = 3
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -501,7 +500,7 @@ def delete_recipe(request, recipe_id):
 
     if request.method == 'POST':
         try:
-            article.delete()
+            recipe.delete()
             messages.success(request, 'Recipe deleted!')
             return redirect(reverse('recipes'))
         except Exception:

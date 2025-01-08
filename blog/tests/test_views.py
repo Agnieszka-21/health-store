@@ -240,24 +240,46 @@ class RecipeDetailViewTest(TestCase):
         self.assertTemplateUsed(response, 'blog/recipe_detail.html')
 
 
-class CreateArticleViewTest(TestCase):
+class ArticleAdminViewsTest(TestCase):
     def setUp(self):
         """
         Sets up data that can be modified in the methods below
+        Used for the following **views:**
+
+        :view:`create_article`
+        :view:`edit_article`
+        :view:`unpublish_article`
+        :view:`delete_article`
         """
-        # user_model = get_user_model()
-        test_customer = User.objects.create(
-            username='testuser1', password='1X<ISRUkw+tuK', id=1
+        test_customer = User.objects.create_user(
+            username='testuser',
+            email='testuser@email.com',
+            password='1X<ISRUkw+tuK',
+            is_staff=False,
         )
         test_customer.save()
-        # test_superuser = User.objects.create(
-        #     username='testsuperuser',
-        #     email='superuseremail@test.com',
-        #     password='1X<ISRUkw+tuK',
-        #     is_superuser=True)
-        # test_superuser.save()
+        test_staffuser = User.objects.create_user(
+            username='teststaffuser',
+            email='staffuseremail@test.com',
+            password='staFF-useR',
+            is_staff=True,
+        )
+        test_staffuser.save()
+        test_superuser = User.objects.create_superuser(
+            username='testsuperuser',
+            email='superuseremail@test.com',
+            password='suPeR42315',
+            is_superuser=True,
+        )
+        test_superuser.save()
+        self.article = Article.objects.create(
+            title='Test article title',
+            img_title='Test image',
+            content='Test content',
+            keywords='test, keywords',
+        )
 
-    def test_unauthenticated_user_redirected(self):
+    def test_create_unauthenticated_user_redirected(self):
         """
         Tests whether unauthenticated user is redirected
         and can not access add blog post page
@@ -265,82 +287,435 @@ class CreateArticleViewTest(TestCase):
         response = self.client.get('/blog/articles/create/')
         self.assertEqual(response.status_code, 302)
 
-    def test_authenticated_non_staff_user_redirected(self):
+    def test_create_authenticated_non_staff_user_redirected(self):
         """
         Tests whether unauthenticated user is redirected
         and can not access add blog post page
         """
-        test_customer = User.objects.get(id=1)
+        test_customer = User.objects.get(username='testuser')
         logged_in = self.client.login(
-            username='testuser1', password='1X<ISRUkw+tuK'
+            username='testuser', password='1X<ISRUkw+tuK',
         )
-        print('LOGGED_IN: ', logged_in)
-        # confirm user is logged in
-        # self.assertTrue(logged_in)
-        # self.assertFalse(self.user.is_staff)
-        # response = self.client.get('/blog/articles/create/')
-        # self.assertEqual(response.status_code, 302)
-
-
-class EditArticleViewTest(TestCase):
-    def setUp(self):
-        """
-        Sets up data that can be modified in the methods below
-        """
-        test_staffuser = User.objects.create_user(
-            username='staffuser', password='staffISRUkw+tuK',
-            id=1, is_staff=True)
-        test_staffuser.save()
-        # test_yogastyle = YogaStyle.objects.create(
-        #     group_class_style='Express Lunchtime Yoga')
-        # test_groupclass = GroupClass.objects.create(title=test_yogastyle)
-        self.article = Article.objects.create(
-            title='Test article title',
-            slug='test-article-title'
-        )
-
-    def test_redirects_if_not_logged_in(self):
-        """
-        Tests whether user is redirected if not logged in
-        """
-        test_staffuser = User.objects.get(username='staffuser')
-        response = self.client.get(reverse(
-            'edit_article', args=[self.article.id]))
+        self.assertTrue(logged_in)
+        self.assertFalse(test_customer.is_staff)
+        response = self.client.get('/blog/articles/create/')
         self.assertEqual(response.status_code, 302)
 
-    def test_uses_correct_template(self):
+    def test_create_staff_user_can_access(self):
+        """
+        Tests whether authenticated staff user is granted access
+        to the article creation page
+        """
+        test_staffuser = User.objects.get(username='teststaffuser')
+        logged_in = self.client.login(
+            username='teststaffuser', password='staFF-useR',
+        )
+        self.assertTrue(logged_in)
+        self.assertTrue(test_staffuser.is_staff)
+        response = self.client.get('/blog/articles/create/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_create_url_accessible_by_name(self):
+        """
+        Tests whether the url related to this view
+        can be accessed by its name
+        """
+        test_staffuser = User.objects.get(username='teststaffuser')
+        logged_in = self.client.login(
+            username='teststaffuser', password='staFF-useR')
+        response = self.client.get(
+            reverse('create_article'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_create_uses_correct_template(self):
         """
         Tests whether the correct template is used
         when user is logged in
         """
-        test_staffuser = User.objects.get(username='staffuser')
+        test_staffuser = User.objects.get(username='teststaffuser')
         logged_in = self.client.login(
-            username='staffuser', password='staffISRUkw+tuK', id=1)
-        # Confirm user is logged in
-        self.assertTrue(logged_in)
+            username='teststaffuser', password='staFF-useR', id=1)
+        response = self.client.get(reverse('create_article'))
+        self.assertTemplateUsed(response, 'blog/create_article.html')
+
+    # def test_staff_user_can_create_article(self):
+    #     """
+    #     Tests whether authenticated staff user can successfully
+    #     create a new article
+    #     """
+    #     test_staffuser = User.objects.get(username='teststaffuser')
+    #     logged_in = self.client.login(
+    #         username='teststaffuser', password='staFF-useR',
+    #     )
+    #     self.new_article = Article.objects.create(
+    #         title='New title',
+    #         banner_img='New banner',
+    #         content='New content',
+    #         keywords='keyword1, keyword2'
+    #     )
+    #     self.new_article.save()
+    #     response = self.client.post(reverse('create_article'), {'new_article': self.new_article})
+    #     print('response: ', response)
+        # self.assertEqual(response.status_code, 200) # ???
+        # self.assertRedirects(response, reverse(
+        #     'article_detail',
+        #     kwargs={'slug': self.new_article.slug}))
+
+    def test_edit_redirects_if_not_logged_in(self):
+        """
+        Tests whether user is redirected if not logged in
+        """
+        test_staffuser = User.objects.get(username='teststaffuser')
+        response = self.client.get(reverse(
+            'edit_article', args=[self.article.id]))
+        self.assertEqual(response.status_code, 302)
+
+    def test_edit_url_accessible_by_name(self):
+        """
+        Tests whether the url related to this view
+        can be accessed by its name
+        """
+        test_staffuser = User.objects.get(username='teststaffuser')
+        logged_in = self.client.login(
+            username='teststaffuser', password='staFF-useR')
+        response = self.client.get(
+            reverse('edit_article', args=[self.article.id]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_uses_correct_template(self):
+        """
+        Tests whether the correct template is used
+        when user is logged in
+        """
+        test_staffuser = User.objects.get(username='teststaffuser')
+        logged_in = self.client.login(
+            username='teststaffuser', password='staFF-useR')
         response = self.client.get(reverse(
             'edit_article',
             args=[self.article.id]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blog/edit_article.html')
 
-    def test_redirects_to_article_detail_on_success(self):
+    def test_unpublish_unauthenticated_user_redirected(self):
         """
-        Tests whether user is redirected to the article's detail page
-        upon successfully editing it
+        Tests whether user is redirected if not logged in
         """
-        test_staffuser = User.objects.get(username='staffuser')
+        test_superuser = User.objects.get(username='testsuperuser')
+        response = self.client.get(reverse(
+            'unpublish_article', args=[self.article.id]))
+        self.assertEqual(response.status_code, 302)
+
+    def test_unpublish_staffuser_redirected(self):
+        """
+        Tests whether an authenticated staff user is redirected
+        """
+        test_staffuser = User.objects.get(username='teststaffuser')
+        response = self.client.get(reverse(
+            'unpublish_article', args=[self.article.id]))
+        self.assertEqual(response.status_code, 302)
+
+    def test_unpublish_uses_correct_template(self):
+        """
+        Tests whether the correct template is used
+        when user is logged in
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
         logged_in = self.client.login(
-            username='staffuser', password='staffISRUkw+tuK', id=1)
-        # Confirm user is logged in
-        self.assertTrue(logged_in)
-        # Edit the article
-        self.article.title = 'Title edited'
-        self.article.save()
-
-        response = self.client.post(reverse(
-            'edit_article',
+            username='testsuperuser', password='suPeR42315')
+        response = self.client.get(reverse(
+            'unpublish_article',
             args=[self.article.id]))
-        # self.assertRedirects(response, reverse(
-        #     'article_detail', args=[self.article.slug]))
+        self.assertTemplateUsed(response, 'blog/delete_article.html')
 
+    def test_unpublish_url_accessible_by_name(self):
+        """
+        Tests whether the url related to this view
+        can be accessed by its name
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
+        logged_in = self.client.login(
+            username='testsuperuser', password='suPeR42315')
+        response = self.client.get(
+            reverse('unpublish_article', args=[self.article.id]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_unauthenticated_user_redirected(self):
+        """
+        Tests whether user is redirected if not logged in
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
+        response = self.client.get(reverse(
+            'delete_article', args=[self.article.id]))
+        self.assertEqual(response.status_code, 302)
+
+    def test_delete_staffuser_redirected(self):
+        """
+        Tests whether an authenticated staff user is redirected
+        """
+        test_staffuser = User.objects.get(username='teststaffuser')
+        response = self.client.get(reverse(
+            'delete_article', args=[self.article.id]))
+        self.assertEqual(response.status_code, 302)
+
+    def test_delete_uses_correct_template(self):
+        """
+        Tests whether the correct template is used
+        when user is logged in
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
+        logged_in = self.client.login(
+            username='testsuperuser', password='suPeR42315')
+        response = self.client.get(reverse(
+            'delete_article',
+            args=[self.article.id]))
+        self.assertTemplateUsed(response, 'blog/delete_article.html')
+
+    def test_delete_url_accessible_by_name(self):
+        """
+        Tests whether the url related to this view
+        can be accessed by its name
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
+        logged_in = self.client.login(
+            username='testsuperuser', password='suPeR42315')
+        response = self.client.get(
+            reverse('delete_article', args=[self.article.id]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_superuser_can_delete_article(self):
+        """
+        Tests whether superuser can delete an article and
+        whether they are redirected correctly upon success
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
+        logged_in = self.client.login(
+            username='testsuperuser', password='suPeR42315')
+        response = self.client.post(
+            reverse('delete_article', args=[self.article.id]))
+        self.article.delete()
+        self.assertRedirects(response, reverse('articles'))
+
+
+class RecipeAdminViewsTest(TestCase):
+    def setUp(self):
+        """
+        Sets up data that can be modified in the methods below
+        Used for the following **views:**
+
+        :view:`create_recipe`
+        :view:`edit_recipe`
+        :view:`unpublish_recipe`
+        :view:`delete_recipe`
+        """
+        test_customer = User.objects.create_user(
+            username='testuser',
+            email='testuser@email.com',
+            password='1X<ISRUkw+tuK',
+            is_staff=False,
+        )
+        test_customer.save()
+        test_staffuser = User.objects.create_user(
+            username='teststaffuser',
+            email='staffuseremail@test.com',
+            password='staFF-useR',
+            is_staff=True,
+        )
+        test_staffuser.save()
+        test_superuser = User.objects.create_superuser(
+            username='testsuperuser',
+            email='superuseremail@test.com',
+            password='suPeR42315',
+            is_superuser=True,
+        )
+        test_superuser.save()
+        self.recipe = Recipe.objects.create(
+            title='Test recipe title',
+            img_title='Test image',
+            description='Test description',
+            ingredients='Test ingredients',
+            method='Test method',
+            keywords='test, keywords',
+        )
+
+    def test_create_unauthenticated_user_redirected(self):
+        """
+        Tests whether user is redirected if not logged in
+        """
+        test_staffuser = User.objects.get(username='teststaffuser')
+        response = self.client.get(reverse(
+            'create_recipe'))
+        self.assertEqual(response.status_code, 302)
+
+    def test_create_authenticated_non_staff_user_redirected(self):
+        """
+        Tests whether unauthenticated user is redirected
+        and can not access add blog post page
+        """
+        test_customer = User.objects.get(username='testuser')
+        logged_in = self.client.login(
+            username='testuser', password='1X<ISRUkw+tuK',
+        )
+        self.assertTrue(logged_in)
+        self.assertFalse(test_customer.is_staff)
+        response = self.client.get('/blog/recipes/create/')
+        self.assertEqual(response.status_code, 302)
+
+    def test_create_staff_user_can_access(self):
+        """
+        Tests whether authenticated staff user is granted access
+        to the article creation page
+        """
+        test_staffuser = User.objects.get(username='teststaffuser')
+        logged_in = self.client.login(
+            username='teststaffuser', password='staFF-useR',
+        )
+        self.assertTrue(logged_in)
+        self.assertTrue(test_staffuser.is_staff)
+        response = self.client.get('/blog/recipes/create/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_create_uses_correct_template(self):
+        """
+        Tests whether the correct template is used
+        when user is logged in
+        """
+        test_staffuser = User.objects.get(username='teststaffuser')
+        logged_in = self.client.login(
+            username='teststaffuser', password='staFF-useR')
+        self.assertTrue(logged_in)
+        response = self.client.get(reverse('create_recipe'))
+        self.assertTemplateUsed(response, 'blog/create_recipe.html')
+
+    def test_edit_redirects_if_not_logged_in(self):
+        """
+        Tests whether user is redirected if not logged in
+        """
+        test_staffuser = User.objects.get(username='teststaffuser')
+        response = self.client.get(reverse(
+            'edit_recipe', args=[self.recipe.id]))
+        self.assertEqual(response.status_code, 302)
+
+    def test_edit_url_accessible_by_name(self):
+        """
+        Tests whether the url related to this view
+        can be accessed by its name
+        """
+        test_staffuser = User.objects.get(username='teststaffuser')
+        logged_in = self.client.login(
+            username='teststaffuser', password='staFF-useR')
+        response = self.client.get(
+            reverse('edit_recipe', args=[self.recipe.id]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_uses_correct_template(self):
+        """
+        Tests whether the correct template is used
+        when user is logged in
+        """
+        test_staffuser = User.objects.get(username='teststaffuser')
+        logged_in = self.client.login(
+            username='teststaffuser', password='staFF-useR')
+        self.assertTrue(logged_in)
+        response = self.client.get(reverse(
+            'edit_recipe',
+            args=[self.recipe.id]))
+        self.assertTemplateUsed(response, 'blog/edit_recipe.html')
+
+    def test_unpublish_unauthenticated_user_redirected(self):
+        """
+        Tests whether user is redirected if not logged in
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
+        response = self.client.get(reverse(
+            'unpublish_recipe', args=[self.recipe.id]))
+        self.assertEqual(response.status_code, 302)
+
+    def test_unpublish_staffuser_redirected(self):
+        """
+        Tests whether an authenticated staff user is redirected
+        """
+        test_staffuser = User.objects.get(username='teststaffuser')
+        response = self.client.get(reverse(
+            'unpublish_recipe', args=[self.recipe.id]))
+        self.assertEqual(response.status_code, 302)
+
+    def test_unpublish_uses_correct_template(self):
+        """
+        Tests whether the correct template is used
+        when user is logged in
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
+        logged_in = self.client.login(
+            username='testsuperuser', password='suPeR42315')
+        response = self.client.get(reverse(
+            'unpublish_recipe',
+            args=[self.recipe.id]))
+        self.assertTemplateUsed(response, 'blog/delete_recipe.html')
+
+    def test_unpublish_url_accessible_by_name(self):
+        """
+        Tests whether the url related to this view
+        can be accessed by its name
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
+        logged_in = self.client.login(
+            username='testsuperuser', password='suPeR42315')
+        response = self.client.get(
+            reverse('unpublish_recipe', args=[self.recipe.id]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_unauthenticated_user_redirected(self):
+        """
+        Tests whether user is redirected if not logged in
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
+        response = self.client.get(reverse(
+            'delete_recipe', args=[self.recipe.id]))
+        self.assertEqual(response.status_code, 302)
+
+    def test_delete_staffuser_redirected(self):
+        """
+        Tests whether an authenticated staff user is redirected
+        """
+        test_staffuser = User.objects.get(username='teststaffuser')
+        response = self.client.get(reverse(
+            'delete_recipe', args=[self.recipe.id]))
+        self.assertEqual(response.status_code, 302)
+
+    def test_delete_uses_correct_template(self):
+        """
+        Tests whether the correct template is used
+        when user is logged in
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
+        logged_in = self.client.login(
+            username='testsuperuser', password='suPeR42315')
+        response = self.client.get(reverse(
+            'delete_recipe',
+            args=[self.recipe.id]))
+        self.assertTemplateUsed(response, 'blog/delete_recipe.html')
+
+    def test_delete_url_accessible_by_name(self):
+        """
+        Tests whether the url related to this view
+        can be accessed by its name
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
+        logged_in = self.client.login(
+            username='testsuperuser', password='suPeR42315')
+        response = self.client.get(
+            reverse('delete_recipe', args=[self.recipe.id]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_superuser_can_delete_recipe(self):
+        """
+        Tests whether superuser can delete a recipe and
+        whether they are redirected correctly upon success
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
+        logged_in = self.client.login(
+            username='testsuperuser', password='suPeR42315')
+        response = self.client.post(
+            reverse('delete_recipe', args=[self.recipe.id]))
+        self.recipe.delete()
+        self.assertRedirects(response, reverse('recipes'))
