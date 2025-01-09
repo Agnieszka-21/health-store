@@ -217,7 +217,6 @@ def add_to_wishlist(request, product_id):
 
     else:
         messages.error(request, 'Sorry, something went wrong')
-        print('Sorry, something went wrong')
 
     return redirect(reverse('products'))
 
@@ -308,7 +307,6 @@ def edit_product(request, product_id):
 
     product = get_object_or_404(Product, pk=product_id)
     product_images = Image.objects.filter(product=product)
-    print('product_images: ', product_images)
 
     if request.method == 'POST':
         product_form = ProductForm(
@@ -366,7 +364,6 @@ def edit_product(request, product_id):
                         return redirect(
                             reverse(
                                 'product_detail', args=[edited_product.id]))
-
                     else:
                         messages.error(
                             request,
