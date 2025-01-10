@@ -79,8 +79,7 @@ class ReviewFormTest(SimpleTestCase):
 
     def test_form_fields(self):
         """
-        Tests which fields this form has
+        Tests the fields included in this form
         """
         form = ReviewForm()
         self.assertTrue(form.Meta.fields, ['text'])
-        

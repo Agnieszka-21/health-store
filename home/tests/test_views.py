@@ -38,7 +38,7 @@ class AdminAccessViewsTest(TestCase):
         # Confirm user is logged in
         self.assertTrue(log_in)
         self.assertTrue(self.user.is_superuser)
-        # Create a carousel for the test database
+        # Create 2 carousels for the test database
         self.carousel1 = Carousel.objects.create(
             title='Test carousel',
             display=True,
@@ -51,7 +51,7 @@ class AdminAccessViewsTest(TestCase):
 
     def test_admin_panel_page(self):
         """
-        Tests the admin panel page url
+        Tests the admin panel page's url
         """
         response = self.client.get('/admin_panel/')
         self.assertEqual(response.status_code, 200)
@@ -66,7 +66,7 @@ class AdminAccessViewsTest(TestCase):
 
     def test_create_carousel_page(self):
         """
-        Tests the create carousel page url
+        Tests the create carousel page's url
         """
         response = self.client.get('/create_carousel/')
         self.assertEqual(response.status_code, 200)
@@ -81,7 +81,7 @@ class AdminAccessViewsTest(TestCase):
 
     def test_choose_carousel_page(self):
         """
-        Tests the choose carousel page url
+        Tests the choose carousel page's url
         """
         response = self.client.get('/choose_carousel/')
         self.assertEqual(response.status_code, 200)
@@ -96,7 +96,7 @@ class AdminAccessViewsTest(TestCase):
 
     def test_edit_carousel_page(self):
         """
-        Tests the edit carousel page url
+        Tests the edit carousel page's url
         """
         response = self.client.get(reverse('edit_carousel',
                                            args=[self.carousel1.id]))
@@ -113,7 +113,7 @@ class AdminAccessViewsTest(TestCase):
 
     def test_delete_carousel_page(self):
         """
-        Tests the delete carousel page url
+        Tests the delete carousel page's url
         """
         response = self.client.get(reverse('delete_carousel',
                                            args=[self.carousel1.id]))

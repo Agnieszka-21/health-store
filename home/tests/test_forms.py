@@ -7,7 +7,7 @@ class CarouselFormTest(SimpleTestCase):
 
     def test_form_fields(self):
         """
-        Tests which fields this form has
+        Tests which fields are included in this form
         """
         form = CarouselForm()
         self.assertTrue(form.Meta.fields, [
@@ -58,4 +58,3 @@ class CarouselFormTest(SimpleTestCase):
         """
         form = CarouselForm()
         self.assertTrue(form.fields['banner_img4'].required)
-        

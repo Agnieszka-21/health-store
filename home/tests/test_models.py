@@ -13,7 +13,7 @@ class CarouselModelTest(TestCase):
 
     def test_title_label(self):
         """
-        Tests the label of the title field
+        Tests the label of the field 'title'
         """
         carousel = Carousel.objects.get(id=1)
         field_label = carousel._meta.get_field('title').verbose_name
@@ -21,7 +21,7 @@ class CarouselModelTest(TestCase):
 
     def test_banner_img1_label(self):
         """
-        Tests the label of the banner_img1 field
+        Tests the label of the field 'banner_img1'
         """
         carousel = Carousel.objects.get(id=1)
         field_label = carousel._meta.get_field('banner_img1').verbose_name
@@ -29,7 +29,7 @@ class CarouselModelTest(TestCase):
 
     def test_name_banner_img1_label(self):
         """
-        Tests the label of the name_banner_img1 field
+        Tests the label of the field 'name_banner_img1'
         """
         carousel = Carousel.objects.get(id=1)
         field_label = carousel._meta.get_field('name_banner_img1').verbose_name
@@ -37,7 +37,7 @@ class CarouselModelTest(TestCase):
 
     def test_banner_img2_label(self):
         """
-        Tests the label of the banner_img2 field
+        Tests the label of the field 'banner_img2'
         """
         carousel = Carousel.objects.get(id=1)
         field_label = carousel._meta.get_field('banner_img2').verbose_name
@@ -45,7 +45,7 @@ class CarouselModelTest(TestCase):
 
     def test_name_banner_img2_label(self):
         """
-        Tests the label of the name_banner_img2 field
+        Tests the label of the field 'name_banner_img2'
         """
         carousel = Carousel.objects.get(id=1)
         field_label = carousel._meta.get_field('name_banner_img2').verbose_name
@@ -53,7 +53,7 @@ class CarouselModelTest(TestCase):
 
     def test_banner_img3_label(self):
         """
-        Tests the label of the banner_img3 field
+        Tests the label of the field 'banner_img3'
         """
         carousel = Carousel.objects.get(id=1)
         field_label = carousel._meta.get_field('banner_img3').verbose_name
@@ -61,7 +61,7 @@ class CarouselModelTest(TestCase):
 
     def test_name_banner_img3_label(self):
         """
-        Tests the label of the name_banner_img3 field
+        Tests the label of the field 'name_banner_img3'
         """
         carousel = Carousel.objects.get(id=1)
         field_label = carousel._meta.get_field('name_banner_img3').verbose_name
@@ -69,7 +69,7 @@ class CarouselModelTest(TestCase):
 
     def test_banner_img4_label(self):
         """
-        Tests the label of the banner_img4 field
+        Tests the label of the field 'banner_img4'
         """
         carousel = Carousel.objects.get(id=1)
         field_label = carousel._meta.get_field('banner_img4').verbose_name
@@ -77,7 +77,7 @@ class CarouselModelTest(TestCase):
 
     def test_name_banner_img4_label(self):
         """
-        Tests the label of the name_banner_img4 field
+        Tests the label of the field 'name_banner_img4'
         """
         carousel = Carousel.objects.get(id=1)
         field_label = carousel._meta.get_field('name_banner_img4').verbose_name
@@ -85,7 +85,7 @@ class CarouselModelTest(TestCase):
 
     def test_title_max_length(self):
         """
-        Tests the maximum length of the title field
+        Tests the maximum length of the field 'title'
         """
         carousel = Carousel.objects.get(id=1)
         max_length = carousel._meta.get_field('title').max_length
@@ -93,7 +93,7 @@ class CarouselModelTest(TestCase):
 
     def test_name_banner_img1_max_length(self):
         """
-        Tests the maximum length of the name_banner_img1 field
+        Tests the maximum length of the field 'name_banner_img1'
         """
         carousel = Carousel.objects.get(id=1)
         max_length = carousel._meta.get_field('name_banner_img1').max_length
@@ -101,7 +101,7 @@ class CarouselModelTest(TestCase):
 
     def test_name_banner_img2_max_length(self):
         """
-        Tests the maximum length of the name_banner_img2 field
+        Tests the maximum length of the field 'name_banner_img2'
         """
         carousel = Carousel.objects.get(id=1)
         max_length = carousel._meta.get_field('name_banner_img2').max_length
@@ -109,7 +109,7 @@ class CarouselModelTest(TestCase):
 
     def test_name_banner_img3_max_length(self):
         """
-        Tests the maximum length of the name_banner_img3 field
+        Tests the maximum length of the field 'name_banner_img3'
         """
         carousel = Carousel.objects.get(id=1)
         max_length = carousel._meta.get_field('name_banner_img3').max_length
@@ -117,7 +117,7 @@ class CarouselModelTest(TestCase):
 
     def test_name_banner_img1_max_length(self):
         """
-        Tests the maximum length of the name_banner_img4 field
+        Tests the maximum length of the field 'name_banner_img4'
         """
         carousel = Carousel.objects.get(id=1)
         max_length = carousel._meta.get_field('name_banner_img4').max_length
@@ -125,11 +125,11 @@ class CarouselModelTest(TestCase):
 
     def test_display_is_false_by_default(self):
         """
-        Tests the default value of the display field
+        Tests the default value of the field 'display'
         """
         carousel = Carousel.objects.get(id=1)
         display = carousel._meta.get_field('display').default
-        self.assertFalse(display, True)
+        self.assertFalse(display)
 
     def test_carousel_ordering(self):
         """

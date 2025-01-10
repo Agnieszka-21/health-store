@@ -72,7 +72,7 @@ class ArticleModelTest(TestCase):
 
     def test_str_representation_is_title(self):
         """
-        Tests string representation
+        Tests string representation of the Article object
         """
         article = Article.objects.get(id=1)
         expected_str = f'{article.title}'
@@ -136,7 +136,7 @@ class RecipeModelTest(TestCase):
         recipe = Recipe.objects.get(id=1)
         self.assertFalse(recipe.published)
 
-    def test_articles_ordering(self):
+    def test_recipes_ordering(self):
         """
         Tests the ordering of Article objects
         """
@@ -146,7 +146,7 @@ class RecipeModelTest(TestCase):
 
     def test_str_representation_is_title(self):
         """
-        Tests string representation
+        Tests string representation of the Recipe object
         """
         recipe = Recipe.objects.get(id=1)
         expected_str = f'{recipe.title}'

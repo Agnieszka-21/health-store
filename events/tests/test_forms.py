@@ -14,7 +14,7 @@ class EventFormTest(SimpleTestCase):
 
     def test_form_fields(self):
         """
-        Tests which fields this form has
+        Tests which fields are included in this form
         """
         form = EventForm()
         self.assertTrue(form.Meta.fields, [
@@ -26,6 +26,10 @@ class EventFormTest(SimpleTestCase):
         ])
 
     def test_field_when_placeholder(self):
+        """
+        Tests the placeholder of the field 'when'
+        """
         form = EventForm()
         self.assertTrue(
-            form.fields['when'].widget.attrs['placeholder'] == 'yyyy-mm-dd hh:mm:ss')
+            form.fields['when'].widget.attrs['placeholder'] == (
+                'yyyy-mm-dd hh:mm:ss'))

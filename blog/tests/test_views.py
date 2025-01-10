@@ -1,10 +1,6 @@
-from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
-from django.utils.timezone import make_aware
-from dateutil import parser
 
 import datetime
 
@@ -83,7 +79,7 @@ class ArticleListViewTest(TestCase):
         Confirms that the list of published articles has (exactly)
         5 items, all on one page, accessible without logging in
         """
-        response = self.client.get(reverse('articles')+'?page=1')
+        response = self.client.get(reverse('articles'))
         self.assertEqual(response.status_code, 200)
         self.assertFalse('is_paginated' in response.context)
         self.assertEqual(len(response.context['published_articles']), 5)
@@ -134,7 +130,7 @@ class RecipeListViewTest(TestCase):
         Confirms that the list of published recipes has (exactly)
         5 items, all on one page, accessible without logging in
         """
-        response = self.client.get(reverse('recipes')+'?page=1')
+        response = self.client.get(reverse('recipes'))
         self.assertEqual(response.status_code, 200)
         self.assertFalse('is_paginated' in response.context)
         self.assertEqual(len(response.context['published_recipes']), 5)
@@ -282,7 +278,7 @@ class ArticleAdminViewsTest(TestCase):
     def test_create_unauthenticated_user_redirected(self):
         """
         Tests whether unauthenticated user is redirected
-        and can not access add blog post page
+        and cannot access the add blog post page
         """
         response = self.client.get('/blog/articles/create/')
         self.assertEqual(response.status_code, 302)
@@ -290,7 +286,7 @@ class ArticleAdminViewsTest(TestCase):
     def test_create_authenticated_non_staff_user_redirected(self):
         """
         Tests whether unauthenticated user is redirected
-        and can not access add blog post page
+        and cannot access the add blog post page
         """
         test_customer = User.objects.get(username='testuser')
         logged_in = self.client.login(
@@ -362,7 +358,7 @@ class ArticleAdminViewsTest(TestCase):
     def test_edit_uses_correct_template(self):
         """
         Tests whether the correct template is used
-        when user is logged in
+        when staffuser is logged in
         """
         test_staffuser = User.objects.get(username='teststaffuser')
         logged_in = self.client.login(
@@ -384,7 +380,7 @@ class ArticleAdminViewsTest(TestCase):
 
     def test_unpublish_staffuser_redirected(self):
         """
-        Tests whether an authenticated staff user is redirected
+        Tests whether an authenticated staffuser is redirected
         """
         test_staffuser = User.objects.get(username='teststaffuser')
         response = self.client.get(reverse(
@@ -394,7 +390,7 @@ class ArticleAdminViewsTest(TestCase):
     def test_unpublish_uses_correct_template(self):
         """
         Tests whether the correct template is used
-        when user is logged in
+        when superuser is logged in
         """
         test_superuser = User.objects.get(username='testsuperuser')
         logged_in = self.client.login(
@@ -447,7 +443,7 @@ class ArticleAdminViewsTest(TestCase):
 
     def test_delete_staffuser_redirected(self):
         """
-        Tests whether an authenticated staff user is redirected
+        Tests whether an authenticated staffuser is redirected
         """
         test_staffuser = User.objects.get(username='teststaffuser')
         response = self.client.get(reverse(
@@ -457,7 +453,7 @@ class ArticleAdminViewsTest(TestCase):
     def test_delete_uses_correct_template(self):
         """
         Tests whether the correct template is used
-        when user is logged in
+        when superuser is logged in
         """
         test_superuser = User.objects.get(username='testsuperuser')
         logged_in = self.client.login(
@@ -548,7 +544,7 @@ class RecipeAdminViewsTest(TestCase):
     def test_create_authenticated_non_staff_user_redirected(self):
         """
         Tests whether unauthenticated user is redirected
-        and can not access add blog post page
+        and can not access the add recipe page
         """
         test_customer = User.objects.get(username='testuser')
         logged_in = self.client.login(
@@ -561,8 +557,8 @@ class RecipeAdminViewsTest(TestCase):
 
     def test_create_staff_user_can_access(self):
         """
-        Tests whether authenticated staff user is granted access
-        to the article creation page
+        Tests whether authenticated staffuser is granted access
+        to the recipe creation page
         """
         test_staffuser = User.objects.get(username='teststaffuser')
         logged_in = self.client.login(
@@ -576,7 +572,7 @@ class RecipeAdminViewsTest(TestCase):
     def test_create_uses_correct_template(self):
         """
         Tests whether the correct template is used
-        when user is logged in
+        when staffuser is logged in
         """
         test_staffuser = User.objects.get(username='teststaffuser')
         logged_in = self.client.login(
@@ -609,7 +605,7 @@ class RecipeAdminViewsTest(TestCase):
     def test_edit_uses_correct_template(self):
         """
         Tests whether the correct template is used
-        when user is logged in
+        when staffuser is logged in
         """
         test_staffuser = User.objects.get(username='teststaffuser')
         logged_in = self.client.login(
@@ -631,7 +627,7 @@ class RecipeAdminViewsTest(TestCase):
 
     def test_unpublish_staffuser_redirected(self):
         """
-        Tests whether an authenticated staff user is redirected
+        Tests whether an authenticated staffuser is redirected
         """
         test_staffuser = User.objects.get(username='teststaffuser')
         response = self.client.get(reverse(
@@ -641,7 +637,7 @@ class RecipeAdminViewsTest(TestCase):
     def test_unpublish_uses_correct_template(self):
         """
         Tests whether the correct template is used
-        when user is logged in
+        when superuser is logged in
         """
         test_superuser = User.objects.get(username='testsuperuser')
         logged_in = self.client.login(
@@ -672,7 +668,7 @@ class RecipeAdminViewsTest(TestCase):
         logged_in = self.client.login(
             username='testsuperuser', password='suPeR42315')
         self.recipe.approved = False
-        self.recipe.published=False
+        self.recipe.published = False
         self.recipe.save()
         response = self.client.post(
             reverse('unpublish_recipe', args=[self.recipe.id]))
@@ -682,7 +678,6 @@ class RecipeAdminViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['published_recipes']), 0)
         self.assertEqual(len(response.context['unpublished_recipes']), 1)
-
 
     def test_delete_unauthenticated_user_redirected(self):
         """
@@ -695,7 +690,7 @@ class RecipeAdminViewsTest(TestCase):
 
     def test_delete_staffuser_redirected(self):
         """
-        Tests whether an authenticated staff user is redirected
+        Tests whether an authenticated staffuser is redirected
         """
         test_staffuser = User.objects.get(username='teststaffuser')
         response = self.client.get(reverse(
@@ -705,7 +700,7 @@ class RecipeAdminViewsTest(TestCase):
     def test_delete_uses_correct_template(self):
         """
         Tests whether the correct template is used
-        when user is logged in
+        when superuser is logged in
         """
         test_superuser = User.objects.get(username='testsuperuser')
         logged_in = self.client.login(

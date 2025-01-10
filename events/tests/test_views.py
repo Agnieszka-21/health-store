@@ -1,31 +1,34 @@
+from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 from django.core import mail
-from datetime import date, timedelta 
 from django.test import TestCase
 from django.urls import reverse
+from django.utils.timezone import make_aware
 
 from ..models import Event
 
 
 class DisplayEventsView(TestCase):
     def setUp(self):
-        today = date.today()
+        """
+        Sets up 3 Event objects
+=        """
         event1 = Event.objects.create(
             title='Event 1',
             description='Test description',
-            when=today + timedelta(days=10),
+            when=make_aware(datetime.now() + timedelta(days=10)),
         )
         event1.save()
         event2 = Event.objects.create(
             title='Event 2',
             description='Test description',
-            when=today + timedelta(days=20),
+            when=make_aware(datetime.now() + timedelta(days=20)),
         )
         event2.save()
         event3 = Event.objects.create(
             title='Event 3',
             description='Test description',
-            when=today - timedelta(days=30),
+            when=make_aware(datetime.now() - timedelta(days=30)),
         )
         event3.save()
 
@@ -52,7 +55,7 @@ class DisplayEventsView(TestCase):
         response = self.client.get(reverse('events'))
         self.assertEqual(response.status_code, 200)
 
-    def test_lists_all_groupclasses(self):
+    def test_lists_all_future_events(self):
         """
         Confirms that the page lists only future events, and does not
         use pagination, so there should be just 2
@@ -95,12 +98,11 @@ class EventAdminViewsTest(TestCase):
         )
         test_superuser.save()
 
-        today = date.today()
         self.event = Event.objects.create(
             title='Test Event',
             description='Test description here',
             speaker='Dr Jane Goodall',
-            when=today + timedelta(days=50),
+            when=make_aware(datetime.now() + timedelta(days=50)),
         )
 
     def test_create_unauthenticated_user_redirected(self):
@@ -130,8 +132,8 @@ class EventAdminViewsTest(TestCase):
 
     def test_create_staffuser_redirected(self):
         """
-        Tests whether authenticated staff user is granted access
-        to the event creation page
+        Tests whether authenticated staff who is not a superuser
+        gets redirected and cannot access the event creation page
         """
         test_staffuser = User.objects.get(username='teststaffuser')
         logged_in = self.client.login(
@@ -189,7 +191,7 @@ class EventAdminViewsTest(TestCase):
     def test_edit_superuser_can_access(self):
         """
         Tests whether authenticated supseruser is granted access
-        to the event edit page
+        to the edit event page
         """
         test_staffuser = User.objects.get(username='testsuperuser')
         logged_in = self.client.login(
@@ -216,7 +218,7 @@ class EventAdminViewsTest(TestCase):
     def test_edit_uses_correct_template(self):
         """
         Tests whether the correct template is used
-        when user is logged in
+        when superuser is logged in
         """
         test_superuser = User.objects.get(username='testsuperuser')
         logged_in = self.client.login(
@@ -249,7 +251,7 @@ class EventAdminViewsTest(TestCase):
     def test_delete_uses_correct_template(self):
         """
         Tests whether the correct template is used
-        when user is logged in
+        when superuser is logged in
         """
         test_superuser = User.objects.get(username='testsuperuser')
         logged_in = self.client.login(
@@ -280,7 +282,6 @@ class EventAdminViewsTest(TestCase):
             username='testsuperuser', password='suPeR42315')
         response = self.client.post(
             reverse('delete_event', args=[self.event.id]))
-        self.event.delete()
         self.assertRedirects(response, reverse('events'))
 
 
@@ -289,12 +290,12 @@ class EventRegisterViewTest(TestCase):
         """
         Sets up data for the event register view tests
         """
-        today = date.today()
+
         self.event = Event.objects.create(
             title='Test Event',
             description='Test description here',
             speaker='Dr Jane Goodall',
-            when=today + timedelta(days=50),
+            when=make_aware(datetime.now() + timedelta(days=10)),
         )
         test_user = User.objects.create_user(
             username='testuser',

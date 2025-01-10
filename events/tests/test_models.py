@@ -1,5 +1,7 @@
+from dateutil import parser
 from django.contrib.auth.models import User
 from django.test import TestCase
+from django.utils.timezone import make_aware
 
 from ..models import Event
 
@@ -13,12 +15,11 @@ class EventModelTest(TestCase):
         """
         event1 = Event.objects.create(
             title='Test Event Title',
-            when='2028-12-12 20:00:00'
+            when=make_aware(parser.parse('2028-12-12 20:00:00')),
         )
-
         event2 = Event.objects.create(
             title='Test Event Two Title',
-            when='2028-12-20 20:00:00',
+            when=make_aware(parser.parse('2028-12-20 20:00:00')),
             cancelled=True
         )
 
@@ -74,7 +75,7 @@ class EventModelTest(TestCase):
     def test_str_representation_if_not_cancelled(self):
         """
         Tests string representation if an Event object
-        is not marked as cancelled
+        is marked as cancelled
         """
         event = Event.objects.get(id=2)
         expected_str = f"CANCELLED: {event.when} | {event.title}"

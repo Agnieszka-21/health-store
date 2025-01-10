@@ -12,12 +12,12 @@ class CategoryModelTest(TestCase):
         """
         Category.objects.create(
             name='category',
-            friendly_name= 'Category'
+            friendly_name='Category'
         )
 
     def test_name_label(self):
         """
-        Tests the label of the name field
+        Tests the label of the field 'name'
         """
         category = Category.objects.get(id=1)
         field_label = category._meta.get_field('name').verbose_name
@@ -25,7 +25,7 @@ class CategoryModelTest(TestCase):
 
     def test_friendly_name_label(self):
         """
-        Tests the label of the friendly_name field
+        Tests the label of the field 'friendly_name'
         """
         category = Category.objects.get(id=1)
         field_label = category._meta.get_field('friendly_name').verbose_name
@@ -33,7 +33,7 @@ class CategoryModelTest(TestCase):
 
     def test_name_max_length(self):
         """
-        Tests the maximum length of the name field
+        Tests the maximum length of the field 'name'
         """
         category = Category.objects.get(id=1)
         max_length = category._meta.get_field('name').max_length
@@ -41,7 +41,7 @@ class CategoryModelTest(TestCase):
 
     def test_friendly_name_max_length(self):
         """
-        Tests the maximum length of the name field
+        Tests the maximum length of the field 'name'
         """
         category = Category.objects.get(id=1)
         max_length = category._meta.get_field('friendly_name').max_length
@@ -59,7 +59,7 @@ class CategoryModelTest(TestCase):
 
     def test_str_representation_is_name(self):
         """
-        Tests the string representation of the Carousel object
+        Tests the string representation of the Category object
         """
         category = Category.objects.get(id=1)
         expected_str_representation = f'{category.name}'
@@ -80,7 +80,7 @@ class BrandModelTest(TestCase):
 
     def test_name_label(self):
         """
-        Tests the label of the name field
+        Tests the label of the field 'name'
         """
         brand = Brand.objects.get(id=1)
         field_label = brand._meta.get_field('name').verbose_name
@@ -88,7 +88,7 @@ class BrandModelTest(TestCase):
 
     def test_friendly_name_label(self):
         """
-        Tests the label of the friendly_name field
+        Tests the label of the field 'friendly_name'
         """
         brand = Brand.objects.get(id=1)
         field_label = brand._meta.get_field('friendly_name').verbose_name
@@ -96,7 +96,7 @@ class BrandModelTest(TestCase):
 
     def test_url_label(self):
         """
-        Tests the label of the url field
+        Tests the label of the field 'url'
         """
         brand = Brand.objects.get(id=1)
         field_label = brand._meta.get_field('url').verbose_name
@@ -104,7 +104,7 @@ class BrandModelTest(TestCase):
 
     def test_name_max_length(self):
         """
-        Tests the maximum length of the name field
+        Tests the maximum length of the field 'name'
         """
         brand = Brand.objects.get(id=1)
         max_length = brand._meta.get_field('name').max_length
@@ -112,7 +112,7 @@ class BrandModelTest(TestCase):
 
     def test_friendly_name_max_length(self):
         """
-        Tests the maximum length of the friendly name field
+        Tests the maximum length of the field 'friendly_name'
         """
         brand = Brand.objects.get(id=1)
         max_length = brand._meta.get_field('friendly_name').max_length
@@ -120,7 +120,7 @@ class BrandModelTest(TestCase):
 
     def test_url_max_length(self):
         """
-        Tests the maximum length of the url field
+        Tests the maximum length of the field 'url'
         """
         brand = Brand.objects.get(id=1)
         max_length = brand._meta.get_field('url').max_length
@@ -136,14 +136,14 @@ class BrandModelTest(TestCase):
 
     def test_get_friendly_name(self):
         """
-        Tests the get_url method
+        Tests the method 'get_friendly_name'
         """
         brand = Brand.objects.get(id=1)
-        self.assertEqual(brand.get_friendly_name(), 'Test Brand')        
+        self.assertEqual(brand.get_friendly_name(), 'Test Brand')
 
     def test_get_url(self):
         """
-        Tests the get_url method
+        Tests the method 'get_url'
         """
         brand = Brand.objects.get(id=1)
         self.assertEqual(brand.get_url(), 'https://google.com')
@@ -160,18 +160,18 @@ class ProductModelTest(TestCase):
         cls.brand_ = 'Pukka'
         cls.brand = Brand.objects.create(name=cls.brand_)
         cls.product = Product.objects.create(
-            category = cls.category,
-            brand = cls.brand,
-            sku = 'SKUU001',
-            name = 'SleepEasy Tea',
-            description = 'Supports sleep',
-            ingredients = 'lemon balm, lavender, chamomile',
-            price = 3.99
+            category=cls.category,
+            brand=cls.brand,
+            sku='SKUU001',
+            name='SleepEasy Tea',
+            description='Supports sleep',
+            ingredients='lemon balm, lavender, chamomile',
+            price=3.99,
         )
 
     def test_name_max_length(self):
         """
-        Tests the maximum length of the name field
+        Tests the maximum length of the field 'name'
         """
         product = Product.objects.get(id=1)
         max_length = product._meta.get_field('name').max_length
@@ -179,7 +179,7 @@ class ProductModelTest(TestCase):
 
     def test_sku_max_length(self):
         """
-        Tests the maximum length of the sku field
+        Tests the maximum length of the field 'sku'
         """
         product = Product.objects.get(id=1)
         max_length = product._meta.get_field('sku').max_length
@@ -195,7 +195,7 @@ class ProductModelTest(TestCase):
 
     def test_str_representation_is_name(self):
         """
-        Tests the string representation of the Brand object
+        Tests the string representation of the Product object
         """
         product = Product.objects.get(id=1)
         expected_str_representation = f'{product.name}'
@@ -216,17 +216,17 @@ class ReviewModelTest(TestCase):
         cls.author_ = 'User1'
         cls.author = User.objects.create(username=cls.author_)
         cls.review = Review.objects.create(
-            product = cls.product,
-            author = cls.author,
-            rating = 5,
-            text = 'review text here',
-            created_on = '2024-12-12 20:20:20',
-            approved = True
+            product=cls.product,
+            author=cls.author,
+            rating=5,
+            text='review text here',
+            created_on='2024-12-12 20:20:20',
+            approved=True,
         )
 
     def test_default_rating(self):
         """
-        Tests the default value of the rating field
+        Tests the default value of the field 'rating'
         """
         review = Review.objects.get(id=1)
         rating = review._meta.get_field('rating').default
@@ -245,5 +245,6 @@ class ReviewModelTest(TestCase):
         Tests the string representation of the Review object
         """
         review = Review.objects.get(id=1)
-        expected_str_representation = f'Comment {review.text} by {review.author}'
+        expected_str_representation = (
+            f'Comment {review.text} by {review.author}')
         self.assertEqual(str(review), expected_str_representation)

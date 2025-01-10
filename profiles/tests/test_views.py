@@ -6,7 +6,6 @@ from ..models import UserProfile
 from checkout.models import Order
 
 
-
 class ProfileViewTest(TestCase):
     def setUp(self):
         """
@@ -19,7 +18,6 @@ class ProfileViewTest(TestCase):
             is_staff=False,
         )
         test_user.save()
-
         self.profile = test_user.profile
 
     def test_unauthenticated_user_redirected(self):
@@ -85,7 +83,6 @@ class OrdersViewTest(TestCase):
             is_staff=False,
         )
         test_user.save()
-
         self.profile = test_user.profile
 
     def test_unauthenticated_user_redirected(self):
@@ -136,18 +133,17 @@ class OrderHistoryViewTest(TestCase):
             is_staff=False,
         )
         test_user.save()
-
         self.profile = test_user.profile
 
         order1 = Order.objects.create(
-            order_number = '1135862',
-            user_profile = self.profile,
-            grand_total = 57.55,
+            order_number='1135862',
+            user_profile=self.profile,
+            grand_total=57.55,
         )
         order2 = Order.objects.create(
-            order_number = '4059872578',
-            user_profile = self.profile,
-            grand_total = 15.33,
+            order_number='4059872578',
+            user_profile=self.profile,
+            grand_total=15.33,
         )
 
     def test_unauthenticated_user_can_acces_order(self):
@@ -173,10 +169,12 @@ class OrderHistoryViewTest(TestCase):
         )
         self.assertTrue(logged_in)
         order1 = Order.objects.get(order_number='1135862')
-        response = self.client.get(f'/profile/order_history/{order1.order_number}/')
+        response = self.client.get(
+            f'/profile/order_history/{order1.order_number}/')
         self.assertEqual(response.status_code, 200)
         order2 = Order.objects.get(order_number='4059872578')
-        response = self.client.get(f'/profile/order_history/{order2.order_number}/')
+        response = self.client.get(
+            f'/profile/order_history/{order2.order_number}/')
         self.assertEqual(response.status_code, 200)
 
     def test_view_uses_correct_template(self):
@@ -187,7 +185,8 @@ class OrderHistoryViewTest(TestCase):
         logged_in = self.client.login(
             username='testuser', password='1X<12345+tuK')
         order = Order.objects.get(order_number='1135862')
-        response = self.client.get(reverse('order_history', args=[order.order_number]))
+        response = self.client.get(
+            reverse('order_history', args=[order.order_number]))
         self.assertTemplateUsed(response, 'checkout/checkout_success.html')
 
 
@@ -205,7 +204,7 @@ class WishlistItemsViewTest(TestCase):
         test_user.save()
 
         self.profile = test_user.profile
-    
+
     def test_unauthenticated_user_redirected(self):
         """
         Tests whether user is redirected if not logged in
@@ -251,9 +250,8 @@ class BookmarkedViewTest(TestCase):
             is_staff=False,
         )
         test_user.save()
-
         self.profile = test_user.profile
-    
+
     def test_unauthenticated_user_redirected(self):
         """
         Tests whether user is redirected if not logged in

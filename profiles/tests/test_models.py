@@ -8,7 +8,7 @@ class UserProfileModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         """
-        Sets up non-modified objects User and Profile
+        Sets up non-modified objects User and UserProfile
         used by all test methods
         """
         cls.user = User.objects.create_user(
@@ -45,7 +45,8 @@ class UserProfileModelTest(TestCase):
         Tests the maximum length of the field 'default_street_address1'
         """
         profile = UserProfile.objects.get(id=self.profile.id)
-        max_length = profile._meta.get_field('default_street_address1').max_length
+        max_length = profile._meta.get_field(
+            'default_street_address1').max_length
         self.assertEqual(max_length, 80)
 
     def test_postcode_max_length(self):
@@ -66,7 +67,7 @@ class UserProfileModelTest(TestCase):
 
     def test_str_representation(self):
         """
-        Tests the string representation of the Brand object
+        Tests the string representation of the UserProfile object
         """
         profile = UserProfile.objects.get(id=1)
         expected_str_representation = f'{profile.user.username}'

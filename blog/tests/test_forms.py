@@ -1,14 +1,15 @@
 from django.test import SimpleTestCase, TestCase
 from django_summernote.widgets import SummernoteWidget
 
-from ..forms import ArticleForm, RestrictedArticleForm, RecipeForm, RestrictedRecipeForm
+from ..forms import (
+    ArticleForm, RestrictedArticleForm, RecipeForm, RestrictedRecipeForm)
 
 
 class ArticleFormTest(SimpleTestCase):
 
     def test_form_fields(self):
         """
-        Tests which fields this form has
+        Tests which fields are included in this form
         """
         form = ArticleForm()
         self.assertTrue(form.Meta.fields, [
@@ -55,17 +56,19 @@ class RestrictedArticleFormTest(SimpleTestCase):
 
     def test_user_field_is_excluded(self):
         """
-        Tests whether the model field 'approved' is excluded
+        Tests whether the model fields 'approved' and
+        'date_of_publication' are excluded
         """
         form = RestrictedArticleForm()
-        self.assertEqual(form.Meta.exclude, ['approved', 'date_of_publication'])
+        self.assertEqual(
+            form.Meta.exclude, ['approved', 'date_of_publication'])
 
 
 class RecipeFormTest(SimpleTestCase):
 
     def test_form_fields(self):
         """
-        Tests which fields this form has
+        Tests which fields are included in this form
         """
         form = RecipeForm()
         self.assertTrue(form.Meta.fields, [
@@ -132,7 +135,9 @@ class RestrictedRecipeFormTest(SimpleTestCase):
 
     def test_user_field_is_excluded(self):
         """
-        Tests whether the model field 'approved' is excluded
+        Tests whether the model fields 'approved' and
+        'date_of_publication' are excluded
         """
         form = RestrictedRecipeForm()
-        self.assertEqual(form.Meta.exclude, ['approved', 'date_of_publication'])
+        self.assertEqual(
+            form.Meta.exclude, ['approved', 'date_of_publication'])
