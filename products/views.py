@@ -91,7 +91,6 @@ def product_detail(request, product_id):
             'review_count': review_count,
             'review_form': review_form,
         }
-
         if review_form.is_valid():
             review = review_form.save(commit=False)
             review.author = request.user
@@ -99,7 +98,6 @@ def product_detail(request, product_id):
             review.rating = request.POST['stars-rating']
             if review.text == '':
                 review.approved = True
-
             try:
                 review.save()
                 messages.success(
@@ -109,10 +107,8 @@ def product_detail(request, product_id):
                 messages.error(
                     request,
                     'Sorry, an error occurred. Please try again later')
-
             return HttpResponseRedirect(
                 reverse('product_detail', args=[product_id]))
-
     else:
         review_form = ReviewForm()
         context = {

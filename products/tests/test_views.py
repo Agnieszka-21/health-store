@@ -206,11 +206,11 @@ class ProductAdminViewsTest(TestCase):
         test_superuser.save()
         self.category = Category.objects.create(
             name='supplements',
-            friendly_name='Supplements'
+            friendly_name='Supplements',
         )
         self.brand = Brand.objects.create(
             name='viridian',
-            friendly_name='Viridian'
+            friendly_name='Viridian',
         )
         self.product = Product.objects.create(
             category=self.category,
@@ -219,7 +219,7 @@ class ProductAdminViewsTest(TestCase):
             name='Vitamin D',
             description='Supplement for better immunity',
             ingredients='Vitamin D3',
-            price=20.99           
+            price=20.99,
         )
 
     def test_add_unauthenticated_user_redirected(self):
@@ -422,12 +422,7 @@ class ProductAdminViewsTest(TestCase):
 class ManageReviewsViewTest(TestCase):
     def setUp(self):
         """
-        Sets up data that can be modified in the methods below
-        Used for the following **views:**
-
-        :view:`add_product`
-        :view:`edit_product`
-        :view:`delete_product`
+        Sets up data for review admin tests
         """
         test_user = User.objects.create_user(
             username='testuser',
@@ -452,11 +447,11 @@ class ManageReviewsViewTest(TestCase):
         test_superuser.save()
         self.category = Category.objects.create(
             name='supplements',
-            friendly_name='Supplements'
+            friendly_name='Supplements',
         )
         self.brand = Brand.objects.create(
             name='viridian',
-            friendly_name='Viridian'
+            friendly_name='Viridian',
         )
         self.product = Product.objects.create(
             category=self.category,
@@ -465,7 +460,7 @@ class ManageReviewsViewTest(TestCase):
             name='Vitamin D',
             description='Supplement for better immunity',
             ingredients='Vitamin D3',
-            price=20.99           
+            price=20.99,
         )
         review1 = Review.objects.create(
             product=self.product,
@@ -483,17 +478,53 @@ class ManageReviewsViewTest(TestCase):
         )
 
     def test_superuser_can_approve_review(self):
+        """
+        Tests whether an authenticated superuser can approve
+        a review, resulting in the review being taken off the
+        list on the manage reviews page
+        """
         test_superuser = User.objects.get(username='testsuperuser')
         logged_in = self.client.login(
             username='testsuperuser', password='suPeR42315')
-        review1 = Review.objects.get(id=1)
-        response = self.client.post(
+        self.assertTrue(logged_in)
+        # Check the initial number of new reviews
+        response = self.client.get(
             reverse('manage_reviews'))
-        self.assertIn([review1], response.context['new_reviews'])
-        # Approve the review  
+        self.assertEqual(response.context['new_reviews'].count(), 2)
+        # Approve the review
+        review1 = Review.objects.get(id=1)
         review1.approved = True
         review1.save()
-        # Check the updated list of new reviews to manage
+        # Check the number of new reviews
         response = self.client.post(
             reverse('manage_reviews'))
-        self.assertNotIn([review1], response.context['new_reviews']) # FIX
+        self.assertEqual(response.context['new_reviews'].count(), 1)
+        # Check the number of reviews on the product detail page
+        response = self.client.get(
+            reverse('product_detail', args=[self.product.id]))
+        self.assertEqual(response.context['review_count'], 1)
+
+    def test_superuser_can_delete_review(self):
+        """
+        Tests whether an authenticated superuser can delete
+        a review
+        """
+        test_superuser = User.objects.get(username='testsuperuser')
+        logged_in = self.client.login(
+            username='testsuperuser', password='suPeR42315')
+        self.assertTrue(logged_in)
+        # Check the initial number of new reviews
+        response = self.client.get(
+            reverse('manage_reviews'))
+        self.assertEqual(response.context['new_reviews'].count(), 2)
+        # Approve the review
+        review2 = Review.objects.get(id=2)
+        review2.delete()
+        # Check the number of new reviews
+        response = self.client.post(
+            reverse('manage_reviews'))
+        self.assertEqual(response.context['new_reviews'].count(), 1)
+        # Check the number of reviews on the product detail page
+        response = self.client.get(
+            reverse('product_detail', args=[self.product.id]))
+        self.assertEqual(response.context['review_count'], 0)
