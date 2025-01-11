@@ -249,7 +249,8 @@ def edit_article(request, article_id):
 
             if article_form.is_valid():
                 edited_article = article_form.save(commit=False)
-                if edited_article.approved and edited_article.date_of_publication is None:
+                if edited_article.approved and (
+                        edited_article.date_of_publication is None):
                     messages.error(
                         request,
                         'Please make sure to set a date of publication')
@@ -327,7 +328,8 @@ def edit_recipe(request, recipe_id):
 
             if recipe_form.is_valid():
                 edited_recipe = recipe_form.save(commit=False)
-                if edited_recipe.approved and edited_recipe.date_of_publication is None:
+                if edited_recipe.approved and (
+                        edited_recipe.date_of_publication is None):
                     messages.error(
                         request,
                         'Please make sure to set a date of publication')
@@ -395,7 +397,8 @@ def unpublish_article(request, article_id):
             messages.success(request, 'Article unpublished successfully.')
             return redirect(reverse('articles'))
         except Exception:
-            messages.error(request, 'Sorry, the article could not be unpublished')
+            messages.error(
+                request, 'Sorry, the article could not be unpublished')
 
     template = 'blog/delete_article.html'
     context = {
@@ -427,7 +430,8 @@ def unpublish_recipe(request, recipe_id):
             return redirect(reverse('recipes'))
         except Exception as e:
             print('Error recipe: ', e)
-            messages.error(request, 'Sorry, the recipe could not be unpublished')
+            messages.error(
+                request, 'Sorry, the recipe could not be unpublished')
 
     template = 'blog/delete_recipe.html'
     context = {
