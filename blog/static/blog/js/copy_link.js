@@ -9,5 +9,5 @@ $(document).ready(function(){
             confirmation.classList.add('d-inline-block');
             confirmation.classList.remove('d-none');
         }
-    )
-})
+    );
+});

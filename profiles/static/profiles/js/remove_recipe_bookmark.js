@@ -13,13 +13,9 @@ $(document).ready(function(){
                     data: {'recipe_id': recipe_id },
                     headers : { 'X-CSRFToken': csrftoken},
                     success: function (result) {
-                        console.log('Success');
                         bookmarked_recipe[0].classList.add('d-none');
-                    },
-                    error: function() {
-                        console.log('An error occurred');
-                    }    
+                    },   
             });
         }
-    )
-})
+    );
+});
