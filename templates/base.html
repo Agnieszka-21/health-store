@@ -89,13 +89,13 @@
                         </div>
 
                         <div>
-                            <h1 id="logo"><a class="navbar-brand" aria-current="page" href="{% url 'home' %}">Health&#127807Store</a></h1>
+                            <h1 id="logo"><a class="navbar-brand" aria-current="page" href="{% url 'home' %}">Health&#127807;Store</a></h1>
                         </div>
 
                         <div class="navbar">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row" id="menu-icons">
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="User profile">
                                         <i class="fa-solid fa-user"></i>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -113,7 +113,7 @@
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link position-relative" href="{% url 'view_basket' %}">
+                                    <a class="nav-link position-relative" href="{% url 'view_basket' %}" aria-label="Shopping basket">
                                         <i class="fa-solid fa-basket-shopping"></i>
 
                                         {% if product_count %}
@@ -229,27 +229,27 @@
 
                     <div class="col-12 col-md-5 mb-3 mb-md-0 align-self-end pb-md-5">
                         <!-- Social media links -->
-                        <section id="social-links" class="pb-2">
-                            <a data-mdb-ripple-init class="btn btn-outline-light btn-floating border-0 mx-1 align-middle" href="https://www.facebook.com/" target="_blank" rel="noopener" role="button">
+                        <div id="social-links" class="pb-2">
+                            <a data-mdb-ripple-init class="btn btn-outline-light btn-floating border-0 mx-1 align-middle" href="https://www.facebook.com/" target="_blank" rel="nofollow noopener" role="button" aria-label="Link to Facebook page">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
-                            <a data-mdb-ripple-init class="btn btn-outline-light btn-floating border-0 mx-1 align-middle" href="https://www.youtube.com/" target="_blank" rel="noopener" role="button">
+                            <a data-mdb-ripple-init class="btn btn-outline-light btn-floating border-0 mx-1 align-middle" href="https://www.youtube.com/" target="_blank" rel="nofollow noopener" role="button" aria-label="Link to YouTube channel">
                                 <i class="fa-brands fa-youtube"></i>
                             </a>
-                            <a data-mdb-ripple-init class="btn btn-outline-light btn-floating border-0 mx-1 align-middle" href="https://www.instagram.com/" target="_blank" rel="noopener" role="button">
+                            <a data-mdb-ripple-init class="btn btn-outline-light btn-floating border-0 mx-1 align-middle" href="https://www.instagram.com/" target="_blank" rel="nofollow noopener" role="button" aria-label="Link to Instagram account">
                                 <i class="fab fa-instagram"></i>
                             </a>
-                        </section>
+                        </div>
                         <!-- Privacy Policy -->
-                        <section id="privacy-policy">
+                        <div id="privacy-policy">
                             <small class="align-middle">
-                                <a class="text-link text-white fw-normal" href="https://www.termsfeed.com/live/a6201b64-813b-405b-9087-b51cf1d883cf" target="_blank">Privacy Policy</a>
+                                <a class="text-link text-white fw-normal" href="https://www.termsfeed.com/live/a6201b64-813b-405b-9087-b51cf1d883cf" target="_blank" rel="nofollow noopener">Privacy Policy</a>
                             </small>
-                        </section>
+                        </div>
                         <!-- Copyright -->
-                        <section id="copyright">
+                        <div id="copyright">
                             <small class="align-middle">© 2024 Copyright: Health Store Ltd.</small>
-                        </section>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -258,7 +258,7 @@
         {% endblock %}
 
         {% block postloadjs %} 
-        <script type="text/javascript">
+        <script>
             var toastElList = [].slice.call(document.querySelectorAll('.toast'));
             console.log('toastElList:', toastElList);
             var toastList = toastElList.map(function(toastEl) {
@@ -269,8 +269,8 @@
         </script>
 
         <!-- Javascript for the newsletter signup form (Mailchimp) -->
-        <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
-        <script type="text/javascript">
+        <script src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
+        <script>
             (function ($) {
                 window.fnames = new Array();
                 window.ftypes = new Array();
