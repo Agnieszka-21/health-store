@@ -18,7 +18,7 @@
             {% for product in wishlist_items %}
             <div id="wishlist-product" class="col mb-2">
                 <div class="card h-100 border-1">
-                    <button class="add-to-wishlist text-end pe-3" style="border:none; background:none;" data-product-item="{{ product.id }}">
+                    <button class="add-to-wishlist text-end pe-3" style="border:none; background:none;" data-product-item="{{ product.id }}" aria-label="Heart icon - click to remove product from wishlist">
                         <i class="fa-solid fa-heart"></i>
                     </button>
 

@@ -15,7 +15,7 @@
                 <h2 class="mb-4">Bookmarked articles</h2>
                 {% for article in saved_articles %}
                 <div id="reading-list" class="row blog-thumbnail">
-                    <button class="remove-article col-1" data-article-item="{{ article.id }}">
+                    <button class="remove-article col-1" data-article-item="{{ article.id }}" aria-label="Bookmark icon - click to remove article from this page">
                         <i class="fa-solid fa-bookmark"></i>
                     </button>
                     {% if article.banner_img %}
@@ -38,7 +38,7 @@
                 <h2 class="mb-4">Bookmarked recipes</h2>
                 {% for recipe in saved_recipes %}
                 <div id="recipe-list" class="row blog-thumbnail">
-                    <button class="remove-recipe col-1" data-recipe-item="{{ recipe.id }}">
+                    <button class="remove-recipe col-1" data-recipe-item="{{ recipe.id }}" aria-label="Bookmark icon - click to remove recipe from this page">
                         <i class="fa-solid fa-bookmark"></i>
                     </button>
                     {% if recipe.banner_img %}
