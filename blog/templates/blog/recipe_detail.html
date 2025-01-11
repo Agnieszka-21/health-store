@@ -27,13 +27,13 @@
                 <div>
                     {% if user.is_authenticated %}
                     <span class="pe-2" id="save-recipe">
-                        <button class="bookmark-recipe text-end pe-2" data-recipe-item="{{ recipe.id }}">
+                        <button class="bookmark-recipe text-end pe-2" data-recipe-item="{{ recipe.id }}" aria-label="Bookmark icon - click to save recipe">
                             <i class="fa-regular fa-bookmark"></i>
                         </button>
                     </span>
                     {% endif %}
                     <span>
-                        <button class="share-link"><i class="fa-solid fa-link"></i></button>
+                        <button class="share-link"><i class="fa-solid fa-link" aria-label="Link icon - click to copy URL"></i></button>
                         <small class="confirmation-text d-none">Link copied!</small>
                     </span>
                 </div>
@@ -48,7 +48,7 @@
                 {% endif %}
             </div>
             <div class="d-none d-lg-block blog-content">
-                <p>{{ recipe.description | safe }}</p>
+                {{ recipe.description | safe }}
             </div>
         </div>
     </div>

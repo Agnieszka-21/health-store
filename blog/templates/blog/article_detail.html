@@ -22,13 +22,13 @@
                 <div>
                     {% if user.is_authenticated %}
                     <span class="pe-3" id="save-article">
-                        <button class="bookmark-article text-end pe-2" data-article-item="{{ article.id }}">
+                        <button class="bookmark-article text-end pe-2" data-article-item="{{ article.id }}" aria-label="Bookmark icon - click to save article">
                             <i class="fa-regular fa-bookmark"></i>
                         </button>
                     </span>
                     {% endif %}
                     <span>
-                        <button class="share-link"><i class="fa-solid fa-link"></i></button>
+                        <button class="share-link" aria-label="Link icon - click to copy URL"><i class="fa-solid fa-link"></i></button>
                         <small class="confirmation-text d-none">Link copied!</small>
                     </span>
                 </div>

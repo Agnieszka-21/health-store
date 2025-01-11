@@ -61,7 +61,7 @@
                     <div class="card h-100 border-1">
 
                         {% if request.user.is_authenticated %}
-                        <button class="add-to-wishlist text-end pe-1 pt-1" data-product-item="{{ product.id }}">
+                        <button class="add-to-wishlist text-end pe-1 pt-1" data-product-item="{{ product.id }}" aria-label="Heart icon - click to add to wishlist">
                             <i class="fa-regular fa-heart h5"></i>
                         </button>
                         {% endif %}

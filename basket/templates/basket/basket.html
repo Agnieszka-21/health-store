@@ -103,14 +103,19 @@
                     </div>
                 </div>
             {% else %}
-            <p class="lead mb-5">Your basket is empty</p>
-            <a href="{% url 'products' %}" class="btn btn-lg btn-dark bg-dark-green">
-                <span class="icon">
-                    <i class="fas fa-chevron-left"></i>
-                </span>
-                <span class="text-uppercase">Keep shopping</span>
-            </a>
+            <div class="mb-5">
+                <p class="lead mb-5">Your basket is empty</p>
+                <a href="{% url 'products' %}" class="btn btn-lg btn-dark bg-dark-green">
+                    <span class="icon">
+                        <i class="fas fa-chevron-left"></i>
+                    </span>
+                    <span class="text-uppercase">Keep shopping</span>
+                </a>
+            </div>
             {% endif %}
+        </div>
+    </div>
+</div>
 
 {% endblock %}
 
@@ -118,10 +123,10 @@
 {% block postloadjs %}
 {{ block.super }}
 <!-- Update product quantity -->
-<script src="{% static 'products/js/product_quantity.js' %}" ></script>
+<script src="{% static 'products/js/product_quantity.js' %}"></script>
 
 <!-- The script element below has been copied from the CI's Boutique Ado walkthrough project and slightly adjusted -->
-<script type="text/javascript">
+<script>
     // Update quantity on click
     $('.update-link').click(function(e) {
         let form = $(this).prev('.update-form');

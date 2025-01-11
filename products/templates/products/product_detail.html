@@ -45,7 +45,7 @@
                 <h5 class="mb-0">{{ product.name }}
                     {% if request.user.is_authenticated %}
                     <span>
-                        <button class="add-to-wishlist text-end pe-3" data-product-item="{{ product.id }}">
+                        <button class="add-to-wishlist text-end pe-3" data-product-item="{{ product.id }}" aria-label="Heart icon - click to add to wishlist">
                             <i class="fa-regular fa-heart"></i>
                         </button>
                     </span>
