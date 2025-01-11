@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib import messages
-from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
+from django.shortcuts import (
+    render, redirect, reverse, get_object_or_404, HttpResponse)
 from django.views.decorators.http import require_POST
 
 from .forms import OrderForm
@@ -16,6 +17,9 @@ import stripe
 
 @require_POST
 def cache_checkout_data(request):
+    """
+    Handles checkout data
+    """
     try:
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.CLIENT_SECRET
@@ -32,6 +36,9 @@ def cache_checkout_data(request):
 
 
 def checkout(request):
+    """
+    Handles checkout process
+    """
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     client_secret = settings.CLIENT_SECRET
 
@@ -69,18 +76,19 @@ def checkout(request):
                         order_line_item.save()
                 except Product.DoesNotExist:
                     messages.error(request, (
-                        "One of the products in your basket wasn't found in our database. "
-                        "Please call us for assistance!")
+                        "One of the products in your basket wasn't found in "
+                        "our database. Please call us for assistance!")
                     )
                     order.delete()
                     return redirect(reverse('view_basket'))
             request.session['save_info'] = 'save-info' in request.POST
-            return redirect(reverse('checkout_success', args=[order.order_number]))
+            return redirect(
+                reverse('checkout_success', args=[order.order_number]))
         else:
             messages.error(request, 'There was an error with your form. \
                 Please double check your information.')
 
-    else: 
+    else:
         basket = request.session.get('basket', {})
         if not basket:
             messages.error(request, 'Your basket is empty')
@@ -94,7 +102,7 @@ def checkout(request):
             amount=stripe_total,
             currency=settings.STRIPE_CURRENCY,
         )
-        
+
         if request.user.is_authenticated:
             try:
                 profile = UserProfile.objects.get(user=request.user)
@@ -130,7 +138,7 @@ def checkout(request):
 
 def checkout_success(request, order_number):
     """
-    Handle successful checkouts
+    Handles successful checkouts
     """
     save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)

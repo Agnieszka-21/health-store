@@ -58,7 +58,6 @@ class Product(models.Model):
     def average_rating(self):
         ratings = Review.objects.filter(
             product=self, approved=True).aggregate(average=Avg('rating'))
-        print('Ratings: ', ratings)
         avg = 0
         if ratings['average'] is not None:
             avg = float(ratings['average'])

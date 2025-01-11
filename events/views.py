@@ -55,7 +55,7 @@ def display_events(request):
     Displays upcoming online events in a specified order
 
     **Context:**
-    
+
     ``upcoming_events``
 
     **Template:**

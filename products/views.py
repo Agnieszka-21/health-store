@@ -340,14 +340,12 @@ def edit_product(request, product_id):
 
                 elif not edited_images.primary_img:
                     # No images in the form
-                    if (edited_images.primary_img == None) and (
-                        edited_images.secondary_img == None) and (
-                            edited_images.tertiary_img == None):
-                        messages.success(
-                            request, 'Successfully updated product!')
-                        return redirect(reverse(
-                            'product_detail', args=[edited_product.id]))
-
+                    if not edited_images.secondary_img:
+                        if not edited_images.tertiary_img:
+                            messages.success(
+                                request, 'Successfully updated product!')
+                            return redirect(reverse(
+                                'product_detail', args=[edited_product.id]))
                     # If user removes the main image, delete the entire Image
                     # object so that the default image can be used instead
                     elif product_images:
