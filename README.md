@@ -674,75 +674,97 @@ While testing every single functionality as I was creating and refining it was e
 
 | Functionality being tested | Expected Outcome | Actual Outcome | Result (pass/fail) |
 | :------------------------- | :--------------- | :------------- | :-------------------- |
-| Logo "Namaste" | takes the user to the homepage when selected on any page | as expected | pass |
-| Navbar link "Sign up" | takes the user to the Sign up page | as expected | pass |
-| Navbar link "Log in" | takes the user to the Log in page | as expected | pass |
-| Navbar link "Schedule" | takes the user to the Schedule page | as expected | pass |
-| Navbar link "My profile" | takes a logged-in user to their profile page | as expected | pass |
-| Navbar link "My bookings" | takes a logged-in user to their bookings | as expected | pass |
-| Navbar link "Log out" | takes a logged-in user to the log out page | as expected | pass |
+| "Sign up" link in the promo banner | takes the user to the newsletter signup form in the footer | as expected | pass |
+| Logo "Health Store" | takes the user to the homepage when selected on any page | as expected | pass |
+| Navbar profile icon | opens/closes a dropdown when selected | as expected | pass |
+| Navbar link "Sign up" under the profile icon | takes the user to the Sign up page | as expected | pass |
+| Navbar link "Log in" under the profile icon | takes the user to the Log in page | as expected | pass |
+| Navbar link "Shop" | takes the user to the Shop page | as expected | pass |
+| Navbar link "Blog" | takes a logged-in user to the blog page | as expected | pass |
+| Navbar link "Events" | takes a logged-in user to the Events page | as expected | pass |
+| Navbar link "Admin Panel" under the profile icon | takes a logged-in admin to the Admin Panel page | as expected | pass |
+| Navbar link "Account" under the profile icon | takes a logged-in user to their account/profile | as expected | pass |
+| Navbar link "Log out" under the profile icon | takes a logged-in user to the log out page | as expected | pass |
+| Header: Search bar | lets the user type a keyword and search for a product | as expected | pass |
 | Footer: Facebook icon | opens Facebook in a new tab | as expected | pass |
 | Footer: Instagram icon | opens Instagram in a new tab| as expected | pass |
 | Footer: YouTube icon | opens YouTube in a new tab | as expected | pass |
+| Footer: Privacy Policy link | opens Privacy Policy page in a new tab | as expected | pass |
+| Footer: Newsletter form | submits datails entered by user to the MailChimp account | as expected | pass 
 | Sign up page: "Sign up" button | creates a user account & profile, sends a verification email, redirects the user to the homepage and shows a suitable message | as expected | pass |
 | Sign up page: "log in" link | redirects the user to the Log in page | as expected | pass |
 | Log in page: "sign up" link | redirects the user to the Sign up page | as expected | pass |
 | Log in page: "Log in" button | logs the user into their account, redirects them to the homepage, shows a success message | as expected | pass |
 | Log in page: "Forgot password" link | redirects the user to the Password Reset page | as expected | pass |
 | Log out page: "Log out" button | logs the user out of their account, redirects them to the homepage, shows a success message | as expected | pass |
-| Home: "See our schedule" button | redirects user to the Schedule page | as expected | pass |
-| Schedule: class title links | redirect the user to a Schedule detail page for the chosen class | as expected | pass |
-| Schedule detail: "Show bio" underlined text | opens the modal containing a particular instructor's bio | as expected | pass |
-| Schedule detail: close icon inside the modal | closes the modal | as expected | pass |
-| Schedule detail: "Log in to book the class" link | redirects user to the log in page | as expected | pass |
-| Schedule detail: "Book class" button | redirects a logged-in user to the Book class page | as expected | pass |
-| Book class page: "Read the waiver here" underlined text | opens the modal containing the studio's liability waiver | as expected | pass |
-| Book class page: close icon inside the modal | closes the modal | as expected | pass |
-| Book class page: "Available dates" dropdown | shows the next 3 dates for the chosen class | as expected | pass |
-| Book class page: "Book class" button | if successful: creates a booking, redirects the user to the Schedule page, shows a success message; if not successful: shows a suitable message | as expected | pass | 
-| My bookings: "Book your next class" button (shown only if there are no upcoming bookings) | redirects the user to the Schedule page | as expected | pass |
-| My bookings: "Edit booking" | redirects the user to the Edit booking page | as expected | pass |
-| My bookings: "Cancel booking" | redirects the user to the Cancel booking page | as expected | pass |
-| Edit booking page: "Available dates" dropdown | shows the next 3 dates for the chosen class | as expected | pass |
-| Edit booking page: "Save changes" button | if successful: updates the chosen booking, redirects the user to My bookings page, shows a success message; if class full: shows an error message; if class already booked on the new date: redirects to My bookings and shows an info message | as expected | pass |
-| Edit booking page: "Discard changes" button | redirects the user to My bookings page | as expected | pass |
-| Cancel booking page: "Yes, cancel my booking" button | cancels the chosen booking, redirects the user to My bookings, shows a success message | as expected | pass |
-| Cancel booking page: "No, I changed my mind" button | redirects the user to My bookings | as expected | pass |
-| My profile: "Edit profile" button | redirects the user to the Edit profile page | as expected | pass |
-| Edit profile page: "Choose file" for the "Profile image" field | opens the File Explorer on the user's device | as expected | pass |
-| Edit profile page: "Clear" checkbox for the "Profile image" field | when checked, on submission it removed the user's current profile image if they uploaded one earlier | as expected | pass | 
-| Edit profile page: "Save profile" button | saves changes, redirects the user to My profile page, shows a success message | as expected | pass |
-| Edit profile page: "Discard changes" button | redirects the user to My profile | as expected | pass |
+| Home: "Shop now" button | redirects user to the Shop page | as expected | pass |
+| Shop: Sort dropdown | lets the user choose how to sort the products | as expected | pass |
+| Shop: Filter dropdown | lets the user choose a product category | as expected | pass |
+| Shop: Filter dropdown | lets the user choose a product category, displays a category badge | as expected | pass |
+| Shop: "Back to all products" link | resets any filters/sorting | as expected | pass |
+| Shop: "Add" or "Add to basket" button | adds a product to the basket with quantity equal to 1 | as expected | pass |
+| Shop: heart icon (logged-in users only) | updates the wishlist, changes the icon's color | as expected | pass |
+| Shop: product name/image links | redirect the user to a product detail page for the chosen product | as expected | pass |
+| Product detail: product images | thumbnail images and main image switch places when clicked | as expected | pass |
+| Product detail: category link | redirects user back to the Shop page filtered by the category | as expected | pass |
+| Product detail: brand link | opens the website of a product's brand in a new tab | as expected | pass |
+| Product detail: quantity input | lets the user choose product quantity between 1-9 | as expected | pass |
+| Product detail: "Add to basket" button | adds the product to basket | as expected | pass |
+| Product detail: "Log in to leave a review" button | redirects user to the Log in page | as expected | pass |
+| Product detail: "Leave a review" form and submit button (logged-in users only) | allows the user to submit a product review | as expected | pass |
+| Basket - empty: "Keep shopping" button | redirects user back to the shop page | as expected | pass |
+| Basket - full: quantity input | lets the user choose product quantity from 1-9 | as expected | pass |
+| Basket - full: "Update" link | applies any changes in product quantity | as expected | pass |
+| Basket - full: "Remove" link | removes a product from basket | as expected | pass |
+| Basket - full: "Go to checkout" button | redirects user to the checkout page | as expected | pass |
+| Basket - full: "Keep shopping" button | redirects user back to the shop page | as expected | pass |
+| Checkout: form | user can fill it with their data needed to check out | as expected | pass |
+| Checkout: form - "Save to profile" checkbox (logged-in users only) | lets user save their delivery data for | as expected | pass |
+| Checkout: "Adjust basket" button | redirects user back to their basket | as expected | pass |
+| Checkout: "Complete order" button | submits the order, processes the payment, and redirects user to success page or back to checkout if the form is not valid (any errors are displayed) | as expected | pass |
+| Checkout success: button | redirects user to the shop page | as expected | pass |
+| Blog page: "Articles" link/button | takes user to the page listing articles | as expected | pass |
+| Blog page: "Recipes" link/button | takes user to the page listing recipes | as expected | pass |
+| Articles page: article title link | takes user to the article detail page | as expected | pass |
+| Recipes page: recipe title link | takes user to the recipe detail page | as expected | pass |
+| Article detail: link icon | copies the article's URL with one click, show "Link copied" notification | as expected | pass |
+| Article detail: bookmark icon (logged-in users only) | saves the article to user's profile | as expected | pass |
+| Article detail - recommended products: product image/name link | redirects user to product detail page | as expected | pass | 
+| Article detail: "Back to articles" button | redirects user to the artilcles page | as expected | pass |
+| Recipe detail: link icon | copies the recipe's URL with one click, show "Link copied" notification | as expected | pass | 
+| Recipe detail: bookmark icon (logged-in users only) | saves the recipe to user's profile | as expected | pass | 
+| Recipe detail - recommended products: product image/name link | redirects user to product detail page | as expected | pass | 
+| Recipe detail: "Back to recipes" button | redirects user to the recipes page | as expected | pass |
+| Events: "Log in to register" button | redirects user to the Log in page | as expected | pass |
+| Events: "Register" button (logged in users only) | redirects user to the even registration page | as expected | pass |
+| Event registration page: "Register" button | sends a registration confirmation email, shows a success message | as expected | pass |
+| Event registration page: "Cancel" button | redirects user to the events page | as expected | pass |
+| Account: "Update information" button | submits the profile form, saving user's data | as expected | pass |
+| Account: "Order history" | redirects the user to the order history page | as expected | pass |
+| Account: "Wishlist" | redirects the user to the wishlist page | as expected | pass |
+| Account: "Bookmarked articles/recipes" | redirects the user to the page with their saved articles/recipes | as expected | pass |
+| Order history page: order link | redirects the user to order confirmation page | as expected | pass |
+| Order history page: "Back to profile" button | redirects user back to their account page | as expected | pass |
+| Order detail page: "Back to orders" button | redirects user back to their order history page | as expected | pass |
+| Wishlist page: heart icon | when clicked, removes a product from wishlist | as expected | pass |
+| Wishlist page: "Back to profile" button | redirects user back to their account page | as expected | pass |
+| Bookmarked articles/recipes page: bookmark icon | when clicked, removes an article/recipe from the list | as expected | pass |
+| Bookmarked articles/recipes page: "Back to profile" button | redirects user back to their account page | as expected | pass |
 
 
 ### Validator Testing
 
 __HTML__
 
-The [W3C Markup Validation Service](https://validator.w3.org/) was used to check any html files containing custom code. All files are passed the validation test without errors - you can see relevant screenshots below:
-- [home page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/html_home.png)
-- [schedule page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/html_schedule.png)
-- [schedule detail page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/html_schedule_detail.png)
-- [signup page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/html_signup.png)
-- [login page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/html_login.png)
-- [logout page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/html_logout.png)
-- [profile page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/html_profile.png)
-- [edit profile page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/html_edit_profile.png)
-- [my bookings page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/html_my_bookings.png)
-- [edit booking page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/html_edit_booking.png)
-- [cancel booking page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/html_cancel_booking.png)
+The [W3C Markup Validation Service](https://validator.w3.org/) was used to check any html files containing custom code. All files are passed the validation test without errors - you can see relevant screenshots [here]().
 
 __CSS__
 
-The style.css file containing custom styling for the application has been checked in the [W3C CSS Validation Service Jigsaw](https://jigsaw.w3.org/css-validator/) and has no errors - see the screenshot below:
-
-![CSS validator test](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/css_no_errors.png)
+All css files containing custom styling for the application has been checked in the [W3C CSS Validation Service Jigsaw](https://jigsaw.w3.org/css-validator/) and have no errors - you can find relevant screenshot in [this folder]().
 
 __JavaScript__
 
-[JSHint](https://jshint.com/) has been used to validate all JavaScript files in the application. The files returned no errors.
-- [waiver.js - validattion result](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/js_waiver_validator.png)
-- [bio.js - validation result](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/js_bio_validator.png)
+[JSHint](https://jshint.com/) has been used to validate all JavaScript files in the application. The files returned no errors and any related screenshots can be found [here]().
 
 __Python__
 
