@@ -751,11 +751,14 @@ All Python files containing custom code have been run through the [Code Institut
 
 ### Lighthouse and Webaim Wave Testing
 
-The deployed website has been tested using both Lighthouse and WebaAim WAVE in order to ensure that it performs well and meets accessibility criteria. A vast majority of Lighthouse scores is in the optimal green range. However, it is worth noting that using Google maps on the homepage, images uploaded to Cloudinary on other pages, as well as applying Bootstrap and Google Fonts has led to Best Practices scores being slightly lower. From the perspective of a business using this web application it made more sense to keep the map and Cloudinary storage rather than trying to get the best score and missing out on those valuable resources, so the decision was simple. 
+The deployed website has been tested using both Lighthouse and WebaAim WAVE in order to ensure that it performs well and meets accessibility criteria. A vast majority of Lighthouse scores is in the optimal green range. However, it is worth noting that
+...
+...
+using Google maps on the homepage, images uploaded to Cloudinary on other pages, as well as applying Bootstrap and Google Fonts has led to Best Practices scores being slightly lower. From the perspective of a business using this web application it made more sense to keep the map and Cloudinary storage rather than trying to get the best score and missing out on those valuable resources, so the decision was simple. 
 
 In order to keep accessibility scores in the optimal range, I ensured to make the website fully-operational for keyboard users, including trapping focus in each modal while it is open (waiver.js and bio.js files) and adding tabindex to card titles on the Schedule page.
 
-You can find screenshots with relevant results [here](https://github.com/Agnieszka-21/namaste-django/tree/main/assets/lighthouse_wave).
+You can find screenshots with relevant results here for [Lighthouse](), amd here for [WebAim WAVE]().
 
 
 ### Responsiveness (tested with Chrome Dev Tools)
@@ -776,60 +779,154 @@ You can find screenshots with relevant results [here](https://github.com/Agniesz
 
 | Browser being tested | Section tested | Intended appearance | Intended responsiveness |
 | :------------------- | :------------- | :------------------ | :------------------ |
-| Chrome | Navbar | good | good |
-| Chrome | Footer | good | good |
-| Chrome | Home - hero section | good | good |
-| Chrome | Home - map, address, opening hours | good | good |
-| Chrome | Schedule - banner image and heading  | good | good |
-| Chrome | Schedule - list of classes grouped by weekday | good | good |
-| Chrome | Schedule detail - class image | good | good |
-| Chrome | Schedule detail - text and "Book class" button | good | good |
-| Chrome | Book class page - booking form | good | good |
-| Chrome | My profile page | good | good |
-| Chrome | Edit profile - profile form | good | good |
-| Chrome | My bookings - list of upcoming bookings | good | good |
-| Chrome | My bookings - no upcoming classes | good | good |
-| Chrome | Edit booking page | good | good |
-| Chrome | Cancel booking page | good | good |
+| Chrome | Promo banner | good | good |
+| Chrome | Navbar - unauthenticated user | good | good |
+| Chrome | Navbar - authenticated user | good | good |
+| Chrome | Navbar - authenticated admin | good | good |
+| Chrome | Footer - newsletter form, social icons, Privacy Policy, copyright | good | good |
+| Chrome | Home - main content | good | good |
+| Chrome | Shop - title and Sort/Filter dropdowns | good | good |
+| Chrome | Shop - products - unauthenticated user | good | good |
+| Chrome | Shop - products - authenticated user | good | good |
+| Chrome | Shop - products - authenticated admin | good | good |
+| Chrome | Product detail - product images | good | good |
+| Chrome | Product detail - product info - unauthenticated user | good | good |
+| Chrome | Product detail - product info - authenticated user | good | good |
+| Chrome | Product detail - add to basket form | good | good |
+| Chrome | Product detail  - authenticated admin | good | good |
+| Chrome | Basket page - list of basket items | good | good |
+| Chrome | Basket page - empty basket | good | good |
+| Chrome | Checkout page - form - unauthenticated user | good | good |
+| Chrome | Checkout page - form - authenticated user | good | good |
+| Chrome | Checkout page - basket summary | good | good |
+| Chrome | Checkout success page | good | good |
+| Chrome | Account page - profile form | good | good |
+| Chrome | Account page - links to wishlist/bookmarks/past orders | good | good |
+| Chrome | Wishlist - listed items | good | good |
+| Chrome | Wishlist - no items | good | good |
+| Chrome | Bookmarks - listed articles/recipes | good | good |
+| Chrome | Bookmarks - no saved articles/recipes | good | good |
+| Chrome | Order history - list of past orders | good | good |
+| Chrome | Order history - no past orders | good | good |
+| Chrome | Order page (past order confirmation) | good | good |
+| Chrome | Blog | good | good |
+| Chrome | Articles page | good | good |
+| Chrome | Articles page - authenticated staff user | good | good |
+| Chrome | Articles page - authenticated admin | good | good |
+| Chrome | Article detail page - unauthenticated user | good | good |
+| Chrome | Article detail page - authenticated user | good | good |
+| Chrome | Article detail page - authenticated staff user | good | good |
+| Chrome | Article detail page - authenticated admin | good | good |
+| Chrome | Edit article - authenticated staff user | good | good |
+| Chrome | Edit article - authenticated admin | good | good |
+| Chrome | Create article - authenticated staff user | good | good |
+| Chrome | Delete article - authenticated admin | good | good |
+| Chrome | Unpublish article - authenticated admin | good | good |
+| Chrome | Recipes page | good | good |
+| Chrome | Recipes page - authenticated staff user | good | good |
+| Chrome | Recipes page - authenticated admin | good | good |
+| Chrome | Recipe detail page - unauthenticated user | good | good |
+| Chrome | Recipe detail page - authenticated user | good | good |
+| Chrome | Recipe detail page - authenticated staff user | good | good |
+| Chrome | Recipe detail page - authenticated admin | good | good |
+| Chrome | Edit recipe - authenticated staff user | good | good |
+| Chrome | Edit recipe - authenticated admin | good | good |
+| Chrome | Create recipe - authenticated staff user | good | good |
+| Chrome | Delete recipe - authenticated admin | good | good |
+| Chrome | Unpublish recipe - authenticated admin | good | good |
+| Chrome | Events - unauthenticated user | good | good |
+| Chrome | Events - authenticated user | good | good |
+| Chrome | Events - authenticated admin | good | good |
+| Chrome | Event registration page | good | good |
+| Chrome | Create event - authenticated admin | good | good |
+| Chrome | Edit event - authenticated admin | good | good |
+| Chrome | Delete event - authenticated admin | good | good |
 | Chrome | Sign up page | good | good |
 | Chrome | Log in page | good | good |
 | Chrome | Log out page | good | good |
-| Firefox | Navbar | good | good |
-| Firefoc | Footer | good | good |
-| Firefox | Home - hero section | good | good |
-| Firefox | Home - map, address, opening hours | good | good |
-| Firefox | Schedule - banner image and heading  | good | good |
-| Firefox | Schedule - list of classes grouped by weekday | good | good |
-| Firefox | Schedule detail - class image | good | good |
-| Firefox | Schedule detail - text and "Book class" button | good | good |
-| Firefox | Book class page - booking form | good | good |
-| Firefox | My profile page | good | good |
-| Firefox | Edit profile - profile form | good | good |
-| Firefox | My bookings - list of upcoming bookings | good | good |
-| Firefox | My bookings - no upcoming classes | good | good |
-| Firefox | Edit booking page | good | good |
-| Firefox | Cancel booking page | good | good |
+| Chrome | Forgot password page | good | good |
+| Chrome | Admin Panel page - authenticated admin | good | good |
+| Chrome | Add product - authenticated admin | good | good |
+| Chrome | Create carousel - authenticated admin | good | good |
+| Chrome | Choose carousel - authenticated admin | good | good |
+| Chrome | Activate carousel - authenticated admin | good | good |
+| Chrome | Edit carousel - authenticated admin | good | good |
+| Chrome | Delete carousel - authenticated admin | good | good |
+| Chrome | Manage reviews - authenticated admin | good | good |
+| Firefox | Promo banner | good | good |
+| Firefox | Navbar - unauthenticated user | good | good |
+| Firefox | Navbar - authenticated user | good | good |
+| Firefox | Navbar - authenticated admin | good | good |
+| Firefox | Footer - newsletter form, social icons, Privacy Policy, copyright | good | good |
+| Firefox | Home - main content | good | good |
+| Firefox | Shop - title and Sort/Filter dropdowns | good | good |
+| Firefox | Shop - products - unauthenticated user | good | good |
+| Firefox | Shop - products - authenticated user | good | good |
+| Firefox | Shop - products - authenticated admin | good | good |
+| Firefox | Product detail - product images | good | good |
+| Firefox | Product detail - product info - unauthenticated user | good | good |
+| Firefox | Product detail - product info - authenticated user | good | good |
+| Firefox | Product detail - add to basket form | good | good |
+| Firefox | Product detail  - authenticated admin | good | good |
+| Firefox | Basket page - list of basket items | good | good |
+| Firefox | Basket page - empty basket | good | good |
+| Firefox | Checkout page - form - unauthenticated user | good | good |
+| Firefox | Checkout page - form - authenticated user | good | good |
+| Firefox | Checkout page - basket summary | good | good |
+| Firefox | Checkout success page | good | good |
+| Firefox | Account page - profile form | good | good |
+| Firefox | Account page - links to wishlist/bookmarks/past orders | good | good |
+| Firefox | Wishlist - listed items | good | good |
+| Firefox | Wishlist - no items | good | good |
+| Firefox | Bookmarks - listed articles/recipes | good | good |
+| Firefox | Bookmarks - no saved articles/recipes | good | good |
+| Firefox | Order history - list of past orders | good | good |
+| Firefox | Order history - no past orders | good | good |
+| Firefox | Order page (past order confirmation) | good | good |
+| Firefox | Blog | good | good |
+| Firefox | Articles page | good | good |
+| Firefox | Articles page - authenticated staff user | good | good |
+| Firefox | Articles page - authenticated admin | good | good |
+| Firefox | Article detail page - unauthenticated user | good | good |
+| Firefox | Article detail page - authenticated user | good | good |
+| Firefox | Article detail page - authenticated staff user | good | good |
+| Firefox | Article detail page - authenticated admin | good | good |
+| Firefox | Edit article - authenticated staff user | good | good |
+| Firefox | Edit article - authenticated admin | good | good |
+| Firefox | Create article - authenticated staff user | good | good |
+| Firefox | Delete article - authenticated admin | good | good |
+| Firefox | Unpublish article - authenticated admin | good | good |
+| Firefox | Recipes page | good | good |
+| Firefox | Recipes page - authenticated staff user | good | good |
+| Firefox | Recipes page - authenticated admin | good | good |
+| Firefox | Recipe detail page - unauthenticated user | good | good |
+| Firefox | Recipe detail page - authenticated user | good | good |
+| Firefox | Recipe detail page - authenticated staff user | good | good |
+| Firefox | Recipe detail page - authenticated admin | good | good |
+| Firefox | Edit recipe - authenticated staff user | good | good |
+| Firefox | Edit recipe - authenticated admin | good | good |
+| Firefox | Create recipe - authenticated staff user | good | good |
+| Firefox | Delete recipe - authenticated admin | good | good |
+| Firefox | Unpublish recipe - authenticated admin | good | good |
+| Firefox | Events - unauthenticated user | good | good |
+| Firefox | Events - authenticated user | good | good |
+| Firefox | Events - authenticated admin | good | good |
+| Firefox | Event registration page | good | good |
+| Firefox | Create event - authenticated admin | good | good |
+| Firefox | Edit event - authenticated admin | good | good |
+| Firefox | Delete event - authenticated admin | good | good |
 | Firefox | Sign up page | good | good |
 | Firefox | Log in page | good | good |
 | Firefox | Log out page | good | good |
-| Edge | Navbar | good | good |
-| Edge | Footer | good | good |
-| Edge | Home - hero section | good | good |
-| Edge | Home - map, address, opening hours | good | good |
-| Edge | Schedule - banner image and heading  | good | good |
-| Edge | Schedule - list of classes grouped by weekday | good | good |
-| Edge | Schedule detail - class image | good | good |
-| Edge | Schedule detail - text and "Book class" button | good | good |
-| Edge | Book class page - booking form | good | good |
-| Edge | My profile page | good | good |
-| Edge | Edit profile - profile form | good | good |
-| Edge | My bookings - list of upcoming bookings | good | good |
-| Edge | My bookings - no upcoming classes | good | good |
-| Edge | Edit booking page | good | good |
-| Edge | Cancel booking page | good | good |
-| Edge | Sign up page | good | good |
-| Edge | Log in page | good | good |
-| Edge | Log out page | good | good |
+| Firefox | Forgot password page | good | good |
+| Firefox | Admin Panel page - authenticated admin | good | good |
+| Firefox | Add product - authenticated admin | good | good |
+| Firefox | Create carousel - authenticated admin | good | good |
+| Firefox | Choose carousel - authenticated admin | good | good |
+| Firefox | Activate carousel - authenticated admin | good | good |
+| Firefox | Edit carousel - authenticated admin | good | good |
+| Firefox | Delete carousel - authenticated admin | good | good |
+| Firefox | Manage reviews - authenticated admin | good | good |
 
 
 ### Automated tests
@@ -854,7 +951,7 @@ __Blog app testing__
 - verbose name plural (for the models where it was set explicitly), 
 - and ordering (if set in class Meta).
 
-![Test results - models]()
+![Test results - models](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_blog_models.png)
 
 2. test_forms.py
 
@@ -864,7 +961,7 @@ __Blog app testing__
 - whether a field widget is a SummernoteWidget or MultipleSelectCheckbox as expected, 
 - and whether the correct fields are excluded in the restricted forms (subclasses of other forms)
 
-![Test results - forms]()
+![Test results - forms](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_blog_forms.png)
 
 3. test_views.py
 
@@ -876,7 +973,7 @@ __Blog app testing__
 - whether the url of a view exists at the expected location,
 - whether views redirect the user upon a successful interaction (e.g. upon deleting a recipe/article),
 
-![Test results - views]()
+![Test results - views](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_blog_views.png)
 
 __Checkout app testing__
 
@@ -886,7 +983,7 @@ __Checkout app testing__
 - the maximum length of a CharField, 
 - and the maximum number of digits for a DecimalField. 
 
-![Test results - models]()
+![Test results - models](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_checkout_models.png)
 
 2. test_forms.py
 
@@ -897,7 +994,7 @@ __Checkout app testing__
 - whether a field has the 'autofocus' attribute
 - a field's class.
 
-![Test results - forms]()
+![Test results - forms](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_checkout_forms.png)
 
 __Events app testing__
 
@@ -909,7 +1006,7 @@ __Events app testing__
 - string representation of a model, 
 - and ordering (if set in class Meta).
 
-![Test results - models]()
+![Test results - models](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_events_models.png)
 
 2. test_forms.py
 
@@ -918,7 +1015,7 @@ __Events app testing__
 - the presence of expected form fields,
 - whether a field placeholder is shown as expected.
 
-![Test results - forms]()
+![Test results - forms](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_events_forms.png)
 
 3. test_views.py
 
@@ -931,7 +1028,7 @@ __Events app testing__
 - whether users with different permissions have access (or do not have access) to different views as expected,
 - whether a confirmation email is sent.
 
-![Test results - views]()
+![Test results - views](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_events_views.png)
 
 __Home app testing__
 
@@ -943,7 +1040,7 @@ __Home app testing__
 - string representation of a model, 
 - and ordering (if set in class Meta).
 
-![Test results - models]()
+![Test results - models](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_home_models.png)
 
 2. test_forms.py
 
@@ -951,7 +1048,7 @@ __Home app testing__
 - the presence of expected form fields,
 - whether specific fields are required as expected.
 
-![Test results - forms]()
+![Test results - forms](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_home_forms.png)
 
 3. test_views.py
 
@@ -962,7 +1059,7 @@ __Home app testing__
 - whether the url of a view exists at the expected location,
 - whether an admin can delete a carousel successfully.
 
-![Test results - views]()
+![Test results - views](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_home_views.png)
 
 __Products app testing__
 
@@ -975,7 +1072,7 @@ __Products app testing__
 - string representation of a model, 
 - and ordering (if set in class Meta).
 
-![Test results - models]()
+![Test results - models](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_products_models.png)
 
 2. test_forms.py
 
@@ -985,7 +1082,7 @@ __Products app testing__
 - whether some fields are required,
 - whether a field help text is correct.
 
-![Test results - forms]()
+![Test results - forms](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_products_forms.png)
 
 3. test_views.py
 
@@ -1000,7 +1097,7 @@ __Products app testing__
 - whether a superuser can create/edit/delete a product as expected,
 - whether a superuser can approve/delete an unapproved review with text.
 
-![Test results - views]()
+![Test results - views](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_products_views.png)
 
 __Profiles app testing__
 
@@ -1011,7 +1108,7 @@ __Profiles app testing__
 - max_length of CharFields, 
 - string representation of the UserProfile model.
 
-![Test results - models]()
+![Test results - models](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_profiles_models.png)
 
 2. test_forms.py
 
@@ -1020,7 +1117,7 @@ __Profiles app testing__
 - whether the 'user' field is excluded as expected,
 - whether the field 'default_phone_number' has the attribute 'autofocus'.
 
-![Test results - forms]()
+![Test results - forms](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_profiles_forms.png)
 
 3. test_views.py
 
@@ -1029,7 +1126,7 @@ __Profiles app testing__
 - whether correct users have access to correct views based on their permissions,
 - whether user can edit their profile.
 
-![Test results - views]()
+![Test results - views](https://github.com/Agnieszka-21/health-store/blob/main/assets/django_tests/test_profiles_views.png)
 
 
 ### Notable Bugs
