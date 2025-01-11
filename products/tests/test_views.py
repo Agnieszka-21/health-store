@@ -249,8 +249,8 @@ class ProductAdminViewsTest(TestCase):
 
     def test_add_staffuser_redirected(self):
         """
-        Tests whether authenticated staff user is granted access
-        to the event creation page
+        Tests whether authenticated staff user is redirected
+        from the product creation page
         """
         test_staffuser = User.objects.get(username='teststaffuser')
         logged_in = self.client.login(
@@ -264,7 +264,7 @@ class ProductAdminViewsTest(TestCase):
     def test_add_superuser_can_access(self):
         """
         Tests whether authenticated supseruser is granted access
-        to the event creation page
+        to the product creation page
         """
         test_superuser = User.objects.get(username='testsuperuser')
         logged_in = self.client.login(
@@ -406,9 +406,9 @@ class ProductAdminViewsTest(TestCase):
             args=[self.product.id]))
         self.assertTemplateUsed(response, 'products/delete_product.html')
 
-    def test_superuser_can_delete_event(self):
+    def test_superuser_can_delete_product(self):
         """
-        Tests whether superuser can delete an event
+        Tests whether superuser can delete a product
         """
         test_superuser = User.objects.get(username='testsuperuser')
         logged_in = self.client.login(

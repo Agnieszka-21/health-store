@@ -41,11 +41,11 @@ Health Store is a web application for a fictional online shop that sells vitamin
 
 This is the fifth and last Portfolio Project for the Code Institute's Diploma Course in Full Stack Software Development (E-commerce Applications). The application is built in Django using Python, HTML, CSS, and JavaScript. It provides role-based permissions for users to interact with data in a PostgreSQL database. It includes user authentication, email validation, and CRUD functionality. The application is connected to Stripe in order to simulate online payments. An AWS account is used to store media and static files, and there is also a newsletter signup form connected to a MailChimp account.
 
-[View the live website here](link)
+[View the live website here](https://health-store-ff0f909bba3d.herokuapp.com/)
 
 Please note: To open any links in this document in a new browser tab, please press CTRL + Click.
 
-![Screenshot of the application on multiple devices](amiresponsivelink)
+![Screenshot of the application on multiple devices](link)
 
 
 ## Table of Contents
@@ -622,21 +622,21 @@ If the latter is seleted, the user is simply redirected back to their "My bookin
 ### Sign up page
 The Sign Up option in the navigation menu is shown when user is not logged in. This page presents a sign up form, allowing the user to create an account and therefore access further features.
 
-![Sign up page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/sign_up_page.png)
+![Sign up page]()
 
 
 ### Log in page
-The Log In option in the navigation menu is shown when user is not logged in. This page presents a log in  form, allowing the user to log into their account and access further features.
+The Log In option in the navigation menu is shown when user is not logged in. This page presents a log-in form, allowing the user to log into their account and access further features.
 
-![Log in page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/log_in_page.png)
-![Log in success](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/log_in_success.png)
+![Log in page]()
+![Log in success]()
 
 
 ### Log out page
-The Log Out option in the navigation menu is shown when user is logged in. This page asks for a log out confirmation, allowing the user to log out of their account and keep their personal data safe.
+The Log Out option in the navigation menu is shown when user is logged in. This page asks for a log-out confirmation, allowing the user to log out of their account and keep their personal data safe.
 
-![Log out page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/log_out_page.png)
-![Log out success](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/log_out_success.png)
+![Log out page]()
+![Log out success]()
 
 
 ## Future Enhancements
@@ -644,15 +644,14 @@ The Log Out option in the navigation menu is shown when user is logged in. This 
 While the following User Stories have not been completed as they have been deemed unnecessary for an MVP, they present a wide range of potential enhancements that could be added to the project in the future.
 
 - [#20 Delete a user profile/account](https://github.com/Agnieszka-21/health-store/issues/20) - so that User (Customer) can remove their account if they think they are not going to need it anymore
-- [#21 Sign in to the user profile/account using a social media login](https://github.com/Agnieszka-21/health-store/issues/21) -
-- [#34 Save the shopping basket for later](https://github.com/Agnieszka-21/health-store/issues/34) -
-- [#36 Create a user account during checkout](https://github.com/Agnieszka-21/health-store/issues/36) -
-- [#63 Keep the existing basket when logging in](https://github.com/Agnieszka-21/health-store/issues/63) -
-- [#41 Unsubscribe from the newsletter](https://github.com/Agnieszka-21/health-store/issues/63) -
-- [#42 Re-subscribe to the newsletter](https://github.com/Agnieszka-21/health-store/issues/63) -
+- [#21 Sign in to the user profile/account using a social media login](https://github.com/Agnieszka-21/health-store/issues/21) - so that users can utilise their existing login credentials for easy authentication
+- [#34 Save the shopping basket for later](https://github.com/Agnieszka-21/health-store/issues/34) - so that the basket does not get lost the moment the user closes the tab with their basket
+- [#36 Create a user account during checkout](https://github.com/Agnieszka-21/health-store/issues/36) - so that new user can easily and quickly create an account
+- [#63 Keep the existing basket when logging in](https://github.com/Agnieszka-21/health-store/issues/63) - so that users with an existing account can log in and benefit from a pre-filled checkout form for convenience
+- [#41 Unsubscribe from the newsletter](https://github.com/Agnieszka-21/health-store/issues/63) - so that the email campaign is GDPR compliant (this requires actually creating a newsletter campaign though)
+- [#42 Re-subscribe to the newsletter](https://github.com/Agnieszka-21/health-store/issues/63) - similar to the above.
 
-
-Another possible enhancement could be...
+Another possible enhancement could be handling stock data and using that information to automatically update the maximum quantity of a product available for purchase for any one customer.
 
 
 ## Testing
@@ -741,13 +740,13 @@ The style.css file containing custom styling for the application has been checke
 
 __JavaScript__
 
-[JSHint](https://jshint.com/) has been used to validate the two JavaScript files in the application. Both files returned no errors.
+[JSHint](https://jshint.com/) has been used to validate all JavaScript files in the application. The files returned no errors.
 - [waiver.js - validattion result](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/js_waiver_validator.png)
 - [bio.js - validation result](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/validators/js_bio_validator.png)
 
 __Python__
 
-All Python files containing custom code have been run through the [Code Institute's Python linter](https://pep8ci.herokuapp.com/#) in order to ensure that they meet the PEP8 requirements/recommendations. No errors were found - you can find relevenat screenshots in [this folder](https://github.com/Agnieszka-21/namaste-django/tree/main/assets/python_linter).
+All Python files containing custom code have been run through the [Code Institute's Python linter](https://pep8ci.herokuapp.com/#) in order to ensure that they meet the PEP8 requirements/recommendations. No errors were found - you can find relevenat screenshots in [this folder]().
 
 
 ### Lighthouse and Webaim Wave Testing
@@ -835,88 +834,237 @@ You can find screenshots with relevant results [here](https://github.com/Agniesz
 
 ### Automated tests
 
-Automated testing was done for both apps - Schedule, and User Profiles. In total, 81 tests were made - 55 tests for the Schedule app, and 26 for the User Profile app. 
+Automated testing was done for the following apps: Blog, Events, Home, Products, and Profiles. In total, 248 tests were made:
+- 83 tests for the Blog app,
+- 15 tests for the Checkout app,
+- 32 tests for the Events app,
+- 36 tests for the Home app,
+- 57 tests for the Products app,
+- and 25 for the Profiles app. 
 
-__Schedule app testing__
+__Blog app testing__
 
 1. test_models.py
 
-26 tests ran successfully, checking the following:
-- field labels, 
+19 tests ran successfully, checking the following:
 - max_length of CharFields, 
 - default value of a field, 
 - ForeignKey relationship between models, 
-- string representation, 
+- string representation of a model, 
 - verbose name plural (for the models where it was set explicitly), 
 - and ordering (if set in class Meta).
 
-![Test results - models](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/automated_tests/test_s_models.png)
+![Test results - models]()
 
 2. test_forms.py
 
-10 tests ran successfully, checking:
-- whether specific fields are required, or uneditable, 
-- whether form field labels are shown correctly, 
-- whether a field widget is a checkbox as expected, 
-- and finally also whether a form is valid when specific criteria are met.
+12 tests ran successfully, checking:
+- the presence of expected form fields,
+- whether a field has correct help text,
+- whether a field widget is a SummernoteWidget or MultipleSelectCheckbox as expected, 
+- and whether the correct fields are excluded in the restricted forms (subclasses of other forms)
 
-![Test results - forms](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/automated_tests/test_s_forms.png)
+![Test results - forms]()
 
 3. test_views.py
 
-19 tests ran successfully, checking the following:
+52 tests ran successfully, checking among others the following details:
 - whether views render correct templates,
 - whether views restricted to logged-in users only redirect anyone who is not logged in,
 - whether views can be accessed by their name,
 - whether generic.ListView views actually show all items they should list,
 - whether the url of a view exists at the expected location,
-- whether listed objects are filtered as expected,
-- whether listed objects are shown in the correct order,
-- whether views redirect the user upon a successful interaction (e.g. upon cancellation of a booking),
-- whether views handling the number and list of participants update data as expected.
+- whether views redirect the user upon a successful interaction (e.g. upon deleting a recipe/article),
 
-![Test results - views](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/automated_tests/test_s_views.png)
+![Test results - views]()
 
-__User Profiles__
+__Checkout app testing__
 
 1. test_models.py
 
-2 tests ran successfully, checking:
+8 tests ran successfully, checking:
 - the maximum length of a CharField, 
-- and the string representation of the Profile model. 
+- and the maximum number of digits for a DecimalField. 
 
-Since the only other model in the User Profiles app is the Django User model, I did not create additional tests here.
-
-![Test results - models](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/automated_tests/test_up_models.png)
+![Test results - models]()
 
 2. test_forms.py
 
-13 tests ran successfully, checking the following criteria:
-- max_length of certain fields,
+7 tests ran successfully, checking the following criteria:
+- whether the correct fields are included,
 - field labels,
-- whether a field is required/not required,
-- the placeholder value in one of the fields (date of birth - shown in the form for optimal user experience).
+- field placeholders,
+- whether a field has the 'autofocus' attribute
+- a field's class.
 
-![Test results - forms](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/automated_tests/test_up_forms.png)
+![Test results - forms]()
+
+__Events app testing__
+
+1. test_models.py
+
+6 tests ran successfully, checking the following:
+- max_length of CharFields, 
+- default value of a field, 
+- string representation of a model, 
+- and ordering (if set in class Meta).
+
+![Test results - models]()
+
+2. test_forms.py
+
+3 tests ran successfully, checking:
+- whether the form is related to the correct model,
+- the presence of expected form fields,
+- whether a field placeholder is shown as expected.
+
+![Test results - forms]()
 
 3. test_views.py
 
-11 tests ran successfully, checking the following criteria:
-- whether the url related to a view exists at a desired location,
-- whether the url related to a view can be accessed by its name,
-- whether the correct template is rendered,
+23 tests ran successfully, checking among others the following details:
+- whether views render correct templates,
 - whether views restricted to logged-in users only redirect anyone who is not logged in,
-- whether a view redirects the user after a successful interaction (e.g. updating a user profile).
+- whether views can be accessed by their name,
+- whether the url of a view exists at the expected location,
+- whether past events are excluded as expected,
+- whether users with different permissions have access (or do not have access) to different views as expected,
+- whether a confirmation email is sent.
 
-![Test results - views](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/automated_tests/test_up_views.png)
+![Test results - views]()
+
+__Home app testing__
+
+1. test_models.py
+
+16 tests ran successfully, checking the following:
+- max_length of CharFields, 
+- default value of a field, 
+- string representation of a model, 
+- and ordering (if set in class Meta).
+
+![Test results - models]()
+
+2. test_forms.py
+
+6 tests ran successfully, checking:
+- the presence of expected form fields,
+- whether specific fields are required as expected.
+
+![Test results - forms]()
+
+3. test_views.py
+
+14 tests ran successfully, checking among others the following details:
+- whether views render correct templates,
+- whether correct users have access to correct views based on their permissions
+- whether views can be accessed by their name,
+- whether the url of a view exists at the expected location,
+- whether an admin can delete a carousel successfully.
+
+![Test results - views]()
+
+__Products app testing__
+
+1. test_models.py
+
+22 tests ran successfully, checking the following:
+- field labels,
+- max_length of CharFields, 
+- default value of a field, 
+- string representation of a model, 
+- and ordering (if set in class Meta).
+
+![Test results - models]()
+
+2. test_forms.py
+
+9 tests ran successfully, checking:
+- whether correct models are used,
+- whether the correct fields are included in a form,
+- whether some fields are required,
+- whether a field help text is correct.
+
+![Test results - forms]()
+
+3. test_views.py
+
+26 tests ran successfully, checking among others the following details:
+- whether views render correct templates,
+- whether correct users have access to correct views based on their permissions
+- whether views can be accessed by their name,
+- whether the url of a view exists at the expected location,
+- whether correct product/products are present in a view,
+- whether an authenticated user can submit a product review,
+- whether different users have correct access permissions,
+- whether a superuser can create/edit/delete a product as expected,
+- whether a superuser can approve/delete an unapproved review with text.
+
+![Test results - views]()
+
+__Profiles app testing__
+
+1. test_models.py
+
+6 tests ran successfully, checking the following:
+- Country field label,
+- max_length of CharFields, 
+- string representation of the UserProfile model.
+
+![Test results - models]()
+
+2. test_forms.py
+
+3 tests ran successfully, checking:
+- whether the correct model is used,
+- whether the 'user' field is excluded as expected,
+- whether the field 'default_phone_number' has the attribute 'autofocus'.
+
+![Test results - forms]()
+
+3. test_views.py
+
+16 tests ran successfully, checking among others the following details:
+- whether views render correct templates,
+- whether correct users have access to correct views based on their permissions,
+- whether user can edit their profile.
+
+![Test results - views]()
 
 
 ### Notable Bugs
 
-There are currently no notable bugs within the project. While I did encounter a few stubborn issues - especially around some views containing forms, and around creating specific dates for each weekly class - continuous manual testing during the development process as well as running automated tests to confirm that everything works as expected has led me to believe that all problems that have arised in the current form of this application have been resolved.
+There are currently two minor bugs within the project which do not affect the most important functionalities. The first one is a caching issue. On a product detail page, if a product has more than one image, the primary image is shown as larger, and the next one or two images are thumbnails. The images can switch places on a click for optimal user experience. This works well but there is an added functionality there which allows user to click the main (larger) image so that it is opened in a new tab and shown in an even larger size. At the moment the image in the new tab is always displayed correctly when in Incognito mode, but without it, sometimes only the primary product image is opened in a new tab, regardless of where it is positioned (as main image or as thumbnail). Since this issue was not a problem for all products during testing but only ones that I have opened repeatedly in the past, I decided to leave it as it is.
+
+The second minor bug is related to the maximum quantity of a product allowed. The maximum number is set to 9, and this works well in the form on the product detail page and in the basket. However, user could potentially place an item with its maximum quality in the basket, and then keep shopping, and add more of the same product. Since in real life maximum product quantities would be dictated by how many of those products are in stock rather than an arbitrarily chosen number, I decided to leave it as it is for the time being and ideally add stock-tracking functionalities in the future.
 
 
 ## Technologies Used
+
+The following modules were used in this project:
+- asgiref==3.8.1
+- boto3==1.35.76
+- botocore==1.35.76
+- crispy-bootstrap4==2024.10
+- dj-database-url==0.5.0
+- Django==4.2
+- django-allauth==0.50.0
+- django-countries==7.6.1
+- django-crispy-forms==2.3
+- django-storages==1.14.4
+- django-summernote==0.8.20.0
+- gunicorn==23.0.0
+- jmespath==1.0.1
+- oauthlib==3.2.2
+- pillow==11.0.0
+- psycopg2==2.9.10
+- PyJWT==2.9.0
+- python3-openid==3.2.0
+- pytz==2024.2
+- requests-oauthlib==2.0.0
+- s3transfer==0.10.4
+- sqlparse==0.5.2
+- stripe==11.3.0
 
 ### Django
 Django was used as the main framework for this project.
@@ -924,17 +1072,17 @@ Django was used as the main framework for this project.
 ### Django AllAuth
 Django Allauth was utilised to handle authentication and authorization and therefore manage user permissions.
 
-### django-eventtools
-A library utilised to create weekly occurrences of each weekly group class. 
-
-### django-render-partial
-A library used to embed a partial template (dates.html in the Schedule app) into another template (book_class.html). The dates.html template is connected to a specific view which ensures that 3 dates are created for the next 3 occurrences of a chosen class and shown in the booking form as a select (dropdown) field, so that the user can choose the best option from the available ones.
+### django-cookies
+This library was used to get a CSRF cookie in JavaScript files handling the product wishlist as well as bookmarking articles/recipes.
 
 ### DTL/Jinja
 Jinja/Django templating language was used to insert data from the database into templates and to perform queries on specific datasets.
 
 ### Crispy forms
 Django-crispy-forms was utilised to improve styling and ensure consistent design in any forms in the project
+
+### Pillow
+Pillow was utilised to handle image fields in models.
 
 ### Heroku
 A cloud-based platform for deploying the site.
@@ -943,7 +1091,7 @@ A cloud-based platform for deploying the site.
 PostgreSQL was used as the database for this project during both development and in production.
 
 ### JavaScript
-JavaScript has been utilised to handle interactions with the waiver modal on the "Book class" page and the teacher bio modal on each "Schedule detail" page.
+JavaScript has been utilised to handle multiple scenarios in the following apps: Blog, Checkout, Products, and Profiles. It is used for handling the following functionalities: Stripe elements, product reviews and star ratings, product images on product detail page, wishlist and bookmarked articles/recipes, product quantities for the basket, filtering and sorting products, copying the URL of an article/recipe with one click for easy sharing, and the country field in the checkout form.
 
 ### Bootstrap 5
 Bootsrap was utilised for creating a responsive layout.
@@ -952,31 +1100,35 @@ Bootsrap was utilised for creating a responsive layout.
 It was used to access the calendar icons on the Schedule page.
 
 ### CSS
-style.css file was created to handle custom styling beyond Bootstrap and introduce media queries for improved responsive design.
+Multiple CSS files (base.css, blog.css, checkout.css, products.css, profile.css) were created to handle custom styling beyond Bootstrap and introduce media queries for improved responsive design.
 
 ### HTML
-HTML was utilised to create templates for each page.
+HTML was utilised to create a template for each page.
 
 ### Packages Used
 
 - Gitpod was used to develop the site
 - GitHub was utilised for storing the files for this project
 - Heroku was used to deploy the site
-- Balsamiq was used to develop initial wireframes for the site (mobile version)
-- DrawSQL.app was utilised to develop the database schema during development
+- An AWS account was used to store media and static files for the project
+
 
 ### Resources Used
 
 - [Favicon generator](https://favicon.io/favicon-generator/) used to create the website's favicons
 - [Django secret key generator](https://djecrety.ir/) was utilised for creating a secret key for deployment on Heroku (SECRET_KEY config var)
-- [Privacy policy generator](link)
+- [Privacy policy generator](https://www.privacypolicygenerator.info/) was utilised to create and host a privacy policy page
+- [MailChimp](https://mailchimp.com/) was used to add to the footer a newsletter signup form
+- Balsamiq was used to develop wireframes for the site (both mobile and desktop version)
+- [DrawSQL.app](https://drawsql.app/) was utilised to develop the database schema during development
+- Free online image converters, compressors, and resizers
 
 
 ## Deployment
 
-The application has been deployed via Heroku and the live page can be found [here](link).
+The application has been deployed via Heroku and the live page can be found [here](https://health-store-ff0f909bba3d.herokuapp.com/).
 
-This program was developed using [this particular template from the Code Institute](https://github.com/Code-Institute-Org/ci-full-template).
+This program was developed using [this particular template from Code Institute](https://github.com/Code-Institute-Org/ci-full-template).
 
 In order to deploy the application to Heroku I followed the following steps:
 - Sign up or log in to Heroku.
@@ -987,12 +1139,18 @@ In order to deploy the application to Heroku I followed the following steps:
 - Add the following key: DISABLE_COLLECTSTATIC, with the value 1 to prevent Heroku from uploading static files during the build.This key-value pair must be removed before final deployment.
 - In the next KEY input field enter "SECRET_KEY" (all capitals), in the VALUE field next to it enter your secret key - you can create yours using [this Django secret key generator](https://djecrety.ir/). Then click the "Add" button to the right.
 - Add another config var, with the KEY "DATABASE_URL" and the VALUE that is your PostgreSQL database's URL. Click "Add".
-- The next config var, with the KEY "CLOUDINARY_URL" and the VALUE of your Cloudinary account's URL, allows you to use Cloudinary to upload and store images. Click "Add".
-- Add also your "CLOUDINARY_NAME" as the next config var to ensure there are no issues with communication between the program and Cloudinary.
+- To connect the project to your Stripe account, set the following Config Vars:
+  - CLIENT_SECRET,
+  - STRIPE_PUBLIC_KEY,
+  - and STRIPE_WH_SECRET. You can find the suitable values for these config vars in your Stripe account.
+- If you plan on using an AWS account to store media and static files, set up your bucket following [AWS documentation](https://docs.aws.amazon.com/quickstarts/) and then add these 3 Config Vars:
+  - USE_AWS set to True,
+  - AWS_ACCESS_KEY_ID with yout access key id,
+  - and AWS_SECRET_ACCESS_KEY with your secret key.
 - To handle email authentication, add also these config vars:
   - EMAIL_HOST_PASSWORD, where the value is a 16-digit app password from a Gmail account to which you would like to connect the program - see more detailed information on that [here](https://support.google.com/mail/answer/185833?hl=en).
   - EMAIL_HOST_USER, where the value is the email address of the Gmail account with the app passcode.
-- In the section "Buildpacks" click the "Add buildpack" button and select "python". Confirm by clicking the button "Add buildpack".
+- In the section "Buildpacks" click the "Add buildpack" button and select "heroku/python". Confirm by clicking the button "Add buildpack".
 - Prepare the code for deployment in your local environment: use  pip install -r requirements.txt to install the libraries and packages needed to run the program (including gunicorn)
 - In the Procfile add the following code:
 web: gunicorn codestar.wsgi
@@ -1003,13 +1161,13 @@ web: gunicorn codestar.wsgi
 - In the "Deployment Method" section choose the "GitHub" button. Follow the next steps (if any) as prompted to connect your GitHub account. In the "Connect to GitHub" section that appears, choose your account, enter the name of your repository, and select "Search".
 -  Once your GitHub repo is connected to the Heroku app, scroll down to the section "Manual deploys".
 -  Confirm that the correct branch of the repo is selected in the drop-down box, and select "Deploy Branch".
--  Heroku will now build the app for you. Once the process is completed, you will see the message "Your app was successfully deployed", and a link to the app where you can visit the live site.
+-  Heroku will now build the app for you. Once the process is completed, you will see the message "Your app was successfully deployed", and a link to the app where you can visit the live site. Afterwards, replace the existing sitemap.xml and robots.txt files with your own - if you switch to "Automatic deploys", your changes will be deployed with the next git push.
   
 
 ## Cloning and forking the repository
 
 In order to clone the GitHub repository use the following link:
-- [link](link)
+- [https://github.com/Agnieszka-21/health-store.git](https://github.com/Agnieszka-21/health-store.git)
 
 In order to fork the GitHub repository:
 - Go to this [health-store repository](https://github.com/Agnieszka-21/health-store)
@@ -1025,29 +1183,39 @@ The following tutorials, articles, documentation and media were used to create t
 
 - [Django documentation](https://docs.djangoproject.com/en/4.2/) has been used extensively for this project
 - Further helpful documentation was related to the libraries installed:
-  - [django-render-partial](https://pypi.org/project/django-render-partial/) utilised for embedding a partial html template with dates for weekly classes into the book_class.html template
-  - [django-eventtools](https://pypi.org/project/django-eventtools/) utilised for creating dates and times for 3 upcoming instances of each chosen group class
-- [Cloudinary documentation](https://cloudinary.com/documentation) was used to set up the configuration between Django and the Cloudinary account
-- The hero section of the homepage is loosely based on [this article](https://mdbootstrap.com/docs/standard/extended/hero/)
-- Templates profile.html and profile_form.html are loosely based on this [User profile template](https://bbbootstrap.com/snippets/bootstrap-5-myprofile-90806631#) in regards to layout and styling.
-- HTML and CSS code used to handle messages has been copied from [this article](https://www.brntn.me/blog/how-i-use-djangos-messages-framework/) by Brenton Cleeland.
-- The footer has been adapted from [this tutorial](https://mdbootstrap.com/docs/standard/extended/social-media-icons-footer/).
-- Navigation bar is loosely based on the CI walkthrough blog project and [this w3schools article](https://www.w3schools.com/bootstrap4/bootstrap_navbar.asp).
-- The JavaScript code for trapping focus in a modal has been adapted from the [following article](https://hidde.blog/using-javascript-to-trap-focus-in-an-element/).
-- The automatic creation of a profile when a User object is created was done with Django signals - code was copied (and slightly adapted) from the Code Institute's walkthrough project [Boutique Ado](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/master/profiles/models.py).
+  - [django-summernote](https://pypi.org/project/django-summernote/) was utilised for text editors in blog article and recipe forms
+  - [js-cookie](https://www.jsdelivr.com/package/npm/js-cookie) package was utilised in several JavaScript files in order to obtain a CSRF token (see static files related to marking products as "favourite" and bookmarking articles/recipes)
+- [Bootstrap 5 documentation](https://getbootstrap.com/docs/5.0/getting-started/introduction/) was used extensively to help create any standard elements like the navigation menu, footer, homepage carousel, card elements, toasts etc.
+- Handling star reviews proved to be more complex than initially expected, the following tutorial helped me find working solutions: [https://stackoverflow.com/questions/45845427/styling-an-integerfield-to-make-it-a-star-rating-system](https://stackoverflow.com/questions/45845427/styling-an-integerfield-to-make-it-a-star-rating-system)
+- Switching places of product images on product detail pages was developed with the help of this post: [https://craftcms.stackexchange.com/questions/32882/how-to-toggle-main-product-image-from-multiple-images](https://craftcms.stackexchange.com/questions/32882/how-to-toggle-main-product-image-from-multiple-images)
+- Mutiple parts of this project are based on two Code Institute's walkthrough projects: [I think therefore I blog](https://github.com/Code-Institute-Solutions/blog/tree/main) and [Boutique Ado](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/master/profiles/models.py).
+  - The review section on product detail pages has been developed based on the blog walkthrough project and its Comments section.
+  - Any parts of the code directly related to Stripe (Checkout and Basket apps) have been copied from Boutique Ado, and adjusted slightly if needed.
+  - The automatic creation of a profile when a User object is created was done with Django signals - code was copied from the Code Institute's walkthrough project Boutique Ado.
+- Pagination for the Shop page has been created by copying code from [this utils.py file](https://github.com/MattBCoding/druid-pp5/blob/main/products/utils.py) by my Code Institute mentor Matt Bodden and tweaking it in the related view.
 
-Please note that any code that has been copied or adapted from an external source has been also marked in the program files (comments were added with links to the sources and more exact information where applicable).
+Code that has been copied from an external source and left without any changes has been also marked in the program files (comments were added with links to the sources and more exact information where applicable).
 
 
 ### Content
 
-- [Yoga Dublin's website](https://www.yogadublin.com/) was an inspiration to build a functional, aesthetically pleasing webpage that could be used by a real-world yoga studio. Descriptions of yoga styles as well as teachers' bios were copied from the Yoga Dublin's website and adapted for the needs of this projects (e.g. shortened, paraphrased, and any names have been changed).
-- Several free-licence images from [Pexels](https://www.pexels.com/) were used in the project. Yan Krukau's photos of yoga classes were particularly helpful, allowing me to use a suite of matching images that contributed to the website's consistent design and branding.
-- [Font Awesome](https://docs.fontawesome.com/) was used for several icons used in the navigation menu, in the footer (social media icons), on the Schedule page (calendar icons), and in the modals (close icon).
-- This [favicon converter](https://favicon.io/favicon-converter/) was used to create favicons based on the brand element "Namaste" in the navigation bar.
+- [Holland & Barrett's website](https://www.hollandandbarrett.ie/) was an inspiration to build a functional, aesthetically pleasing webpage that could be used by a real-world health store. Blog articles, banner images for articles, and event details used in this project have been copied or adapted from existing blog posts and podcast episodes by Holland & Barrett.
+- Recipes used on the blog have been copied and adapted (including images) from the [BBC Good Food's](https://www.bbcgoodfood.com/) website.
+- [Boots](https://www.boots.ie/) and [H&M](https://www2.hm.com/en_ie/index.html) websites and apps were used to guide decisions regarding layout and styling on various devices so that they meet current standards.
+- Product SKU values are based on SKUs from the store [Nourish](https://www.nourish.ie/).
+- Product images have been copied from their brand's or vendor's websites. This enabled the use of multiple images per product, which is industry standard. Here is a full list of websites from which product images were copied:
+  - [Craft Food Traders](https://craftfoodtraders.ie/)
+  - [Dublin Herbalists](https://dublinherbalists.ie/)
+  - [The Handmade Soap Company](https://thehandmadesoapcompany.ie/)
+  - [Tisserand](https://www.tisserand.com/)
+  - [Viridian](https://viridian-nutrition.com/)
+  - [Wild Nutrition](https://www.wildnutrition.com/)
+- Several free-licence images from [Pexels](https://www.pexels.com/) were used in the project.
+- [freepik.com](https://www.freepik.com/) is the source of free-licence SVG files on error pages (404 and 500)
+- [Font Awesome](https://docs.fontawesome.com/) was used for several icons used in the navigation menu, in the footer (social media icons), on the Schedule page (calendar icons), and in the modals (close icon)..
 - [Google Fonts](https://fonts.google.com/) page was used to access the fonts used throughout the website.
-- [Google Maps](https://www.google.ie/maps/) page was used to embed the small map with the studio's location as an iframe on the homepage.
-- [Cloudinary](https://cloudinary.com/) was used to store profile images uploaded by users, as well as photos for the schedule detail pages uploaded in the admin panel by an admin.
+- [AWS](https://aws.amazon.com/) was used to store media and static files used in this project.
+- A [MailChimp](https://mailchimp.com/) account was used to embed in the footer a newsletter signup form.
 
 
 ## Acknowledgements
