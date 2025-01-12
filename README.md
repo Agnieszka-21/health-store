@@ -669,7 +669,7 @@ Automated tests were also written to confirm that each view renders the correct 
 
 ### Manual Testing
 
-While testing every single functionality as I was creating and refining it was essential to progressing with this project, I also applied a more structured approach to testing once everything seemed to work correctly in order to double-check the code's behavior and ensure that I handled any possible scenarios to avoid any issues. The table below documents this more structured approach, where I tested all possible functionalities as well as likely user inputs in [the live version of the app](https://namaste-yoga-studio-d494d1aeeada.herokuapp.com/).
+While testing every single functionality as I was creating and refining it was essential to progressing with this project, I also applied a more structured approach to testing once everything seemed to work correctly in order to double-check the code's behavior and ensure that I handled any possible scenarios to avoid any issues. The table below documents this more structured approach, where I tested all possible functionalities as well as likely user inputs in [the live version of the app](https://health-store-ff0f909bba3d.herokuapp.com/).
 
 
 | Functionality being tested | Expected Outcome | Actual Outcome | Result (pass/fail) |
@@ -705,6 +705,12 @@ While testing every single functionality as I was creating and refining it was e
 | Shop: "Add" or "Add to basket" button | adds a product to the basket with quantity equal to 1 | as expected | pass |
 | Shop: heart icon (logged-in users only) | updates the wishlist, changes the icon's color | as expected | pass |
 | Shop: product name/image links | redirect the user to a product detail page for the chosen product | as expected | pass |
+| Shop: "Edit" button (logged-in admins only) | redirect admin to the edit product page | as expected | pass |
+| Shop: "Delete" button (logged-in admins only) | redirect admin to the delete product page | as expected | pass |
+| Edit product page (logged-in admins only): "Cancel" button | redirect admin to the shop page | as expected | pass |
+| Edit product page (logged-in admins only): "Update Product" button | save changes, redirect admin to product detail page | as expected | pass |
+| Delete product page (logged-in admins only): "Cancel" button | redirect admin to the shop page | as expected | pass |
+| Delete product page (logged-in admins only): "Delete" button | delete product, redirect admin to the shop page | as expected | pass |
 | Product detail: product images | thumbnail images and main image switch places when clicked | as expected | pass |
 | Product detail: category link | redirects user back to the Shop page filtered by the category | as expected | pass |
 | Product detail: brand link | opens the website of a product's brand in a new tab | as expected | pass |
@@ -712,6 +718,10 @@ While testing every single functionality as I was creating and refining it was e
 | Product detail: "Add to basket" button | adds the product to basket | as expected | pass |
 | Product detail: "Log in to leave a review" button | redirects user to the Log in page | as expected | pass |
 | Product detail: "Leave a review" form and submit button (logged-in users only) | allows the user to submit a product review | as expected | pass |
+| Product detail: "Edit" under the user's review (logged-in users only) | displays the review in the review form ready for editing | as expected | pass |
+| Product detail: "Delete" under the user's review (logged-in users only) | opens a modal with 2 options: Close (closes the modal) or Delete (deletes the review) | as expected | pass |
+| Product detail: "Edit" button (logged-in admins only) | redirect admin to the edit product page | as expected | pass |
+| Product detail: "Delete" button (logged-in admins only) | redirect admin to the delete product page | as expected | pass |
 | Basket - empty: "Keep shopping" button | redirects user back to the shop page | as expected | pass |
 | Basket - full: quantity input | lets the user choose product quantity from 1-9 | as expected | pass |
 | Basket - full: "Update" link | applies any changes in product quantity | as expected | pass |
@@ -726,17 +736,45 @@ While testing every single functionality as I was creating and refining it was e
 | Blog page: "Articles" link/button | takes user to the page listing articles | as expected | pass |
 | Blog page: "Recipes" link/button | takes user to the page listing recipes | as expected | pass |
 | Articles page: article title link | takes user to the article detail page | as expected | pass |
+| Articles page: "Create a new article" button (logged-in staff users only) | takes user to the create article page | as expected | pass |
+| Articles page: "Edit article" button (logged-in staff users only) | takes user to the edit article page | as expected | pass |
+| Articles page: "Delete article" button (logged-in admins only) | takes user to the delete article page to confirm/cancel | as expected | pass |
+| Articles page: "Unpublish article" button (logged-in admins only) | takes user to the unpublish article page to confirm/cancel | as expected | pass |
+| Unpublish article page (logged-in admins only): "Cancel" button | takes user to the articles page | as expected | pass |
+| Unpublish article page (logged-in admins only): "Unpublish" button | redirects user to the articles page, the unpublished article is listed under "Waiting for admin's approval" | as expected | pass |
+| Delete article page (logged-in admins only): "Cancel" button | takes user to the articles page | as expected | pass |
+| Delete article page (logged-in admins only): "Delete" button | deletes article and takes user to the articles page | as expected | pass |
 | Recipes page: recipe title link | takes user to the recipe detail page | as expected | pass |
+| Recipes page: "Create a new recipe" button (logged-in staff users only) | takes user to the create recipe page | as expected | pass |
+| Recipes page: "Edit recipe" button (logged-in staff users only) | takes user to the edit recipe page | as expected | pass |
+| Recipes page: "Delete recipe" button (logged-in admins only) | takes user to the delete recipe page to confirm/cancel | as expected | pass |
+| Recipes page: "Unpublish recipe" button (logged-in admins only) | takes user to the unpublish recipe page to confirm/cancel | as expected | pass |
+| Unpublish recipe page (logged-in admins only): "Cancel" button | takes user to the recipes page | as expected | pass |
+| Unpublish recipe page (logged-in admins only): "Unpublish" button | redirects user to the recipes page, the unpublished recipe is listed under "Waiting for admin's approval" | as expected | pass |
+| Delete recipe page (logged-in admins only): "Cancel" button | takes user to the recipes page | as expected | pass |
+| Delete recipe page (logged-in admins only): "Delete" button | deletes recipe and takes user to the recipes page | as expected | pass |
 | Article detail: link icon | copies the article's URL with one click, show "Link copied" notification | as expected | pass |
 | Article detail: bookmark icon (logged-in users only) | saves the article to user's profile | as expected | pass |
 | Article detail - recommended products: product image/name link | redirects user to product detail page | as expected | pass | 
 | Article detail: "Back to articles" button | redirects user to the artilcles page | as expected | pass |
+| Article detail: "Edit" button (logged-in staff users only) | redirects user to the edit artilcle page | as expected | pass |
+| Article detail: "Unpublish" button (logged-in admins only) | redirects user to the unpublish artilcle page | as expected | pass |
 | Recipe detail: link icon | copies the recipe's URL with one click, show "Link copied" notification | as expected | pass | 
 | Recipe detail: bookmark icon (logged-in users only) | saves the recipe to user's profile | as expected | pass | 
 | Recipe detail - recommended products: product image/name link | redirects user to product detail page | as expected | pass | 
 | Recipe detail: "Back to recipes" button | redirects user to the recipes page | as expected | pass |
+| Recipe detail: "Edit" button (logged-in staff users only) | redirects user to the edit recipe page | as expected | pass |
+| Recipe detail: "Unpublish" button (logged-in admins only) | redirects user to the unpublish recipe page | as expected | pass |
 | Events: "Log in to register" button | redirects user to the Log in page | as expected | pass |
-| Events: "Register" button (logged in users only) | redirects user to the even registration page | as expected | pass |
+| Events: "Register" button (logged-in users only) | redirects user to the even registration page | as expected | pass |
+| Events: "Create a new event" button (logged-in admins only) | redirects admin to the create event page | as expected | pass |
+| Events: "Edit event" button (logged-in admins only) | redirects admin to the edit event page | as expected | pass |
+| Events: "Delete event" button (logged-in admins only) | redirects admin to the delete event page | as expected | pass |
+| Edit event (logged-in admins only): "Cancelled" checkmark in the form | once the form is submitted successfully, the event on events page has a badge "Event cancelled" instead of the registration button (shown to all users) | as expected | pass |
+| Edit event (logged-in admins only): "Cancel" button | redirects admin to the events page | as expected | pass |
+| Edit event (logged-in admins only): "Update Event" button | saves changes, redirects admin to the events page | as expected | pass |
+| Delete event (logged-in admins only): "Cancel" button | redirects admin to the events page | as expected | pass |
+| Delete event (logged-in admins only): "Delete" button | deletes event, redirects admin to the events page | as expected | pass |
 | Event registration page: "Register" button | sends a registration confirmation email, shows a success message | as expected | pass |
 | Event registration page: "Cancel" button | redirects user to the events page | as expected | pass |
 | Account: "Update information" button | submits the profile form, saving user's data | as expected | pass |
@@ -750,6 +788,22 @@ While testing every single functionality as I was creating and refining it was e
 | Wishlist page: "Back to profile" button | redirects user back to their account page | as expected | pass |
 | Bookmarked articles/recipes page: bookmark icon | when clicked, removes an article/recipe from the list | as expected | pass |
 | Bookmarked articles/recipes page: "Back to profile" button | redirects user back to their account page | as expected | pass |
+| Admin Panel page (logged-in admins only): "Add a new product" card | redirects admin to the create product page | as expected | pass |
+| Admin Panel page (logged-in admins only): "Manage reviews waiting for approval" card | redirects admin to the review management page | as expected | pass |
+| Admin Panel page (logged-in admins only): "Create a new carousel" card | redirects admin to the create carousel page | as expected | pass |
+| Admin Panel page (logged-in admins only): "Choose carousel" card | redirects admin to the create product page | as expected | pass |
+| Review management page (logged-in admins only): "Cancel" button | redirects admin back to the Admin Panel | as expected | pass |
+| Review management page (logged-in admins only): "Save Updates" button | saves changes as marked (approve/delete) and redirects admin to the shop page | as expected | pass |
+| Create carousel page (logged-in admins only): "Cancel" button | redirects admin back to the Admin Panel | as expected | pass |
+| Create carousel page (logged-in admins only): "Add carousel" button | creates carousel, redirects admin back to the Admin Panel | as expected | pass |
+| Choose carousel page (logged-in admins only): "Cancel" button | redirects admin back to the Admin Panel | as expected | pass |
+| Choose carousel page (logged-in admins only): "Activate carousel" button | makes the carousel chosen from the dropdown appear on the homepage, redirects admin to the homepage | as expected | pass |
+| Choose carousel page (logged-in admins only): "Edit" button | redirects admin to the edit carousel page | as expected | pass |
+| Choose carousel page (logged-in admins only): "Delete" button | redirects admin back to the delete carousel page | as expected | pass |
+| Edit carousel page (logged-in admins only): "Cancel" button | redirects admin to the Admin Panel | as expected | pass |
+| Edit carousel page (logged-in admins only): "Edit carousel" button | saves changes, redirects admin to the Admin Panel | as expected | pass |
+| Delete carousel page (logged-in admins only): "Cancel" button | redirects admin to the Admin Panel | as expected | pass |
+| Delete carousel page (logged-in admins only): "Cancel" button | deletes carousel, redirects admin to the Admin Panel | as expected | pass |
 
 
 ### Validator Testing
