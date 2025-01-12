@@ -863,17 +863,27 @@ See the mobile wireframes below:
 
 #### Database schema
 
-A few custom models were predicted to be required when building the site. Built-in Django AllAuth with its User model was applied for the user authentication system, removing the need to build a custom User model. However, a custom Profile model was required in order to gather and maintain additional information like a profile image uploaded by the user, as well as information on their date of birth and recent or chronic injuries - if they wished to add these. These 2 models were used throughout the User Profiles app.
+Multiple custom models were predicted to be required when building this application.
 
-In the Schedule app, there are more custom models, some of them linked to the User model. The Yoga Styles and Style Description are simple models which define options to choose from for the Group Class model that stores information on the weekly group classes. The "title" column uses the Yoga Style model as its Foreign Key, while the "description" column has the same relationship to the Style Description model. Further details are declared as choices for a CharField or an IntField, or as a direct input in a form or within the admin panel (e.g. for the datetime field - "first class" column, or the "image" column - CloudinaryField upload).
+Built-in Django AllAuth with its User model was applied for the user authentication system, removing the need to build a custom User model. However, a custom UserProfile model was required in order to obtain and store additional information like user's full name, email, and delivery address - should they choose to save these in their account for a faster checkout. The __UserProfile__ model has been copied from Code Instute's walkthrough project, Boutique Ado, and it is present in the Profiles app.
 
-The next two models, Repeated Event and Event Occurrence, are a result of using the Django-Eventtools library, which was applied to create specific datetimes for each weekly class, needed for the Booking model and the Specific Group Class model.
+In the Products app, there are further custom models: __Category, Brand, Product, Image, Wishlist,__ and __Review.__ Category and Product have been copied from the walkthrough project Boutique Ado and adapted. The Brand model is very similar to Category. Image is a model for storing product images. Review was based on Code Institute's walkthrough project I Think Therefore I Blog (originally a Comment model).
 
-The Booking model utilises Group Class and User models as its Foreign Keys (for the "chosen class" column, and the "client" column). It gathers and maintains information regarding each specific booking, including whether or not it was cancelled, and storing a cancellation reason based on how the booking was cancelled.
+There are no models in the Basket app.
 
-The Specific Group Class model is directly connected only to the User model (many-to-many relationship to store a list of participants' names for each specific class). However, through the use of suitable logic in views, it "inherits" indirectly information regarding the "specific title" column from the Group Class, and for the "specific datetime" column from the Django-Eventtools models (datetime chosen by user on the book class page).
+In the Checkout app, there are 2 models: __Order,__ and __OrderLineItem,__ both copied and adapted from the walkthrough project Boutique Ado. You can find a link to this project under [Credits](#code) in the Credits section.
 
-You can see the models and the relationships between them in the following database schema, created using the [drawSQL app](https://drawsql.app/).
+In the Blog app, further models were created: __Article, Recipe, Reading,__ and __FavouriteRecipe__. What is unique for the first two is the fact that they use Summernote to store blog post content. The last two models are connected to the UserProfile model and are created/updated with signals, ensuring that each user has automatically one reading list (a list of bookmarked articles), and one list of favourite recipes in their account that they can interact with.
+
+There is just one custom models in the Events app, called __Events__, utilized to store data in relation to monthly online events (webinars) on topics related to health and well-being.
+
+In the home app, there is the __Carousel__ model which allows admin users to manage homepage appearance through carousels of images displayed in the hero section.
+
+Extended CRUD functionalities are possible thanks to these models' interactions with one another through field types like one to one, foreign key, and many to many. Thank to the use of signals certain models automatically create an object as soon as a User or UserProfile object is created (e.g. Wishlist, ReadingList, FavouriteRecipes). 
+
+What is more, I tried to ensure that any admin functionalities related to data manipulation can be handled in the front-end rather than in the built-in Django admin. This reflects the fact that most store admins are not developers, so they need these options for optimal user experience while using the application. Some examples of this are full CRUD for blog articles, recipes, events, carousel, and products.
+
+You can see the models and the relationships between the models in the following database schemas, created using the [drawSQL app](https://drawsql.app/).
 
 ![Database schema]()
 
@@ -1939,6 +1949,88 @@ In order to fork the GitHub repository:
 - Go to this [health-store repository](https://github.com/Agnieszka-21/health-store)
 - In the menu at the top choose the option "Fork"
 - You should now have your own repository inside your GitHub account.
+
+
+## Business considerations
+
+### Business model
+
+The Health Store project was set up as an example of a B2C business, so interacting direcly with customers. It is an online retail store selling products internationally and 24/7. 
+
+__Who is the customer__
+
+The store's customers are likely to be impulse buyers who make the choice to buy on their own. Therefore it was crucial to make the checkout and payment process as easy and streamlined as possible.
+
+__What is being sold__
+
+Health Store sells physical products, therefore it was important to develop the following functionalities:
+- searching, filtering, and sorting results
+- order notifications.
+A possible future enhancement would be adding stock management options so that users are notified when a product is sold out, and product quantity in the quantity input field is dynamically updated to reflect product stock levels.
+
+__How is the payment made__
+
+In this application, each transaction is finished after a single payment is made, which is typical for businesses selling physical products.
+
+
+### SEO
+
+__Keywords__
+Keywords included in the relevant meta tag of the application have been chosen by following these steps:
+1. Brainstorming general types of topics that Health Store's customers are likely to search for
+2. Filling in the general topics with some possible keyword ideas (long and short keywords)
+3. Trying these ideas out on Google and using the auto-complete feature as well as "People also ask"
+4. Selecting from the list the best keywords, considering their relevance, authority, and volume
+
+Here is the list of keywords selected in this process:
+"health store, shop online, well-being, healthy food, vegan food, organic food, vegan recipes, healthy cooking, supplements for better sleep, vitamins for tiredness, natural skincare, natural beauty products, soy candles, non-toxic candles, soy wax candles, aromatherapy, essential oils, alternative health"
+
+Further keywords are added to this list (to the meta tag) for blog articles and recipes for more accourate search results for users interested in content on a healthy lifestyle and healthy cooking. The keywords can be set in a suitable form (create article/recipe, edit article/recipe) by a staff user or admin, and if they are present, they are automatically appended to the list shown above for any published article or recipe.
+
+__SEO implementation in HTML__
+- Semantic HTML elements (header, footer, nav, article, section, etc.) have been utilized throughout the application with SEO in mind
+- Any external links have been given been given the rel attribute "noopener nofollow"
+- External links include social media sites (in the footer) and product brand's sites (on product detail pages)
+- Internal links connect the pages with one another, making navigation easy and intuitive, and helping users to explore the website
+- Relevant words and keywords have been used to describe any images (the alt attribute)
+- Image file names have been checked to indicate what they depict
+- Apart from keywords, meta tags were used for the website's title and description
+
+__Other SEO implementations__
+
+Two files have been create and added in the root folder of the project with the specific goal of improving the website's SEO: 
+- sitemap.xml,
+- and robots.txt.
+
+[xml-sitemaps.com](https://www.xml-sitemaps.com/) was utilised to generate a sitemap file for the deployed webiste.
+As for the robots.txt file, the following parts of the website have been excluded from crawling to protect user's data: accounts, basket, checkout, and profile.
+
+### Web marketing
+
+__Content marketing__
+Blog articles and recipes as well as online events have been created as examples of content marketing, used for driving traffic to the store's website by handling topics that the store's potential customers are interested in. What is more, for each article/recipe, any additional keywords saved the relevant forms (create article/recipe, edit article/recipe) are automatically appended to the meta tag with keywords in the base template, making each specific article or recipe easier to find for search engines.
+
+__Organic social media marketing__
+A business Facebook page has been set up for Health Store to provide an example of unpaid social media marketing. It could also be used for paid social media marketing, if the store owner were to boost posts or create ads. Please see screenshots of the page below.
+
+![Facebook page - part 1]()
+![Facebook page - part 2]()
+
+And here is the page as seen by an external user.
+
+![Facebook page - part 1]()
+
+Since the action button "Buy now" required an external shopping platform, I decided to go with the classic "Learn more" which opens Health Store's website in a new tab.
+
+__Email marketing__
+
+A MailChimp account was created in order to add to the website a newsletter signup form. The form can be found in the footer and is fully functioning. It has been customized to match the styling of the Health Store application. There is also a link to the newsletter in the promotional banner at the very top of each page, guiding users' attention toward in a subtle way and encouraging them to sign up. No email campaign has been connected to the form at the moment but it is something that could be done in the future.
+
+![Newsletter signup form]()
+
+__GDPR considerations__
+
+A Privacy Policy has been created for Health Store with the help of [this free privacy policy generator](https://www.privacypolicygenerator.info/). A link to a hosted page displaying the document has been added to the footer, near the newsletter sign-up form, to ensure that users can find it easily. The policy informs users about how their data is collected and processed by Health Store. You can see the Privacy Policy link in the previous screenshot.
 
 
 ## Credits
