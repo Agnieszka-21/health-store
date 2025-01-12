@@ -91,7 +91,7 @@ def remove_from_wishlist(request, product_id):
     """
     if request.POST and 'attr_id' in request.POST:
 
-        wishlist = Wishlist.objects.get(user_profil=request.user.profile)
+        wishlist = Wishlist.objects.get(user_profile=request.user.profile)
         wishlist.favourite_products.remove(request.POST['attr_id'])
         updated_wishlist = wishlist.favourite_products.all()
         wishlist_items = updated_wishlist
