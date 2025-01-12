@@ -1,7 +1,6 @@
 /* Mailchimp newsletter signup form default styling */
 #mc_embed_signup {
     background: #fff;
-    /* false; */
     clear: left;
     font: 14px Helvetica, Arial, sans-serif;
     width: 600px;
@@ -28,6 +27,10 @@
 #mc_embed_signup .button:focus {
     background-color: #ffffff;
     color: #013A20;
+}
+
+#mc_embed_signup #mce-success-response {
+    color: #CDD193;
 }
 
 /* General styles for the base template */

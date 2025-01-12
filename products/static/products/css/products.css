@@ -4,6 +4,12 @@
     font-weight: 500;
 }
 
+.product-name-link:hover,
+.product-name-link:focus {
+    color: #1C0F13;
+    text-decoration: underline;
+}
+
 #products-number a,
 .text-link {
     color: #013a20;
