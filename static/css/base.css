@@ -84,7 +84,6 @@ body {
     padding: 0 .5rem;
 }
 
-/* check the next few items - where are they used */
 .update-link,
 .remove-item {
     cursor: pointer;
@@ -242,7 +241,7 @@ body {
     font-weight: 600;
 }
 
-/* Admin panel */
+/* Admin panel page */
 .btn-admin {
     border-color: #1C0F13;
     border-width: .5px;

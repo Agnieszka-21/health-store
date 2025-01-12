@@ -57,7 +57,7 @@
                 <small class="col-md-3 text-end my-3 my-md-0">
                     <a class="btn btn-sm btn-admin" href="{% url 'edit_recipe' recipe.id %}">Edit</a>
                     {% if request.user.is_superuser %}
-                    <a class="btn btn-sm btn-admin text-danger" href="{% url 'delete_recipe' recipe.id %}">Delete</a>
+                    <a class="btn btn-sm btn-admin" href="{% url 'delete_recipe' recipe.id %}">Delete</a>
                     {% endif %}
                 </small>
                 {% endfor %}
