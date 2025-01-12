@@ -18,22 +18,23 @@
                     <i class="fa-solid fa-plus pe-2"></i>Create a new article
                 </a>
             </div>
-
-            <div class="row blog-thumbnail">
-                <h4 class="pb-3">Approved and scheduled for publishing</h4>
+ 
+            <h4 class="pb-3">Approved and scheduled for publishing</h4>                
                 {% for article in scheduled_for_publication %}
-                {% if article.banner_img %}
-                <img class="col-6 col-md-4" src="{{ article.banner_img.url }}" alt="{{ article.img_title }}">
-                {% else %}
-                <img class="col-6 col-md-4" src="{{ MEDIA_URL }}noimage.png" alt="{{ article.title }}">
-                {% endif %}
-                <div class="col-6 col-md-5">
-                    <a class="text-link" href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
-                    <p>Scheduled for: {{ article.date_of_publication }}</p>
+                <div class="row blog-thumbnail">
+                    {% if article.banner_img %}
+                    <img class="col-6 col-md-4" src="{{ article.banner_img.url }}" alt="{{ article.img_title }}">
+                    {% else %}
+                    <img class="col-6 col-md-4" src="{{ MEDIA_URL }}noimage.png" alt="{{ article.title }}">
+                    {% endif %}
+                    <div class="col-6 col-md-5">
+                        <a class="text-link" href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
+                        <p>Scheduled for: {{ article.date_of_publication }}</p>
+                    </div>
+                    <small class="col col-md-3 text-end my-3 my-md-0">
+                        <a class="btn btn-sm btn-admin" href="{% url 'edit_article' article.id %}">Edit</a>
+                    </small>
                 </div>
-                <small class="col col-md-3 text-end my-3 my-md-0">
-                    <a class="btn btn-sm btn-admin" href="{% url 'edit_article' article.id %}">Edit</a>
-                </small>
                 {% empty %}
                 <div>
                     <p>No articles scheduled for publication</p>
@@ -41,22 +42,23 @@
                 {% endfor %}
             </div>
                 
-            <div class="row blog-thumbnail mt-5">
-                <h4 class="pb-3">Waiting for admin's approval</h4>
+            <h4 class="py-3">Waiting for admin's approval</h4>
                 {% for article in unpublished_articles %}
-                {% if article.banner_img %}
-                <img class="col-6 col-md-4" src="{{ article.banner_img.url }}" alt="{{ article.img_title }}">
-                {% else %}
-                <img class="col-6 col-md-4" src="{{ MEDIA_URL }}noimage.png" alt="{{ article.title }}">
-                {% endif %}
-                <a class="col-6 col-md-5 text-link" href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
-
-                <small class="col col-md-3 text-end my-3 my-md-0">
-                    <a class="btn btn-sm btn-admin" href="{% url 'edit_article' article.id %}">Edit</a>
-                    {% if request.user.is_superuser %}
-                    <a class="btn btn-sm btn-admin ms-1" href="{% url 'delete_article' article.id %}">Delete</a>
+                <div class="row blog-thumbnail mt-5">
+                    {% if article.banner_img %}
+                    <img class="col-6 col-md-4" src="{{ article.banner_img.url }}" alt="{{ article.img_title }}">
+                    {% else %}
+                    <img class="col-6 col-md-4" src="{{ MEDIA_URL }}noimage.png" alt="{{ article.title }}">
                     {% endif %}
-                </small>
+                    <a class="col-6 col-md-5 text-link" href="{% url 'article_detail' article.slug %}">{{ article.title }}</a>
+
+                    <small class="col col-md-3 text-end my-3 my-md-0">
+                        <a class="btn btn-sm btn-admin" href="{% url 'edit_article' article.id %}">Edit</a>
+                        {% if request.user.is_superuser %}
+                        <a class="btn btn-sm btn-admin ms-1" href="{% url 'delete_article' article.id %}">Delete</a>
+                        {% endif %}
+                    </small>
+                </div>
                 {% empty %}
                 <div>
                     <p>No articles waiting for admin's approval</p>
@@ -66,7 +68,6 @@
                     <p>All articles below the line have been published on the blog.</p>
                 </div>
                 <hr>
-            </div>
             {% endif %}
 
             {% for article in published_articles %}
@@ -87,7 +88,9 @@
                     {% endif %}
                 </small>
                 {% endif %}
+            </div>    
             {% empty %}
+            <div>
                 <div class="mt-5">
                     <p>No articles yet.</p>
                 </div>
