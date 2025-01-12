@@ -1,37 +1,3 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
-
-## Gitpod Reminders
-
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
-
-`python3 -m http.server`
-
-A blue button should appear to click: _Make Public_,
-
-Another blue button should appear to click: _Open Browser_.
-
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
-
-A blue button should appear to click: _Make Public_,
-
-Another blue button should appear to click: _Open Browser_.
-
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
-
-To log into the Heroku toolbelt CLI:
-
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
-
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
-
-------
-
-
-
 # Health Store
 
 
@@ -262,22 +228,514 @@ __Admins__ need to be logged into their superuser account in order to access the
 
 ---
 
-#### View ....
+#### Create a user account (sign up)
 
-[User story #2:  ](link)
-As a User (Client), I would like to view the studio's class schedule, so that I can check if I am interested in and able to attend any classes offered.
+[User story #15:  ](https://github.com/Agnieszka-21/health-store/issues/15)
+As a User (Customer), I would like to create a user profile/account, so that I can save my data for a speedier checkout process, save favourite products and blog and avail of any other functionalities available only to registered users.
 
 __Acceptance Criteria__
-- Given that I am a User (Client), when I navigate to the studio's schedule page, then I can see the current schedule without having to register or log in.
+- Given that I am an unregistered User (Client), when I choose the "Sign Up" option, then I can create my account with an email address and a password.
+- Given that I am an unregistered User (Client), when I choose the "Sign Up" option, then I am sent an email that allows me to verify my email and confirm that I want to sign up for an account.
 
 __Implementation__
-- Create models YogaStyle, StyleDescription, and GroupClass
-- In the admin panel, set up data related to these models as needed to create GroupClass objects
-- Create a view which lists all group classes, and a template for Schedule page which extends base.html
+- Use Django AllAuth so that the user can create an account.
+- Make sure to verify user's email (configuration in settings.py)
+- Adjust the verification/confirmation email so that it displays the correct business name instead of example.com
 
 ---
 
+#### Log into the user profile/account
+
+[User story #16:  ](https://github.com/Agnieszka-21/health-store/issues/16)
+As a User (Customer), I would like to be able to log in to my profile/account, so that I can access the advantages of having an account.
+
+__Acceptance Criteria__
+- Given that I am a registered user
+When I navigate to the login page
+Then I can enter my details to log in to my account
+- Given that I am a registered user, when I navigate to the login page and enter my details and I click login, then I am logged into my account and I am able to see a visual confirmation that I am now logged in.
+- Given that I am a registered user and I try to log in to my account, when I enter the wrong information, then the site informs me that the information was incorrect and prevents my logging in.
+- Given that I am a registered user and I try to log in to my account, when I forget my password, then I can click a "Forgot password" link that takes me to a page that helps me reset my password.
+
+__Implementation__
+- Create a Login option in the navigation bar and main menu
+- Show the Login option only to a user who is not logged in yet
+- Make sure the user can reset their password in case they forget it
+
 ---
+
+#### Log out of the user profile/account
+
+[User story #17:  ](https://github.com/Agnieszka-21/health-store/issues/17)
+As a User (Customer), I would like to be able to log out of my account, so that I can make sure my personal details are safe.
+
+__Acceptance Criteria__
+- Given that I am a logged in user, when I select "log out" in the nav bar and confirm it, then I am redirected to the homepage and a confirmation message is shown
+
+__Implementation__
+- Once the User is logged in, give them the option to log out in the main menu and the nav bar
+- Defensive programming - when user chooses the log out option, ask for confirmation
+- If the user confirms that they want to log out, redirect them to the Homepage with updated navbar (Login/Signup option shown)
+
+---
+
+#### View a user profile/account
+
+[User story #19:  ](https://github.com/Agnieszka-21/health-store/issues/19)
+As a User (Customer), I would like to be able to view my profile, so that I can see any information saved there.
+
+__Acceptance Criteria__
+- Given that I am a registered user, when I log in to my account, then I can easily navigate to and view my profile/account
+
+__Implementation__
+- Create the Profile/Account option in the nav bar, shown only when a user is logged in
+- Ensure that this option takes the user to their account with all their saved information
+
+---
+
+#### Edit the user profile/account
+
+[User story #18:  ](https://github.com/Agnieszka-21/health-store/issues/18)
+As a User (Customer), I would like to be able to add and edit specific details like address or payment method to my profile, so that they stay up to date and enhance my shopping experience.
+
+__Acceptance Criteria__
+- Given that I am a logged in user, when I navigate to my profile/account, then I can add and edit suitable data.
+- Given that I am a logged in user, when I add/edit/delete my profile data, then get a notification that confirms my changes.
+- Given that I am a logged in user, when there is an issue with adding/editing/deleting my profile data, then the site informs me what went wrong.
+
+__Implementation__
+- Create a way of saving a user's default address, name, email, and phone number in their user account
+- Show a suitable notification whenever user makes a change to their profile
+
+---
+
+#### View all products
+
+[User story #22:  ](https://github.com/Agnieszka-21/health-store/issues/22)
+As a User (Customer), I would like to be able to view all products in one place, so that I can browse and explore what the shop has to offer.
+
+__Acceptance Criteria__
+- Given that I am a user who wants to browse all products carried by the store, when I navigate to the shop page, then I can see all products listed there.
+- Given that I am a user who wants to browse all products carried by the store, when I access the shop page, then I can easily access all products by scrolling.
+- Given that I am a user who wants to browse all products carried by the store, when I view the shop page, then I can see the right level of detail for each product to be well-informed without feeling overwhelmed.
+
+__Implementation__
+- Create a page that shows all products carried by the store with only the most relevant information
+- I For each product, show one image and only the most essential information
+
+---
+
+#### Filter products based on category
+
+[User story #23:  ](https://github.com/Agnieszka-21/health-store/issues/23)
+As a User (Customer), I would like to be able to filter products available on the shop page, so that I can be more specific in my search for products while still exploring my options.
+
+__Acceptance Criteria__
+- Given that I am a user who wants to browse products in a specific category, when I navigate to the shop page, then I can switch on a suitable filter to view only relevant products.
+
+__Implementation__
+- Create a filter button and functionality
+- Provide the functionality of filtering products by category
+
+---
+
+#### Sort products based on specific criteria
+
+[User story #24:  ](https://github.com/Agnieszka-21/health-store/issues/24)
+As a User (Customer), I would like to be able to sort products available on the shop page, so that I can browse products in a specific order (lowest price first/highest price first/highest ratings first).
+
+__Acceptance Criteria__
+- Given that I am a user who wants to see products with the highest ratings first, when I navigate to the shop page, then I can switch on a suitable sorting option to view products in the required order.
+- Given that I am a user who wants to see products with the lowest price first, when I navigate to the shop page, then I can switch on a suitable sorting option to view products in the required order.
+- Given that I am a user who wants to see products with the highest price first, when I navigate to the shop page, then I can switch on a suitable sorting option to view products in the required order.
+
+__Implementation__
+-  Create a sort button and functionality
+- Provide the following sorting options: by price (low to high), by price (high to low), by rating (high to low), by name (A-Z and Z-A)
+
+---
+
+#### Search for a specific product
+
+[User story #25:  ](https://github.com/Agnieszka-21/health-store/issues/25)
+As a User (Customer), I would like to be able to search for a specific product by typing a keyword, so that results show only the products related to my search.
+
+__Acceptance Criteria__
+- Given that I am a user who wants to search for a specific product, when I navigate to the shop page, then I can type a keyword into a search bar.
+- Given that I am a user who wants to search for a specific product, when I navigate to the shop page, then I can view results of my search that include only products related to my keyword.
+
+__Implementation__
+- Create a search bar as part in the header
+- Ensure the functionality looks for the keyword in product name/description/ingredients
+
+---
+
+#### View a specific product with a high level of detail
+
+[User story #26:  ](https://github.com/Agnieszka-21/health-store/issues/26)
+As a User (Customer), I would like to be able to view any product in more detail, on a separate page, so that I can access all the information I might need to help me decide whether to purchase that product or not.
+
+__Acceptance Criteria__
+- Given that I am a user who is interested in specific products, when I navigate to the shop page, then I can select a product to view it in more detail.
+- Given that I am a user who is interested in specific products, when I view a product detail page, then I can access a suitable level of information, including multiple photos, ratings, description etc.
+
+__Implementation__
+- Create a product detail page that populates with a chosen product's data
+- Include all relevant information - product name, description, price, rating, SKU, and multiple images
+
+---
+
+#### Optimise user experience on the shop page (pagination, back-to-top link)
+
+[User story #64:  ](https://github.com/Agnieszka-21/health-store/issues/64)
+As a User (Customer), I would like to be able to avoid endless scrolling and get back to the top of the page easily, so that I can enjoy the shopping experience without feeling overwhelmed.
+
+__Acceptance Criteria__
+- Given That I am a user, when I scroll through the shop page, then I have the option of going to the next/previous page that loads more products.
+- Given That I am a user, when I scroll through the shop page, then I can click the back-to-top button and easily return to the top of the page.
+
+__Implementation__
+- Add pagination to the page with all products (shop) to avoid endless scrolling
+- Add the "back to the top" option for enhanced user experience
+
+---
+
+#### Add a product to the basket
+
+[User story #30:  ](https://github.com/Agnieszka-21/health-store/issues/30)
+As a User (Customer), I would like to be able to add products that I want to buy to my shopping basket, so that I can purchase them.
+
+__Acceptance Criteria__
+- Given That I am an unregistered user, when I find a product I want to purchase and I click on "add to basket", then the product is added to my shopping basket.
+- Given That I am a registered and logged in user, when I find a product I want to purchase and click "add to basket", then the product is added to my shopping basket.
+- Given that I am a user,, when I click add to cart on a product that is already in my basket, then the quantity of that product in my basket increases by the defined amount.
+
+__Implementation__
+- Develop a shopping basket functionality to track products the user wants to purchase
+- Make the basket functionality accessible for both logged in and not logged in/unregistered users
+- Develop a method to check whether a product already exists in the basket – if the product exists, increase quantity as required
+
+---
+
+#### View the basket
+
+[User story #31:  ](https://github.com/Agnieszka-21/health-store/issues/31)
+As a User (Customer), I would like to be able to view the contents of my shopping basket, so that I can confirm that it contains all the products I want to buy in correct quantities before proceeding to purchase.
+
+__Acceptance Criteria__
+- Given that I am a user, when I click on the shopping basket in the nav bar, then I am taken to a page with the details of all the products I have in my basket.
+- Given that I am a user, when I add a product to my cart, then I receive a visual confirmation that the product was added to my basket.
+
+__Implementation__
+- Develop a page for viewing the shopping basket
+- Develop a temporary preview of the shopping cart to display when adding a product to the cart (on medium and larger screens)
+- Display number of products in the basket next to the basket icon in the navbar
+
+---
+
+#### Remove a product from the basket
+
+[User story #32:  ](https://github.com/Agnieszka-21/health-store/issues/32)
+As a User (Customer), I would like to be able to remove products from my baseket so that I can purchase exactly the products I want to buy.
+
+__Acceptance Criteria__
+- Given that I am a user and I have added products to my shopping basket, when I view the basket, then I can remove each specific product listed there.
+
+__Implementation__
+- Develop the ability to remove a product from the shopping basket
+- Update the total price of all items in the basket when a product is removed
+
+---
+
+#### Adjust the quantity of a product/products in the basket
+
+[User story #33:  ](https://github.com/Agnieszka-21/health-store/issues/33)
+As a User (Customer), I would like to be able to adjust the quantity of each product in my baseket so that I can purchase exactly the right quantity of each chosen product.
+
+__Acceptance Criteria__
+- Given that I am a user and I have added products to my shopping basket, when I view the basket, then I can adjust the quantity of each product.
+- Given that I am a user and I have added products to my shopping basket, when I change the quantity of a product in my shopping basket, then I the total price for all products is adjusted accordingly.
+
+__Implementation__
+- Develop the ability to adjust the item quantity in the shopping basket
+- Update the total price of all items in the basket when product quantity is changed
+
+---
+
+#### Proceed to checkout
+
+[User story #35:  ](https://github.com/Agnieszka-21/health-store/issues/35)
+As a User (Customer), I would like to be able to proceed to the checkout, so that I can purchase my items and place an order.
+
+__Acceptance Criteria__
+- Given that I am a user, when I have reviewed my shopping cart, then I have the option to proceed to the checkout.
+
+__Implementation__
+- Develop a checkout link on shopping basket page
+- Develop a checkout link on shopping basket preview
+
+---
+
+#### Provide personal details needed in the checkout process
+
+[User story #37:  ](https://github.com/Agnieszka-21/health-store/issues/37)
+As a User (Customer), I would like to be able to provide my details, so that my order can be processed.
+
+__Acceptance Criteria__
+- Given that I am a user who is not logged in, when I proceed to checkout, then I am asked to enter my shipping and billing address
+- Given that I am a user who is not logged in, when I enter my billing address, then I can use the same address as my shipping address without having to fill it out twice.
+- Given that I am a logged in user,, when I enter my billing and shipping address details, then I have the option to save them to my account.
+- Given that I am a logged in user and there are address details saved in my account, when I get to the enter billing and shipping address page, then I have the option to use previously saved details.
+- Given that I am a registered user and I am not logged in, when I proceed to enter the address information, then I have the ability to log in to my account and then return to the same page and use previously saved address details.
+
+__Implementation__
+- Develop checkout page to collect billing and delivery address details
+- Enable option to use billing address for delivery address
+- Enable option for users to save address details to their account
+- Enable link to login which redirects back to checkout page
+- Enable logged in users to select previously saved addresses instead of manual completion of the form
+
+---
+
+#### Pay for the items in the shopping basket
+
+[User story #38:  ](https://github.com/Agnieszka-21/health-store/issues/38)
+As a User (Customer), I would like to be able to use my credit/debit card to make a purchase, so that I can pay for my items easily and I can receive my order.
+
+__Acceptance Criteria__
+- Given that I am a user, when checking out my shopping basket, then I have the ability to enter my credit/debit card details securely.
+- Given that I am a user, when I enter my card details to pay for the transaction, then my payment will be processed.
+- Given that I am a user, when I enter my card details and click/tap "buy", then I am kept informed as to the status of the transaction as it progresses.
+- Given that I am a user, when my payment fails, then I am redirected back to the checkout page without losing all the inputted information so that I can try again or with a different card.
+- Given that I am a user, when I check out and my payment is processed successfully, then I am taken to a confirmation page.
+
+__Implementation__
+- Develop secure form to capture credit card details
+- Develop link to payment processor
+- Develop message system to keep customer informed of processing status
+- Develop redirect to appropriate page depending on payment outcome
+
+---
+
+#### Receive an order confirmation
+
+[User story #39:  ](https://github.com/Agnieszka-21/health-store/issues/39)
+As a User (Customer), I want to be shown a confirmation page when my payment is accepted and my order is placed, so that I can see that my order will be processed.
+
+__Acceptance Criteria__
+- Given that I am a user, when I complete the checkout process and my payment is accepted, then I can see a confirmation page with my order details.
+- Given that I am a user, when I complete the checkout process and my payment is accepted, then I receive a confirmation email with my order details.
+- Given that I am a registered user and I was logged in when I placed my order, when I have completed the checkout process and my payment was accepted, then my order appears in my user account.
+
+__Implementation__
+- Create an order confirmation page that is shown to the user when they successfully complete the checkout process
+- Develop an automated order confirmation email containing all important order details
+-  Link a new order to a user so that it is visible in the user's profile/account
+- Ensure each order has a unique id number
+
+---
+
+#### View product reviews
+
+[User story #73:  ](https://github.com/Agnieszka-21/health-store/issues/73)
+As a User (Customer), I would like to be able to submit a review of a product, so that I feel that my opinion matters and is heard.
+
+__Acceptance Criteria__
+- Given that I am a user, when I go to a product detail page and scroll down, then I can see a list of existing reviews for that product.
+- Given that I am a registered user who recently submitted a review of a product that contained text, when I go to that product's page and scroll down, then I can see my review with a badge "Review awaiting approval".
+- Given that I am a registered user who recently submitted a review of a product that contained text, when I go to that product's page and scroll down after an admin approved my review, then I can see my review on the page.
+- Given that I am a registered user who recently submitted a review of a product that did not contain text (star rating only), when I go to that product's page and scroll down to the Review section, then I can see my review (rating) on the page.
+
+__Implementation__
+- Display all reviews that are marked as "approved" on the relevant product page
+- Ensure that reviews without text are automatically marked as "approved" to be displayed right away
+- Do not display new reviews with text until they have been approved by an admin
+- If a user is logged in and they have a review awaiting approval, display that review under "Reviews" with a suitable badge
+
+---
+
+#### Create a product review
+
+[User story #74:  ](https://github.com/Agnieszka-21/health-store/issues/74)
+As a User (Customer), I would like to be able to create a product review/rating, so that my opinion can be shared with other customers to help them make an informed decision.
+
+__Acceptance Criteria__
+- Given that I am an unauthenticated user, when I go to a product page and scroll down to "Reviews", then I can click a "Log in to leave a review" button that redirects me to the login page.
+- Given that I am a logged in user, when I go to a product page and scroll down to "Reviews", then I can see a "Submit a review" form with a mandatory star rating and an optional text.
+- Given that I am a logged in user who just filled the review form, when I click "Submit", then a message is displayed to confirm a successful review submission if the form was valid.
+- Given that I am a logged in user who just filled the review form, when I click "Submit", then a suitable warning/information is shown if the form was not valid (star rating missing)
+
+__Implementation__
+- Display a "log in to leave a review" button to unauthenticated users
+-  Display a review form to logged in users
+- Show a confirmation of review submission on success
+- Validate form to ensure that a star rating is present in the submitted form (required field)
+
+---
+
+#### Edit a review
+
+[User story #75:  ](https://github.com/Agnieszka-21/health-store/issues/75)
+As a User (Customer), I would like to be able to edit my own product review, so that it reflects my current opinion on the product.
+
+__Acceptance Criteria__
+- Given that I am a logged in user, when I go to a product page and scroll down to "Reviews", then I can see any reviews I submitted for that product
+- Given that I am a logged in user, when I go to a product page and scroll down to "Reviews", then I am shown an "Edit" button next to each of my reviews.
+- Given that I am a logged in user, when I click "Edit" next to one of my reviews, then my review is displayed in the review form and I can update it there.
+- Given that I am a logged in user who just edited a review, when I click "Submit", then a suitable message is shown to let me know whether my submission was successful or whether I need to add any missing information in the form.
+
+__Implementation__
+- Display an "Edit" button next to each product review whose author is the authenticated user
+- Make the review populate the review form once user clicked "Edit"
+- Show a confirmation of review submission on success
+- Validate form to ensure that a star rating is present in the submitted form (required field)
+- Ensure that for any reviews with text, they are shown as "awaiting approval" and are displayed only to their logged-in author until they have been approved by an admin.
+
+---
+
+#### Delete a review
+
+[User story #76:  ](https://github.com/Agnieszka-21/health-store/issues/76)
+As a User (Customer), I would like to be able to delete my own product review, so that it is not displayed on the page if I change my mind.
+
+__Acceptance Criteria__
+- Given that I am a logged in user, when I go to a product page and scroll down to "Reviews", then I can see any reviews I submitted for that product
+- Given that I am a logged in user, when I go to a product page and scroll down to "Reviews", then I am shown an "Delete" button next to each of my reviews.
+- Given that I am a logged in user, when I click "Delete" next to one of my reviews, then I am asked warned about the action being irreversible and asked for confirmation, or I can cancel the process.
+- Given that I am a logged in user who just confirmed they want to delete their review, when I check the list of reviews of the product, then |I can see that the review I deleted is not displayed anymore.
+
+__Implementation__
+- Display a "Delete" button next to each product review whose author is the authenticated user
+- Display a modal to sk for confirmation to avoid accidental deletions
+- Show a message confirming successful review deletion if the user decided to click "Delete"
+- If user cancels the deletion process, simply close the modal.
+
+---
+
+#### Mark and save a product as "favourite"
+
+[User story #27:  ](https://github.com/Agnieszka-21/health-store/issues/27)
+As a User (Customer), I would like to be able to save my favourite products to a wishlist in my profile/account, so that I can find them easily when I am ready to buy them.
+
+__Acceptance Criteria__
+- Given that I am a user, when I navigate to the shop page, then I can tap/click/select a heart icon next to any product.
+- Given that I am a logged in user, when I tap the heart icon next to a specific product, then that product is automatically saved to the wishlist in my profile/account.
+- Given that I am a user who is not logged in, when I tap the heart icon next to a specific product, then a notification telling me to log in pops up.
+
+__Implementation__
+- Add a heart icon next to each product, both on the shop page, and on a product detail page
+- Create a functionality that saves the product to a list of favourites" if the user is logged in
+- Show a message prompting a user to log in in order to mark a product as "favourite" if they are not logged in
+- Make the heart icon accessible to keyboard users as well
+
+---
+
+#### View your wishlist/"favourites"
+
+[User story #28:  ](https://github.com/Agnieszka-21/health-store/issues/28)
+As a User (Customer), I would like to be able to view a list of all products I have marked as "favourite" in my profile/account, so that I can access them easily.
+
+__Acceptance Criteria__
+- Given that I am a logged in user, when I navigate to my profile/account, then I can view a list of products I have marked as "favourite".
+
+__Implementation__
+- Add the wishlist/"favourites" to a user profile/account
+- Make it easily accessible through the profile/account navigation
+
+---
+
+#### Remove a product/products from your wishlist
+
+[User story #29:  ](https://github.com/Agnieszka-21/health-store/issues/29)
+As a User (Customer), I would like to be able to remove from my wishlist any products previously marked as "favourite", so that the list stays clean and up to date.
+
+__Acceptance Criteria__
+- Given that I am a logged in user, when I navigate to the wishlist in my profile/account, then I can remove any product from the wishlist.
+
+__Implementation__
+- Add a heart icon (filled in/coloured) next to each product listed in the whislist
+- Create a functionality that removes a product from the wishlist if the user taps the heart
+
+---
+
+#### View/read a blog with articles and healthy recipes
+
+[User story #48:  ](https://github.com/Agnieszka-21/health-store/issues/48)
+As a User (Customer), I would like to have easy access to the stores's blog, so that I can be learn more about a healthy lifestyle.
+
+__Acceptance Criteria__
+- Given that I am a user, when I visit the store's website, then I can easily navigate to the blog and read any articles/recipes.
+
+__Implementation__
+- Add a blog to the website which contains health and wellness-related articles and healthy recipes
+- Add a link to the blog in the nav bar
+
+---
+
+#### Save an article/recipe to a user profile
+
+[User story #49:  ](https://github.com/Agnieszka-21/health-store/issues/49)
+As a User (Customer), I would like to be able to save my favourite blog articles and recipes to my profile so that I can access them easily in the future.
+
+__Acceptance Criteria__
+- Given that I am a logged in user, when I navigate to any blog post (article/recipe), then I can save the post to my account to easily find it in the future.
+- Given that I am a logged in user, when I navigate to my user profile/account, then I can see and easily access all my saved blog posts.
+
+__Implementation__
+- Add a "save/bookmark" icon to the blog article/recipe detail template
+- Create the functionality to save an article/recipe to the profile for any logged-in user when they click the icon
+- Ensure there is a section of the user account where each user can see their saved articles/recipes
+
+---
+
+#### Sign up to a webinar on health- an wellness-related topics
+
+[User story #50:  ](https://github.com/Agnieszka-21/health-store/issues/50)
+As a User (Customer), I would like to be able to attend online events organised by the store so that I can be a part of a community of like-minded people who are interested in health and wellness.
+
+__Acceptance Criteria__
+- Given that I am a user, when I go to the main navigation, then I can access a page with details of upcoming webinars.
+- Given that I am a registered user, when I navigate to the page with upcoming webinars, then I can sign up for any of them.
+- Given that I am a user, when I go to my mailbx, then I can see the confirmation email with event details.
+
+__Implementation__
+- Add a page for upcoming webinars/online events
+- Add a link to this page in the main navigation
+- Develop the correct webinar sign-up functionality depending on the user's status (logged-in/logged-out/unregistered)
+- Send a registration confirmation email
+
+---
+
+#### Copy the URL of an article/recipe with one click for easy sharing 
+
+[User story #51:  ](https://github.com/Agnieszka-21/health-store/issues/51)
+
+
+__Acceptance Criteria__
+- Given that I am a user, when I visit any article or recipe in the store's blog, then I can click the "copy" icon to copy the page's URL with one click.
+
+__Implementation__
+- Add a "copy" icon in the template for every blog article/recipe
+- Develop the functionality to copy the URL of that article's/recipe's page just by clicking on that icon
+- Display a message "Link copied" so that the user knows what just happened
+
+---
+
+#### Sign up to the newsletter
+
+[User story #40:  ](https://github.com/Agnieszka-21/health-store/issues/40)
+As a User (Customer), I want to be able to sign up to the health store's newsletter, so that I can receive special offers, information on exclusive online events, as well as health and wellness-related content.
+
+__Acceptance Criteria__
+- Given that I am a user, when I fill the newsletter signup form, then I am added to the list of recepients of the store's newsletter.
+- Given that I am a user, when I am considering filling the newsletter signup form, then I can read the store's privacy policy to have a better understanding of what happens to my data.
+
+__Implementation__
+- Create a newsletter signup form and place it in the footer so that it is easily accessible on multiple pages
+- Create a Privacy Policy and a link to it right below/next to the newsletter signup form for easy access
+
+---
+
 
 #### Opportunities arising from User Stories
 
