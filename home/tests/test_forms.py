@@ -5,24 +5,12 @@ from ..forms import CarouselForm
 
 class CarouselFormTest(SimpleTestCase):
 
-    def test_form_fields(self):
+    def test_display_field_is_excluded(self):
         """
-        Tests which fields are included in this form
+        Tests whether the model field 'display' is excluded
         """
         form = CarouselForm()
-        self.assertTrue(form.Meta.fields, [
-            'title',
-            'banner_img1',
-            'name_banner_img1',
-            'banner_img2',
-            'name_banner_img2',
-            'banner_img3',
-            'name_banner_img3',
-            'banner_img4',
-            'name_banner_img4',
-            'created_on',
-            'display',
-        ])
+        self.assertEqual(form.Meta.exclude, ('display',))
 
     def test_title_is_required(self):
         """

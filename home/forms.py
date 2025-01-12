@@ -5,7 +5,7 @@ from .models import Carousel
 class CarouselForm(forms.ModelForm):
     class Meta:
         model = Carousel
-        fields = '__all__'
+        exclude = ('display',)
 
     def __init__(self, *args, **kwargs):
         super(CarouselForm, self).__init__(*args, **kwargs)
