@@ -459,168 +459,299 @@ Images used as thumbnails on the Articles page, and as banners on each article's
 
 ### Homepage
 
-__Navigation bar__
+__Promo banner linked to newsletter form__
 
-The navigation bar is shown in 2 versions, depending on whether the user is logged in or not. For a user who is not logged in, it lists Home, Schedule, Sign up, and Log in.
+The promo banner at the very top of the page informs users that they can get a discount code if they sign up to the store's newsletter. When clicked, the "sign up" link sends the user to the newsletter form in the footer.
 
-![Navbar - user not logged in](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/navbar_not_logged_in.png)
+![Promo banner]()
 
-For a logged in user, it shows the following options: Home, Schedule, My profile, My bookings, and Log out.
+__Header - the logo, navigation bar, search bar__
 
-![Navbar - user logged in](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/navbar_logged_in.png)
+The store's logo is shown in the center of the navigation bar and it acts as a link to the homepage.
 
-__Hero section__
+The navigation bar is shown in 3 versions, depending on whether the user is logged in, user is not logged in, or user is an authenticated admin. In these 3 versions the main navbar stays the same, displaying the following options: Shop, Blog, Events, a Profile icon, and a Basket icon (screenshot below).
 
-The hero section consists of a responsive full-width background image, a black semi-transparent overlay for optimal contrast, and white text "Welcome to the friendliest yoga studio in Dublin" followed by a button with the call to action "See our class schedule", which redirects the user to the Schedule page. This way the purpose of the page is clear right away - to invite user to check out the offer of yoga classes so they can book the ones that they find interesting.
+![Navbar - user not logged in]()
 
-![Hero section](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/home_hero.png)
+what changes is the dropdown under the profile icon. For a logged in end-user or staff user, it shows the following options: Account and Log out.
 
-__Embedded Google maps__
+![Navbar profile menu - end-user logged in]()
 
-Underneath the hero section, the user can find general information about the studio, including an embedded Google map with a pin showing the exact location of the studio.
+For a logged in admin, it shows the following options: Admin Panel, Account and Log out.
 
-![Google maps, address, and opening hours](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/home_map_info.png)
+![Navbar profile menu - admin user logged in]()
 
-__Address and opening hours__
+__Hero section carousel__
 
-Next to the map (or below on tablet and phone screens), there is information on the studio's address and its opening hours - easily accessible to anyone visiting the page. See the previous screenshot.
+The hero section consists of a responsive full-width carousel with 4 images that slide left at regular intervals. User can also control the carousel by clicking a right/left arrow or one of the 4 thin rectangles at the bottom of the carousel where each rectangle stands for a specific image.
 
-__Footer with social icons__
+![Carousel]()
 
-The footer includes links to social media pages of the studio, which open in a new tab each. It also has a copyright section at the very bottom.
+__Shop now button__
 
-![Footer](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/footer.png)
+Underneath the carousel, there is a large "Shop now" button, which redirects the user to the Shop page when clicked. Because of its central placement on the page, it reinforces the application's aim to sell products to customers.
 
+![Shop now button]()
 
-### Schedule page
+__Footer - newsletter signup form, social icons, privacy policy link__
 
-__Banner image and call-to-action heading__
+The footer includes a newsletter signup form embedded from MailChimp, as well as links to social media pages, which open in a new tab each. It also has a link to the store's Privacy Policy which opens in a new tab, and copyright information.
 
-An image depicting a group of people practising yoga in a class, and below the heading with a call to action: "Find the perfect class for you!".
+![Footer]()
 
-![Schedule page banner and heading](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/schedule_banner_heading.png)
 
-__List of all weekly classes (cards)__
+### Shop page
 
-The classes are listed grouped by weekday, starting with Monday, and ordered according to their start time. A calendar icon from Font Awesome and a short name of each weekday visually divide the list for enhanced user experience and clarity. Each class is shown as a card which presents the most important details, and the class title is a link that leads directly to the detail page for the class. Class titles are also tabbable, ensuring that the entire website is accessible for keyboard users.
+__Title, filtering, sorting__
 
-![Schedule list](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/schedule_list.png)
+At the top of the shop page, there is a title "Products" and 2 dropdowns: one for filtering products by category, and one for sorting products according to their price/name/average rating.
 
+![Shop page]()
 
-### Schedule detail pages
+If filtering by a category is active, the chosen category is shown under the title, and a link to all products is visible on the left side. The same link is displayed when sorting is active, and when clicked any sorting/filtering is removed.
 
-__Image__
+![Shop page - category filter active]()
 
-For added visual interest, there is an image of a yoga class. The images differ depending on the style of yoga taught in the class to give the user an idea of what is done in the class or who it is for. The images can be uploaded to Cloudinary through the admin panel when creating/updating a group class.
+__Main section - list of products__
 
-![Schedule detail page - user not logged in](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/schedule_det_not_logged_in.png)
+Each product is shown as a card, and there are up to 8 products per page. For any authenticated users, a heart icon is shown next to each product, adding a wishlist functionality. For admin users, there are additionally 2 buttons for each product - Edit and Delete. See the screenshot below.
 
-__Class details__
+![Shop page - view for admins]()
 
-Title, instructor, description, weekday, start time, and duration are all shown next to the class image. They are visually coherent yet separate from one another to ensure that the user finds the information they need the most without feeling overwhelmed by details (see the previous screenshot).
+__Pagination__
 
-__Show bio link and modal__
+The shop page is paginated, so that there are only 8 products on each page - or less on the last page.
 
-Next to the instructor's name, there is a "Show bio" span that can be selected (by a mouseclick or with Tab key) to open a modal that houses a short bio of the instructor. In the modal, there is also a "close" button - if you click the button (or anywhere outside of the modal), the modal will be closed. To ensure that the page is fully accessible, JavaScript was used to handle the modal functionality, including trapping focus in the modal when it is open.
+![Pagination]()
 
-![Teacher bio modal](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/teacher_bio_modal.png)
 
-__Book now button__
+### Product detail page
 
-Shown only for logged in users, when selected, it takes the user to the "Book class" page. For users who are not logged in or do not have an account yet, there is a link to the log in page instead.
+__Product images__
 
-![Schedule detail page - user logged in](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/schedule_det_logged_in.png)
+For added visual interest, on each product's detail page, there are up to 3 images of the product. The main image is shown as larger, the other 2 as thumbnails.
 
+![Product images]()
 
-### Book class page
+These images switch places when clicked so that any of the available product images can be shown in the larger size.
 
-__User form__
+![Product images - switched]()
 
-Pre-filled and uneditable. Contains the following details: the logged-in user's first name, last name, and email address.
+Additionally, the user can open any image in a new tab with a click on the larger image.
 
-![Book class page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/book_class_page.png)
+__Product information__
 
-__Booking form__
+The following details are shown to all users: product name, its price, average rating, a link to product's category, a link to product's brand (which opens in a new tab since it is an external link), description, and ingredients. Additionally, logged-in users can see a heart icon next to the product name which allows them to add product to their wishlist.
 
-Contains a dropdown with available dates - the next 3 available occurrences of the weekly group class to choose from.
-It also has a checkbox to "sign" the studio's liability waiver, which is required so that the class can be booked.
+![Product information]()
 
-![Waiver not signed](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/waiver_signed_required.png)
+__Quantity input and "Add to basket" button__
 
-If the booking is successful, the user is redirected to the Schedule page (to encourage the user to check out other classes) and shown a success message.
+Under product information, there is an input field for the user to choose quantity (from 1 to 9) of the product, and an "Add to basket" button which adds the product to the shopping basket in the quantity specified in the input field. 
 
-![Booking successful](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/booking_success.png)
+![Quantity input and "Add to basket" button]()
 
-Should the chosen class be already fully booked, the following message is shown:
+A success message is shown upon successful addition of the product to the basket. The message can be closed on the close (x) button. It also includes a "Go to checkout" button which redirects the user to the basket page.
 
-![Booking failed - class already full](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/book_class_fail_full.png)
+![Success message - product added to basket]()
 
-In the event when the user tries to book the exact same class that they have already booked (same group class on the same date and time), they are informed that they have already booked a place in this class and prevented from making a duplicate booking (each user is allowed to book a class only for themselves, so they receive exactly one spot in each class they book).
+Similar messages are displayed for any user interactions with the application, letting them know whether their operation has been successful or not, and what the recommended solution is.
 
-![Booking failed - duplicate exists](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/book_class_already_booked.png)
+__Product reviews__
 
-__"Read the waiver here" link and modal__
+At the bottom of the page, there is a Reviews section for that particular product. It displayes any existing and approved by admin reviews. For an unauthenticated user, there is also a "Log in to leave a review" button, redirecting them to the Log in page.
 
-Under the checkbox, there is a span "Read the waiver here" that opens a modal with the studio's liability waiver. In the modal, there is also a "close" button - if you click the button (or anywhere outside of the modal), the modal will be closed. To ensure that the page is fully accessible, JavaScript was used to handle the modal functionality, including trapping focus in the modal when it is open.
+![Reviews as displayed to an unauthenticated user]()
 
-![Waiver modal](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/waiver_modal.png)
+For a logged-in user, instead of the button, there is a review form which they can fill and submit. A star rating required while the text field can be left empty. If the user submits only a star rating, their review is displayed under "Reviews" right away. If they decided to add text, they can see their review with a badge "Review waiting for admin's approval". The review is not visible to any other users until it has been approved by an admin.
 
+![Reviews as displayed to a logged-in user]()
 
-### My profile page
+For any existing reviews submitted by this particular user, there are also 2 buttons shown for each review: "Edit" and "Delete". If the user clicks "Edit", their review populates the review form and can be updated and submitted. Should the edited review contain text, it is again not displayed to the general public until it has been approved by an admin.
 
-This page shows the following information: a profile image (either one uploaded by the user, or the default image), the user's full name and email address, and then their additional information like date of birth and chronic/recent injuries. There is also a button "Edit profile" that brings the user to the Edit profile page.
+![Edit review]()
 
-![My profile page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/my_profile_page.png)
+The "Delete" button opens a modal where the user can choose either "Cancel" or "Delete". The modal warns the user that their action is irreversible, and if the user chooses "Delete", the review disappears from the website, and the database.
 
+![Delete review modal]()
 
-### Edit profile page
+### Basket page
 
-![Edit profile page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/edit_profile_page.png)
+__List of basket items__
 
-This page contains a profile form where the user can update the following details: their date of birth, their information about injuries, and their profile image. All these elements are optional and can be left blank (a default picture is used as a profile image in this case). At the bottom of the form, there are 2 buttons: "Save profile" and "Discard changes". The latter simply redirects the user back to their profile page. The "Save profile" button saves the changes, redirects the user to the profile page, and shows the following success message:
+The page displays a list of all items present in the user's basket. Each product is shown inside a card, which includes basic product information: product's primary image, its name, SKU, and price. There is also the same quantity input as the one shown on a product detail page, as well as 2 links: "Update" and "Remove". The first link saves any product quantity adjustments, and the "Remove" link deletes the item from the user's basket. Under all products, there is a basket summary, stating basket total price, delivery fee, and the grand total. If the basket's value is under EUR 50.00, the user is also informed how much more they need to spend in order to avail of free delivery. At the bottom of the page, there are 2 buttons. The "Keep shopping" button redirects the user back to the shop page, while the "Go to checkout" button takes them to the checkout page.
 
-![Edit profile - success](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/edit_profile_success.png)
+![Basket page]()
 
+If there are no items in the user's basket, the page informs them that their basket is empty, and there is a "Keep shopping" button redirecting them to the shop page.
 
-### My bookings page
+![Basket - no items in the basket]()
 
-The user can see here a list of their booked classes, but only the ones that are upcoming in the future to ensure that no changes are made to the classes that are in the past or taking place in that exact moment. Each class is shown as a card with 2 buttons - Edit booking, and Cancel booking.
 
-![My bookings page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/my_bookings.png)
+### Checkout page
 
-If the user has no upcoming bookings, the page informs them about that and a button with the call to action "Book your next class" is shown that redirects the user to the Schedule page so that they can choose and book their next class easily.
+__Checkout form__
 
-![My bookings page with no upcoming classes](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/my_bookings_page_empty.png)
+The checkout form has 3 sections. The first, "Details", collects user's full name and email. The second, "Delivery", collects user's delivery address information. The third, "Payment", comes from Stripe and collects user's credit/debit card details. There are also 2 buttons: "Adjust basket" takes the user back to the basket page, and "Complete order" submits the form so that their payment can be processed and their order is placed. While the processing is happening (usually up to a few seconds), a green overlay with the animated loading icon is displayed.
 
+![Checkout page]()
 
-### Edit booking page
+If the user is not authenticated, at the bottom of the form, they can click a link to the "Log in" or "Sign up" page if they wish to use an account.
 
-The user can change here the date of their class. A dropdown like the one on the "Book class" page is shown, with the next 3 dates of the weekly class. There are also 2 buttons: "Save changes" which leads to the outcomes described below, and "Discard changes" which simply redirects the user to their "My bookings" page.
+![Checkout form - unauthenticated user]()
 
-![Edit booking page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/edit_booking_page.png)
+Should the user be logged in, at the bottom of the delivery section of the form, there is a checkbox which they can check in order to save their personal and address details to their account for a faster checkout in the future.
 
-If the user could be added to the specific class on the new date they chose, a success message is shown and they are redirected to the "My bookings" page.
+![Checkout form - logged in user]()
 
-![Edit booking - success](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/edit_booking_success.png)
+If the logged-in user already saved their data in the past, the checkout form will be populated with those details.
 
-If the specific class on the new date chosen by the user is already fully booked, they are informed that their booking could not be updated for that reason. The user can still choose a different date from the dropdown and try again.
+__Order summary__
 
-![Edit booking - class already full](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/edit_booking_fail_full.png)
+On the checkout page, there is also an order summary showing all basket items with their most important details, and the basket total, delivery fee, and grand total amount to ensure the customer is clear on what they are buying and how much they are going to be charged.
 
-If the specific class on the new date chosen by the user is already one of that user's booked classes, they are informed about that, redirected to their "My bookings" page, and prevented from creating a duplicate booking.
 
-![Edit booking - class already booked](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/edit_booking_duplicate_found.png)
+### Checkout success page
 
+Once the payment has been processed, the customer is redirected to the page where they can see a thank you message and exact details of their order. They are also informed that a confirmation email has been sent and should be able to find the email in their mailbox within a few minutes.
 
-### Cancel booking page
+![Checkout success page]()
 
-The user can cancel here their upcoming class. The page re-confirms that the user wants to cancel their booking. There are 2 buttons, similarly to the "Edit booking" page: "Yes, cancel my booking" and "No, I changed my mind". 
+### Account page
 
-![Cancel booking page](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/cancel_booking_page.png)
+__Profile form__
 
-If the latter is seleted, the user is simply redirected back to their "My bookings" page. If the user does go ahead with the cancellation, they are shown a success message and are redirected to the "My bookings" page.
+The form can be filled with the user's personal and address details, which are then used to speed up the checkout process, as long as the user is logged into their account. These details can be updated at any point and the changes are saved by the user clicking the "Update information" button below.
 
-![Cancel booking - success](https://github.com/Agnieszka-21/namaste-django/blob/main/assets/screenshots/cancel_booking_success.png)
+__Links to order history, wishlist, and boomarked articles/recipes__
+
+Furthermore, there are 3 cards with distinct titles, letting the user know which page they can redirect them to.
+
+![Account page]()
+
+__Order history__
+
+This page lists user's past orders. Each order number on the list is a link to a separate page, where the user can check this particular order's details.
+
+![Order history]()
+
+![Specific order from history]()
+
+__Wishlist__
+
+The wishlist is where any products "liked" by the user are shown. Each product's image is a link to this product's detail page. The user can remove any of these items from the wishlist simply by clicking the heart icon. Lastly, there is also a button which redirects the user back to their account page.
+
+![Wishlist]()
+
+If there are no items on the wishlist, the user is informed about it.
+
+![Empty wishlist]()
+
+__Bookmarked articles/recipes__
+
+This page lists any articles and recipes that the user has saved by clicking the bookmark icon on their respective detail pages. Bookmarked recipes are shown separately from bookmarked articles for increased clarity and better user experience. For each item on the list, the thumbnail image and the title are shown, together with a solid bookmark icon. By clicking this icon, the user can remove the item from the page. If the user clicks the title, it redirects them to the item's detail page. If the user has not saved any articles or recipes, the "Check out articles" or "Check out recipes" button is shown. At the bottom of the page, there is also a "Back to profile" button redirecting the user to their account page.
+
+![Bookmarked articles/recipes]()
+
+### Blog
+
+__Blog page__
+This is a page showing simply 2 options to choose from: articles, and recipes. This is where the user chooses which ones they would like to check out by clicking one of the 2 links. For each option, an image is used as background for added visual interest.
+
+![Blog page]()
+
+__Articles__
+
+This page lists all published articles, and for each of them the user can see a thumbnail image and their title, which is a clickable link redirecting the user to this article's detail page.
+
+![Articles page]()
+
+For logged-in staff users, further options are visible: the "Create a new article" button, and an "Edit" button for each of the articles. The list is shown in 3 segments: approved and scheduled for publishing, waiting for admin's approval, and all published articles.
+
+![Articles page - staff user]()
+
+For logged-in admins, in addition to the options visible to the staff, there are "Delete" buttons next to any articles that have not been published yet, and "Unpublish" buttons next to each article that has already been published. 
+
+![Articles page - admin user]()
+
+__Create article page__
+
+This page, accessible to any staff users, shows an article form where all required details can be added. Any articles submitted successfully through this form are shown on the articles page, under "Waiting for admin's approval". 
+
+![Create article page]()
+
+__Edit article page__
+
+This page dispalys an article form identical to the one on the article creation page, but populated with relevant article data. For admins, this form includes one additional field, "approved", which can be checked to indicate that the article is ready to be shown on the website to the general public. If "approved" is checked, the "publication date" field is required for submitting the form - in case the user forgets about it, they are shown a suitable reminder.
+
+![Edit article page]()
+
+__Unpublish article__
+
+This page is accessible only to admins and it asks the user to choose either "Cancel" or "Unpublish" - using defensive design here and for any deletions reduces the risk of mistakes.
+
+![Unpublish article page]()
+
+__Delete article__
+
+This page, accessible only to admins, warns the user that should they choose to delete an article, their decision is irreversible. They can choose to cancel or proceed with their request, which results in the article being deleted.
+
+![Delete article]()
+
+__Article detail__
+
+A specific article is displayed here with the following details: a title, publication date, the link icon for copying the URL with one click and easy sharing, a banner image, and the article's content. If any products have been marked as related to this article, the "Recommended products" section is shown at the bottom of the page. There is also a button redirecting the user back to the main page listing articles.
+
+![Article detail]()
+
+For any authenticated users, there is a bookmark icon next to the link icon, which allows the user to save that article to their profile (bookmark it) with one click.
+
+![Bookmark article icon]()
+
+For staff users and admins, further options are visible (buttons like "Edit", "Unpublish", or "Delete", depending on the user's permissions and the article's status).
+
+__Recipes__
+This page lists all published recipes, and it is nearly identical to the artiles page regarding its layout, and exactly identical when it comes to access permissions and available funcitonalities.
+
+![Recipes]()
+
+__Staff/admin pages for recipes__
+These are shaped in a very similar way to the staff/admin articles pages, so a detailed description is unneccessary. 
+
+__Recipe detail__
+A specific recipe is displayed here with the following details: an image, title, publication date, the link icon for copying the URL with one click and easy sharing, a description, a list of ingredients, and numbered list of preparation steps (method). If any products have been marked as related to this recipe, the "Recommended products" section is shown at the bottom of the page. There is also a button redirecting the user back to the main page listing recipes.
+
+![Recipe detail]()
+
+Any other functionalities that are available to logged-in users, staff users, and admin users on an article detail page, are availble here as well.
+
+
+### Events
+
+The user can see here a list of upcoming online events (webinars), each of them shown as a card with the following details in the header: event title, guest speaker, and when it takes place. The body of each card contains a short description of the event and the "Log in to register" button if the event has not been cancelled. If the event is cancelled, a badge with this information is shown instead of the button.
+
+![Events page]()
+
+For a logged-in user, there is a "Register" button shown instead of the "Log in to register" option, redirecting them to the registration page.
+
+![Events page - authenticated user]()
+
+For admins, this page is shown with additional buttons: "Create a new event" at the top of the page, as well as "Edit" and "Delete" for each existing event in the footer of its card.
+
+![Events page - admin view]()
+
+__Event registration page__
+
+If an authenticated user chose to click the "Register" button, they are redirected to this event's registration page that summarizes the most important details and lets them either "Register" or "Cancel" if they changed their mind. The page also informs them that a confirmation email has been sent, and it should appear in the user's mailbox within a few minutes.
+
+__Admin pages for events__
+These pages designed very similarly to the recipe and article management pages. What might be worth mentioning for clarity is that an admin can cancel an event by clicking "Edit" next to an event and checking the "Cancelled" box. For visuals on event admin pages see the following screenshots:
+
+![Create event]()
+
+![Edit event]()
+
+![Delete event]()
 
 
 ### Sign up page
