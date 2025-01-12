@@ -423,17 +423,17 @@ You can see the models and the relationships between them in the following datab
 ### The Surface Plane
 
 #### Design
-The design of the website is simple, minimalistic, and coherent. It is supposed to convey ease, simplicity, and make the end-user feel both grounded and welcome.
+The design of the website is supposed to convey ease, simplicity, and naturalness. This communicates on a deeper level the store's commitment to selling products which are close to nature, environmentally friendly, and which support one's health and well-being.
 
-The color palatte is based on earthy and neutral tones.
+The color palatte is based on colors associated with nature and simplicity.
 
-The main color - walnut brown - has been used throughout the page in the navbar and footer, and also on hover/select for elements like buttons and links to emphasise their active state. It is a neutral shade often associated with earth and nature, which can convey the message of the studio: we are here to help you feel calm, relaxed, and grounded.
+The main color - dark green #013a20 - has been used throughout the page in the header and footer, and also for most elements that the end-user might interact with like buttons and links to keep the website's design coherent and simple. It is a deep shade of green, bringing to mind nature, especially the plant world. This color reinforces the store's goals: we are here to support your health and to provide products that are close to nature.
 
-The main background color of the page is an off-white color #f7f7f7. Since most of the text is pure black (#000), it provides a good contrast while being gentler on the eyes and matching the natural theme of the color palette.
+The main background color of the page is a pure white color #fff. Since most of the text is liquorice black #1C0F13 or pure black #000, white provides excellent contrast, ensuring the website's optimal accessibility. It also works well for both dark green (e.g. used in links) and light sage #cdd193 used for the "Shop now" button on the homepage as well as while hovering over or focusing on any other buttons.
 
-There is also pure white color (#fff) used as background for cards on the Schedule page and My bookings page, so that the cards are clearly discernible from the off-white background but without creating too much contrast, which could result in distraction and overwhelm.
+Most elements that are links use the dark green color, are underlined, and the font-weight is bold to ensure plenty of contrast with the background since these are elements that the end-user will interact with. On hover/focus, the text decoration (underline) disappears for both better readability and to ensure that the user knows the link is active. An exception from that would be product names on the Shop page that are black and not underlined since the convention is that these are links to each product's detail page. On hover/focus, each product name becomes underlined to indicate that it is an active link.
 
-Elements that are links or made to look like links use the eye-catching "office-green" color (#008000), and the font-weight is bold to ensure plenty of contrast with the background since these are elements that the end-user will interact with.
+All buttons that are shown only to authenticated staff and admin users have a pale yellow color #FCFFD9 so that they are clearly discernible. This ensures easier website navigation for any staff members and visual clarity as to what is shown to the end-user, and what is hidden from them.
 
 The following table created with [Contrast Grid](https://contrast-grid.eightshapes.com/) shows the color palette utilised in this project.
 
@@ -442,13 +442,17 @@ The following table created with [Contrast Grid](https://contrast-grid.eightshap
 
 #### Typography
 Two types of Google fonts have been used in this project.
-For the brand name shown in the top left corner of each page, "Namaste", the Nova Mono font was used to provide an eye-catching design. Since this is a monospace font, monospace was also declared as a fallback font-family in style.css.
+For the brand name "Health Store", shown at the top of each page in the center of the header, the Orelega One font was used to provide an eye-catching yet classic and simple design. Since this is a serif font, serif was also declared as a fallback font-family in the base.css file. To reinforce the business's dedication to natural and eco-friendly products, a herb emoji was inserted in between "Health" and "Store", tying it also to the herb emoji in the favicon.
 
-Lato font-family was used for all remaining text, in various weights ranging from 400 to 800. This is a sans-serif font, easily readable, light and simple, which matches the website's overall feel of being easy to navigate, minimalistic, and accessible for anyone. 
+Montserrat font-family was used for all remaining text, in various weights ranging from 100 to 900. This is a sans-serif font, easily readable, light and easy on the eyes, which matches the website's overall feel of ease, simplicity, and naturalness.
 
 
 #### Images
-Images of yoga classes used on this website are free-licence images from Pexels. Most of them come from the same suite of images by Yan Krukau, providing a coherent feel and look, and conveying to the end-user the real character of the yoga studio, giving them insights into the environment and the community of yoga practicioners. The hero image was also the starting point for creating the color palette for the website, with the walnut brown found directly in the image through a color picker tool.
+Images used in the homepage carousel as well as on the main blog page are free-licence images from Pexels. 
+
+Product images have been copied from each product's brand's or main vendor's websites to allow for using high-quality, multiple images for each product as would be the industry standard - [you can find exact sources here](#content).
+
+Images used as thumbnails on the Articles page, and as banners on each article's detail page, were copied from Holland & Barrett's blog posts. Images used as thumbnails on the Recipes page, and then in a larger size on each recipe's detail page, were copied from BBC Good Food's recipe pages. You can find more information on sources of any images used throughout the application under [Content](#content).
 
 
 ## Features
@@ -651,20 +655,20 @@ While the following User Stories have not been completed as they have been deeme
 - [#41 Unsubscribe from the newsletter](https://github.com/Agnieszka-21/health-store/issues/63) - so that the email campaign is GDPR compliant (this requires actually creating a newsletter campaign though)
 - [#42 Re-subscribe to the newsletter](https://github.com/Agnieszka-21/health-store/issues/63) - similar to the above.
 
-Another possible enhancement could be handling stock data and using that information to automatically update the maximum quantity of a product available for purchase for any one customer.
+Another possible enhancement could be handling stock data and using that information to automatically update the maximum quantity of a product available for purchase for a customer.
 
 
 ## Testing
 
 ### Testing Overview
 
-Continuous testing was an integral part of the development process. I used numerous print statements, which were removed as specific features reached their desired shape and functionality. The statements helped me follow what is happening, especially in the more complex scenarios where multiple things were affected by just one change (e.g. when booking a class, cancelling, or updating a booking) and where multiple functions worked together, calling one another and handling a wide range of scenarios. 
+Continuous testing was an integral part of the development process. I used numerous print and cosole.log statements, which were removed as specific features reached their desired shape and functionality. The statements helped me follow what is happening, especially in the more complex scenarios where multiple things were affected by just one change and where multiple functions worked together, calling one another and handling a wide range of scenarios.
 
-While there is still a significant potential for further enhancements in a project as complex as this one, I ensured to handle any and all errors that I encountered, and took great care to minimise the risk of any errors occurring on submission of forms. Validation was often handled at the earliest stages while developing the forms, limiting the end-users' access to information that can be handled in the backend, in a more secure way (e.g. date input in the booking and update booking forms, name and email not editable by the end-user after the user signs up for an account, or the "waiver signed" field in the booking form being required and a simple checkbox).
+While there is still a significant potential for further enhancements in a project as complex as this one, I ensured to handle all errors that I encountered, and took great care to minimise the risk of any errors occurring on submission of forms. Multiple success/error messages are shown to users to confirm their actions, or inform them about any issues and recommended solutions. Validation was also handled at the earliest stages while developing the forms, limiting the users' access to information that can be handled in the backend in a more secure way where possible.
 
 Manual tests were conducted mainly in my development environment, and once results were positive, they were re-checked within the live application after it was deployed to Heroku. 
 
-Automated tests were also written to confirm that each view renders the correct template, to ensure that views restricted to logged-in users only redirect the user to the log in page, and many more.
+Automated tests were also written to confirm that each view renders the correct template, to ensure correct access permissions to different pages for various users (customers, staff, admin), and many more.
 
 
 ### Manual Testing
