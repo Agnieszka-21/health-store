@@ -11,11 +11,115 @@ This is the fifth and last Portfolio Project for the Code Institute's Diploma Co
 
 Please note: To open any links in this document in a new browser tab, please press CTRL + Click.
 
-![Screenshot of the application on multiple devices](link)
+![Screenshot of the application on multiple devices](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/amiresponsive.png)
 
 
 ## Table of Contents
 
+- [Health Store](#health-store)
+   * [Introduction](#introduction)
+   * [Table of Contents](#table-of-contents)
+   * [UX](#ux)
+      + [The Strategy Plane](#the-strategy-plane)
+         - [The Site's Ideal User](#the-sites-ideal-user)
+         - [Site Goals](#site-goals)
+         - [Iterations (GitHub Milestones)](#iterations-github-milestones)
+         - [Epics](#epics)
+         - [User Stories](#user-stories)
+         - [Story Points](#story-points)
+         - [MoSCoW Prioritization](#moscow-prioritization)
+      + [The Scope Plane](#the-scope-plane)
+      + [The Structure Plane](#the-structure-plane)
+         - [Create a user account (sign up)](#create-a-user-account-sign-up)
+         - [Log into the user profile/account](#log-into-the-user-profileaccount)
+         - [Log out of the user profile/account](#log-out-of-the-user-profileaccount)
+         - [View a user profile/account](#view-a-user-profileaccount)
+         - [Edit the user profile/account](#edit-the-user-profileaccount)
+         - [View all products](#view-all-products)
+         - [Filter products based on category](#filter-products-based-on-category)
+         - [Sort products based on specific criteria](#sort-products-based-on-specific-criteria)
+         - [Search for a specific product](#search-for-a-specific-product)
+         - [View a specific product with a high level of detail](#view-a-specific-product-with-a-high-level-of-detail)
+         - [Optimise user experience on the shop page (pagination, back-to-top link)](#optimise-user-experience-on-the-shop-page-pagination-back-to-top-link)
+         - [Add a product to the basket](#add-a-product-to-the-basket)
+         - [View the basket](#view-the-basket)
+         - [Remove a product from the basket](#remove-a-product-from-the-basket)
+         - [Adjust the quantity of a product/products in the basket](#adjust-the-quantity-of-a-productproducts-in-the-basket)
+         - [Proceed to checkout](#proceed-to-checkout)
+         - [Provide personal details needed in the checkout process](#provide-personal-details-needed-in-the-checkout-process)
+         - [Pay for the items in the shopping basket](#pay-for-the-items-in-the-shopping-basket)
+         - [Receive an order confirmation](#receive-an-order-confirmation)
+         - [View product reviews](#view-product-reviews)
+         - [Create a product review](#create-a-product-review)
+         - [Edit a review](#edit-a-review)
+         - [Delete a review](#delete-a-review)
+         - [Mark and save a product as "favourite"](#mark-and-save-a-product-as-favourite)
+         - [View your wishlist/"favourites"](#view-your-wishlistfavourites)
+         - [Remove a product/products from your wishlist](#remove-a-productproducts-from-your-wishlist)
+         - [View/read a blog with articles and healthy recipes](#viewread-a-blog-with-articles-and-healthy-recipes)
+         - [Save an article/recipe to a user profile](#save-an-articlerecipe-to-a-user-profile)
+         - [Sign up to a webinar on health- an wellness-related topics](#sign-up-to-a-webinar-on-health-an-wellness-related-topics)
+         - [Copy the URL of an article/recipe with one click for easy sharing ](#copy-the-url-of-an-articlerecipe-with-one-click-for-easy-sharing)
+         - [Sign up to the newsletter](#sign-up-to-the-newsletter)
+         - [Opportunities arising from User Stories](#opportunities-arising-from-user-stories)
+      + [The Skeleton Plane](#the-skeleton-plane)
+         - [Wireframe mock-ups](#wireframe-mock-ups)
+         - [Desktop version](#desktop-version)
+         - [Database schema](#database-schema)
+      + [The Surface Plane](#the-surface-plane)
+         - [Design](#design)
+         - [Typography](#typography)
+         - [Images](#images)
+   * [Features](#features)
+      + [Homepage](#homepage)
+      + [Shop page](#shop-page)
+      + [Product detail page](#product-detail-page)
+      + [Basket page](#basket-page)
+      + [Checkout page](#checkout-page)
+      + [Checkout success page](#checkout-success-page)
+      + [Account page](#account-page)
+      + [Blog](#blog)
+      + [Events](#events)
+      + [Sign up page](#sign-up-page)
+      + [Log in page](#log-in-page)
+      + [Log out page](#log-out-page)
+      + [Additional screenshots](#additional-screenshots)
+   * [Future Enhancements](#future-enhancements)
+   * [Testing](#testing)
+      + [Testing Overview](#testing-overview)
+      + [Manual Testing](#manual-testing)
+      + [Validator Testing](#validator-testing)
+      + [Lighthouse and Webaim Wave Testing](#lighthouse-and-webaim-wave-testing)
+      + [Responsiveness (tested with Chrome Dev Tools)](#responsiveness-tested-with-chrome-dev-tools)
+      + [Browser compatibility testing](#browser-compatibility-testing)
+      + [Automated tests](#automated-tests)
+      + [Notable Bugs](#notable-bugs)
+   * [Technologies Used](#technologies-used)
+      + [Django](#django)
+      + [Django AllAuth](#django-allauth)
+      + [django-cookies](#django-cookies)
+      + [DTL/Jinja](#dtljinja)
+      + [Crispy forms](#crispy-forms)
+      + [Pillow](#pillow)
+      + [Heroku](#heroku)
+      + [PostgreSQL](#postgresql)
+      + [JavaScript](#javascript)
+      + [Bootstrap 5](#bootstrap-5)
+      + [Font Awesome](#font-awesome)
+      + [CSS](#css)
+      + [HTML](#html)
+      + [Packages Used](#packages-used)
+      + [Resources Used](#resources-used)
+   * [Deployment](#deployment)
+   * [Cloning and forking the repository](#cloning-and-forking-the-repository)
+   * [Business considerations](#business-considerations)
+      + [Business model](#business-model)
+      + [SEO](#seo)
+      + [Web marketing](#web-marketing)
+   * [Credits](#credits)
+      + [Code](#code)
+      + [Content](#content)
+   * [Acknowledgements](#acknowledgements)
 
 
 ## UX
@@ -77,8 +181,8 @@ This project is based on the following 13 epics:
 - [#9 Blog and webinars](https://github.com/Agnieszka-21/health-store/issues/9)
 - [#56 Blog and webinar management](https://github.com/Agnieszka-21/health-store/issues/56)
 - [#67 Homepage management](https://github.com/Agnieszka-21/health-store/issues/67)
-- [#7 Web marketing](https://github.com/Agnieszka-21/namaste-django/issues/7)
-- [#8 SEO](https://github.com/Agnieszka-21/namaste-django/issues/8)
+- [#7 Web marketing](https://github.com/Agnieszka-21/health-store/issues/7)
+- [#8 SEO](https://github.com/Agnieszka-21/health-store/issues/8)
 
 
 These epics were split into User Stories to help manage the work on this project. All these and more details can be found in the project's [kanban board](https://github.com/users/Agnieszka-21/projects/3/views/1?sortedBy%5Bdirection%5D=asc&sortedBy%5BcolumnId%5D=Labels).
@@ -101,7 +205,7 @@ Here are the User Stories resulting from the 13 epics
 - [#19 View a user profile/account](https://github.com/Agnieszka-21/health-store/issues/19)
 - [#18 Edit the user profile/account](https://github.com/Agnieszka-21/health-store/issues/18)
 - [#20 Delete a user profile/account](https://github.com/Agnieszka-21/health-store/issues/20) - see [Future Enhancements](#future-enhancements)
-- [#21 SIgn in to the user profile/account using a social media login](https://github.com/Agnieszka-21/health-store/issues/21) - see [Future Enhancements](#future-enhancements)
+- [#21 Sign in to the user profile/account using a social media login](https://github.com/Agnieszka-21/health-store/issues/21) - see [Future Enhancements](#future-enhancements)
 
 
 3. View products
@@ -118,16 +222,16 @@ Here are the User Stories resulting from the 13 epics
 - [#29 Remove a product/products from your wishlist](https://github.com/Agnieszka-21/health-store/issues/29)
 
 5. Shopping basket
-- [#30 Add a product/products to the basket](https://github.com/Agnieszka-21/namaste-django/issues/30)
-- [#31 View the basket](https://github.com/Agnieszka-21/namaste-django/issues/31)
-- [#32 Remove a product/products from the basket](https://github.com/Agnieszka-21/namaste-django/issues/32)
-- [#33 Adjust the quantity of a product/products in the basket](https://github.com/Agnieszka-21/namaste-django/issues/33)
-- [#34 Save the shopping basket for later](https://github.com/Agnieszka-21/namaste-django/issues/34) - see [Future Enhancements](#future-enhancements)
-- [#35 Proceed to checkout](https://github.com/Agnieszka-21/namaste-django/issues/35)
-- [#63 Keep the existing basket when logging in](https://github.com/Agnieszka-21/namaste-django/issues/63) - see [Future Enhancements](#future-enhancements)
+- [#30 Add a product/products to the basket](https://github.com/Agnieszka-21/health-store/issues/30)
+- [#31 View the basket](https://github.com/Agnieszka-21/health-store/issues/31)
+- [#32 Remove a product/products from the basket](https://github.com/Agnieszka-21/health-store/issues/32)
+- [#33 Adjust the quantity of a product/products in the basket](https://github.com/Agnieszka-21/health-store/issues/33)
+- [#34 Save the shopping basket for later](https://github.com/Agnieszka-21/health-store/issues/34) - see [Future Enhancements](#future-enhancements)
+- [#35 Proceed to checkout](https://github.com/Agnieszka-21/health-store/issues/35)
+- [#63 Keep the existing basket when logging in](https://github.com/Agnieszka-21/health-store/issues/63) - see [Future Enhancements](#future-enhancements)
 
 6. Checkout
-- [#36 Create a user account during a checkout process](https://github.com/Agnieszka-21/namaste-django/issues/36) - [Future Enhancements](#future-enhancements)
+- [#36 Create a user account during a checkout process](https://github.com/Agnieszka-21/health-store/issues/36) - [Future Enhancements](#future-enhancements)
 - [#37 Provide personal details needed in the checkout process](https://github.com/Agnieszka-21/health-store/issues/37)
 - [#38 Pay for the items in the shopping basket](https://github.com/Agnieszka-21/health-store/issues/38)
 - [#39 Receive an order confirmation](https://github.com/Agnieszka-21/health-store/issues/39)
@@ -772,15 +876,15 @@ See the mobile wireframes below:
 
 | Homepage | Shop page | Product detail page |
 | :------------------- | :--------------- | :------------- |
-| ![Homepage mobile wireframe]() | ![Shop page mobile wireframe]() | ![Product detail mobile wireframe]() |
+| ![Homepage mobile wireframe](https://github.com/Agnieszka-21/health-store/blob/main/assets/wireframes/health_home.png) | ![Shop page mobile wireframe](https://github.com/Agnieszka-21/health-store/blob/main/assets/wireframes/health_shop.png) | ![Product detail mobile wireframe](https://github.com/Agnieszka-21/health-store/blob/main/assets/wireframes/health_product_detail.png) |
 
 | Blog | Recipe detail | Article detail |
 | :------------------- | :--------------- | :--------------- |
-| ![Blog mobile wireframe]() | ![Recipe detail mobile wireframe]() | ![Article detail mobile wireframe]() |
+| ![Blog mobile wireframe](https://github.com/Agnieszka-21/health-store/blob/main/assets/wireframes/health_discover.png) | ![Recipe detail mobile wireframe](https://github.com/Agnieszka-21/health-store/blob/main/assets/wireframes/health_recipe.png) | ![Article detail mobile wireframe](https://github.com/Agnieszka-21/health-store/blob/main/assets/wireframes/health_blog_article.png) |
 
 | Basket | Account | Events |
 | :------------------- | :--------------- | :--------------- |
-| ![Basket mobile wireframe]() | ![Account mobile wireframe]() | ![Events mobile wireframe]() |
+| ![Basket mobile wireframe](https://github.com/Agnieszka-21/health-store/blob/main/assets/wireframes/health_basket.png) | ![Account mobile wireframe](https://github.com/Agnieszka-21/health-store/blob/main/assets/wireframes/health_user_account.png) | ![Events mobile wireframe](https://github.com/Agnieszka-21/health-store/blob/main/assets/wireframes/health_events.png) |
 
 
 #### Desktop version
@@ -864,11 +968,11 @@ You can see the models and the relationships between the models in the following
 
 The first schema showcases how different models revolve around the User or UserProfile model, using one of these two either in a one-to-one, foreign key, or many-to-many relationship.
 
-![Database schema - models connected with one another through User or UserProfile]()
+![Database schema - models connected with one another through User or UserProfile](https://github.com/Agnieszka-21/health-store/blob/main/assets/database_schema/drawSQL-user.png)
 
 The second schema (see below) depicts product-related database models.
 
-![Database schema - models connected with one another through User or UserProfile]()
+![Database schema - models connected with one another through Product model](https://github.com/Agnieszka-21/health-store/blob/main/assets/database_schema/drawSQL-product.png)
 
 The Carousel model has no connection with any of the other models.
 
@@ -890,7 +994,7 @@ All buttons that are shown only to authenticated staff and admin users have a pa
 
 The following table created with [Contrast Grid](https://contrast-grid.eightshapes.com/) shows the color palette utilised in this project.
 
-![Contrast Grid color palette]()
+![Contrast Grid color palette](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/contrast_grid.png)
 
 
 #### Typography
@@ -916,7 +1020,7 @@ __Promo banner linked to newsletter form__
 
 The promo banner at the very top of the page informs users that they can get a discount code if they sign up to the store's newsletter. When clicked, the "sign up" link sends the user to the newsletter form in the footer.
 
-![Promo banner]()
+![Promo banner](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/home_promo_banner.png)
 
 __Header - the logo, navigation bar, search bar__
 
@@ -924,33 +1028,37 @@ The store's logo is shown in the center of the navigation bar and it acts as a l
 
 The navigation bar is shown in 3 versions, depending on whether the user is logged in, user is not logged in, or user is an authenticated admin. In these 3 versions the main navbar stays the same, displaying the following options: Shop, Blog, Events, a Profile icon, and a Basket icon (screenshot below).
 
-![Navbar - user not logged in]()
+![Header - navbar](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/home_header.png)
 
-what changes is the dropdown under the profile icon. For a logged in end-user or staff user, it shows the following options: Account and Log out.
+What changes is the dropdown under the profile icon. For an unauthenticated user it looks like this:
 
-![Navbar profile menu - end-user logged in]()
+![Navbar profile menu](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/home_navigation_profile.png)
+
+For a logged in end-user or staff user, it shows the following options: Account and Log out.
+
+![Navbar profile menu - end-user logged in](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/home_navigation_profile_loggedin.png)
 
 For a logged in admin, it shows the following options: Admin Panel, Account and Log out.
 
-![Navbar profile menu - admin user logged in]()
+![Navbar profile menu - admin user logged in](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/home_navigation_profile_admin.png)
 
 __Hero section carousel__
 
 The hero section consists of a responsive full-width carousel with 4 images that slide left at regular intervals. User can also control the carousel by clicking a right/left arrow or one of the 4 thin rectangles at the bottom of the carousel where each rectangle stands for a specific image.
 
-![Carousel]()
+![Carousel](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/home_carousel.png)
 
 __Shop now button__
 
 Underneath the carousel, there is a large "Shop now" button, which redirects the user to the Shop page when clicked. Because of its central placement on the page, it reinforces the application's aim to sell products to customers.
 
-![Shop now button]()
+![Shop now button](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/home_button.png)
 
 __Footer - newsletter signup form, social icons, privacy policy link__
 
 The footer includes a newsletter signup form embedded from MailChimp, as well as links to social media pages, which open in a new tab each. It also has a link to the store's Privacy Policy which opens in a new tab, and copyright information.
 
-![Footer]()
+![Footer](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/home_footer.png)
 
 
 ### Shop page
@@ -959,23 +1067,28 @@ __Title, filtering, sorting__
 
 At the top of the shop page, there is a title "Products" and 2 dropdowns: one for filtering products by category, and one for sorting products according to their price/name/average rating.
 
-![Shop page]()
-
 If filtering by a category is active, the chosen category is shown under the title, and a link to all products is visible on the left side. The same link is displayed when sorting is active, and when clicked any sorting/filtering is removed.
 
-![Shop page - category filter active]()
+![Shop page - category filter active](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/products_filtered.png)
+
+![Shop page - sorting active](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/products_sorted.png)
 
 __Main section - list of products__
 
 Each product is shown as a card, and there are up to 8 products per page. For any authenticated users, a heart icon is shown next to each product, adding a wishlist functionality. For admin users, there are additionally 2 buttons for each product - Edit and Delete. See the screenshot below.
 
-![Shop page - view for admins]()
+If the user is logged in, the page looks like this:
+![Shop page - view for logged-in users](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/products_loggedin.png)
+
+For unauthenticated users, heart icons next to each product are not shown:
+
+![Shop page - unauthenticated user](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/products_customer.png)
 
 __Pagination__
 
 The shop page is paginated, so that there are only 8 products on each page - or less on the last page.
 
-![Pagination]()
+![Pagination](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/products_pagination.png)
 
 
 ### Product detail page
@@ -984,11 +1097,11 @@ __Product images__
 
 For added visual interest, on each product's detail page, there are up to 3 images of the product. The main image is shown as larger, the other 2 as thumbnails.
 
-![Product images]()
+![Product detail page - images and product information](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/product_detail.png)
 
 These images switch places when clicked so that any of the available product images can be shown in the larger size.
 
-![Product images - switched]()
+![Product images - switched](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/product_detail_img_switch.png)
 
 Additionally, the user can open any image in a new tab with a click on the larger image.
 
@@ -996,17 +1109,13 @@ __Product information__
 
 The following details are shown to all users: product name, its price, average rating, a link to product's category, a link to product's brand (which opens in a new tab since it is an external link), description, and ingredients. Additionally, logged-in users can see a heart icon next to the product name which allows them to add product to their wishlist.
 
-![Product information]()
-
 __Quantity input and "Add to basket" button__
 
 Under product information, there is an input field for the user to choose quantity (from 1 to 9) of the product, and an "Add to basket" button which adds the product to the shopping basket in the quantity specified in the input field. 
 
-![Quantity input and "Add to basket" button]()
-
 A success message is shown upon successful addition of the product to the basket. The message can be closed on the close (x) button. It also includes a "Go to checkout" button which redirects the user to the basket page.
 
-![Success message - product added to basket]()
+![Success message - product added to basket](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/msg_addtobasket.png)
 
 Similar messages are displayed for any user interactions with the application, letting them know whether their operation has been successful or not, and what the recommended solution is.
 
@@ -1014,19 +1123,19 @@ __Product reviews__
 
 At the bottom of the page, there is a Reviews section for that particular product. It displayes any existing and approved by admin reviews. For an unauthenticated user, there is also a "Log in to leave a review" button, redirecting them to the Log in page.
 
-![Reviews as displayed to an unauthenticated user]()
+![Reviews as displayed to an unauthenticated user](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/product_detail_reviews.png)
 
 For a logged-in user, instead of the button, there is a review form which they can fill and submit. A star rating required while the text field can be left empty. If the user submits only a star rating, their review is displayed under "Reviews" right away. If they decided to add text, they can see their review with a badge "Review waiting for admin's approval". The review is not visible to any other users until it has been approved by an admin.
 
-![Reviews as displayed to a logged-in user]()
+![Reviews as displayed to a logged-in user](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/product_detail_reviews_loggedin.png)
 
 For any existing reviews submitted by this particular user, there are also 2 buttons shown for each review: "Edit" and "Delete". If the user clicks "Edit", their review populates the review form and can be updated and submitted. Should the edited review contain text, it is again not displayed to the general public until it has been approved by an admin.
 
-![Edit review]()
+![Edit review](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/product_detail_reviews_loggedin_edit.png)
 
 The "Delete" button opens a modal where the user can choose either "Cancel" or "Delete". The modal warns the user that their action is irreversible, and if the user chooses "Delete", the review disappears from the website, and the database.
 
-![Delete review modal]()
+![Delete review modal](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/product_detail_reviews_loggedin_delete.png)
 
 ### Basket page
 
@@ -1034,11 +1143,9 @@ __List of basket items__
 
 The page displays a list of all items present in the user's basket. Each product is shown inside a card, which includes basic product information: product's primary image, its name, SKU, and price. There is also the same quantity input as the one shown on a product detail page, as well as 2 links: "Update" and "Remove". The first link saves any product quantity adjustments, and the "Remove" link deletes the item from the user's basket. Under all products, there is a basket summary, stating basket total price, delivery fee, and the grand total. If the basket's value is under EUR 50.00, the user is also informed how much more they need to spend in order to avail of free delivery. At the bottom of the page, there are 2 buttons. The "Keep shopping" button redirects the user back to the shop page, while the "Go to checkout" button takes them to the checkout page.
 
-![Basket page]()
+![Basket page](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/basket.png)
 
 If there are no items in the user's basket, the page informs them that their basket is empty, and there is a "Keep shopping" button redirecting them to the shop page.
-
-![Basket - no items in the basket]()
 
 
 ### Checkout page
@@ -1047,15 +1154,13 @@ __Checkout form__
 
 The checkout form has 3 sections. The first, "Details", collects user's full name and email. The second, "Delivery", collects user's delivery address information. The third, "Payment", comes from Stripe and collects user's credit/debit card details. There are also 2 buttons: "Adjust basket" takes the user back to the basket page, and "Complete order" submits the form so that their payment can be processed and their order is placed. While the processing is happening (usually up to a few seconds), a green overlay with the animated loading icon is displayed.
 
-![Checkout page]()
+![Checkout page](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/checkout.png)
 
 If the user is not authenticated, at the bottom of the form, they can click a link to the "Log in" or "Sign up" page if they wish to use an account.
 
-![Checkout form - unauthenticated user]()
+![Checkout form - unauthenticated user](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/checkout2.png)
 
 Should the user be logged in, at the bottom of the delivery section of the form, there is a checkbox which they can check in order to save their personal and address details to their account for a faster checkout in the future.
-
-![Checkout form - logged in user]()
 
 If the logged-in user already saved their data in the past, the checkout form will be populated with those details.
 
@@ -1068,7 +1173,7 @@ On the checkout page, there is also an order summary showing all basket items wi
 
 Once the payment has been processed, the customer is redirected to the page where they can see a thank you message and exact details of their order. They are also informed that a confirmation email has been sent and should be able to find the email in their mailbox within a few minutes.
 
-![Checkout success page]()
+![Checkout success page](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/checkout_success.png)
 
 ### Account page
 
@@ -1080,151 +1185,149 @@ __Links to order history, wishlist, and boomarked articles/recipes__
 
 Furthermore, there are 3 cards with distinct titles, letting the user know which page they can redirect them to.
 
-![Account page]()
+![Account page](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/account.png)
 
 __Order history__
 
 This page lists user's past orders. Each order number on the list is a link to a separate page, where the user can check this particular order's details.
 
-![Order history]()
+![Order history](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/account_orders.png)
 
-![Specific order from history]()
+By clicking the order number link, the user is redirected to the order confirmation page.
+![Specific order from history](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/account_order.png)
 
 __Wishlist__
 
 The wishlist is where any products "liked" by the user are shown. Each product's image is a link to this product's detail page. The user can remove any of these items from the wishlist simply by clicking the heart icon. Lastly, there is also a button which redirects the user back to their account page.
 
-![Wishlist]()
+![Wishlist](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/account_wishlist.png)
 
 If there are no items on the wishlist, the user is informed about it.
 
-![Empty wishlist]()
+![Empty wishlist](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/account_wishlist.png)
 
 __Bookmarked articles/recipes__
 
 This page lists any articles and recipes that the user has saved by clicking the bookmark icon on their respective detail pages. Bookmarked recipes are shown separately from bookmarked articles for increased clarity and better user experience. For each item on the list, the thumbnail image and the title are shown, together with a solid bookmark icon. By clicking this icon, the user can remove the item from the page. If the user clicks the title, it redirects them to the item's detail page. If the user has not saved any articles or recipes, the "Check out articles" or "Check out recipes" button is shown. At the bottom of the page, there is also a "Back to profile" button redirecting the user to their account page.
 
-![Bookmarked articles/recipes]()
+![Bookmarked articles/recipes](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/account_bookmarked.png)
 
 ### Blog
 
 __Blog page__
 This is a page showing simply 2 options to choose from: articles, and recipes. This is where the user chooses which ones they would like to check out by clicking one of the 2 links. For each option, an image is used as background for added visual interest.
 
-![Blog page]()
+![Blog page](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/blog.png)
 
 __Articles__
 
 This page lists all published articles, and for each of them the user can see a thumbnail image and their title, which is a clickable link redirecting the user to this article's detail page.
 
-![Articles page]()
+![Articles page](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/articles.png)
 
 For logged-in staff users, further options are visible: the "Create a new article" button, and an "Edit" button for each of the articles. The list is shown in 3 segments: approved and scheduled for publishing, waiting for admin's approval, and all published articles.
 
-![Articles page - staff user]()
-
 For logged-in admins, in addition to the options visible to the staff, there are "Delete" buttons next to any articles that have not been published yet, and "Unpublish" buttons next to each article that has already been published. 
 
-![Articles page - admin user]()
+![Articles page - admin user](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/admin_articles.png)
 
 __Create article page__
 
 This page, accessible to any staff users, shows an article form where all required details can be added. Any articles submitted successfully through this form are shown on the articles page, under "Waiting for admin's approval". 
 
-![Create article page]()
+![Create article page - part 1](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/admin_create_article.png)
+![Create article page - part 2](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/admin_create_article2.png)
 
 __Edit article page__
 
 This page dispalys an article form identical to the one on the article creation page, but populated with relevant article data. For admins, this form includes one additional field, "approved", which can be checked to indicate that the article is ready to be shown on the website to the general public. If "approved" is checked, the "publication date" field is required for submitting the form - in case the user forgets about it, they are shown a suitable reminder.
 
-![Edit article page]()
-
 __Unpublish article__
 
 This page is accessible only to admins and it asks the user to choose either "Cancel" or "Unpublish" - using defensive design here and for any deletions reduces the risk of mistakes.
 
-![Unpublish article page]()
+![Unpublish article page](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/admin_unpublish_article.png)
 
 __Delete article__
 
 This page, accessible only to admins, warns the user that should they choose to delete an article, their decision is irreversible. They can choose to cancel or proceed with their request, which results in the article being deleted.
 
-![Delete article]()
+![Delete article](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/admin_delete_article.png)
 
 __Article detail__
 
 A specific article is displayed here with the following details: a title, publication date, the link icon for copying the URL with one click and easy sharing, a banner image, and the article's content. If any products have been marked as related to this article, the "Recommended products" section is shown at the bottom of the page. There is also a button redirecting the user back to the main page listing articles.
 
-![Article detail]()
+![Article detail](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/article_detail.png)
+
+![Article detail - recommended products](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/article_detail_recommended.png)
 
 For any authenticated users, there is a bookmark icon next to the link icon, which allows the user to save that article to their profile (bookmark it) with one click.
 
-![Bookmark article icon]()
+![Bookmark article icon](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/article_detail_bookmark.png)
 
 For staff users and admins, further options are visible (buttons like "Edit", "Unpublish", or "Delete", depending on the user's permissions and the article's status).
 
 __Recipes__
+
 This page lists all published recipes, and it is nearly identical to the artiles page regarding its layout, and exactly identical when it comes to access permissions and available funcitonalities.
 
-![Recipes]()
-
 __Staff/admin pages for recipes__
+
 These are shaped in a very similar way to the staff/admin articles pages, so a detailed description is unneccessary. 
 
 __Recipe detail__
 A specific recipe is displayed here with the following details: an image, title, publication date, the link icon for copying the URL with one click and easy sharing, a description, a list of ingredients, and numbered list of preparation steps (method). If any products have been marked as related to this recipe, the "Recommended products" section is shown at the bottom of the page. There is also a button redirecting the user back to the main page listing recipes.
 
-![Recipe detail]()
+![Recipe detail - part 1](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/recipe_detail.png)
+![Recipe detail - part 2](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/recipe_detail2.png)
 
-Any other functionalities that are available to logged-in users, staff users, and admin users on an article detail page, are availble here as well.
+Any other functionalities that are available to logged-in users, staff users, and admin users on an article detail page, are available for recipes as well.
 
 
 ### Events
 
-The user can see here a list of upcoming online events (webinars), each of them shown as a card with the following details in the header: event title, guest speaker, and when it takes place. The body of each card contains a short description of the event and the "Log in to register" button if the event has not been cancelled. If the event is cancelled, a badge with this information is shown instead of the button.
+The user can see here a list of upcoming online events (webinars), each of them shown as a card with the following details in the header: event title, guest speaker, and when it takes place. The body of each card contains a short description of the event and the "Log in to register" button if the event has not been cancelled.
 
-![Events page]()
+![Events page](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/events.png)
+
+If the event is cancelled, a badge with this information is shown instead of the button.
+
+![Events page - cancelled event](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/events_cancelled.png)
 
 For a logged-in user, there is a "Register" button shown instead of the "Log in to register" option, redirecting them to the registration page.
 
-![Events page - authenticated user]()
+![Events page - authenticated user](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/events_loggedin.png)
 
 For admins, this page is shown with additional buttons: "Create a new event" at the top of the page, as well as "Edit" and "Delete" for each existing event in the footer of its card.
-
-![Events page - admin view]()
 
 __Event registration page__
 
 If an authenticated user chose to click the "Register" button, they are redirected to this event's registration page that summarizes the most important details and lets them either "Register" or "Cancel" if they changed their mind. The page also informs them that a confirmation email has been sent, and it should appear in the user's mailbox within a few minutes.
 
+![Event registration page](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/event_register.png)
+
 __Admin pages for events__
-These pages designed very similarly to the recipe and article management pages. What might be worth mentioning for clarity is that an admin can cancel an event by clicking "Edit" next to an event and checking the "Cancelled" box. For visuals on event admin pages see the following screenshots:
-
-![Create event]()
-
-![Edit event]()
-
-![Delete event]()
+These pages designed very similarly to the recipe and article management pages. What might be worth mentioning for clarity is that an admin can cancel an event by clicking "Edit" next to an event and checking the "Cancelled" box.
 
 
 ### Sign up page
 The Sign Up option in the navigation menu is shown when user is not logged in. This page presents a sign up form, allowing the user to create an account and therefore access further features.
 
-![Sign up page]()
+![Sign up page](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/sign_up.png)
 
 
 ### Log in page
 The Log In option in the navigation menu is shown when user is not logged in. This page presents a log-in form, allowing the user to log into their account and access further features.
 
-![Log in page]()
-![Log in success]()
+![Log in page](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/log_in.png)
 
 
 ### Log out page
-The Log Out option in the navigation menu is shown when user is logged in. This page asks for a log-out confirmation, allowing the user to log out of their account and keep their personal data safe.
+The Log Out option in the navigation menu is shown when user is logged in. This page asks for a log-out confirmation, allowing the user to log out of their account and keep their personal data safe. Just like the two previous pages, it is based on an AllAuth template with custom styling.
 
-![Log out page]()
-![Log out success]()
+### Additional screenshots
+Additional screenshots (mainly for pages accessed only by admins) are available in [this folder](https://github.com/Agnieszka-21/health-store/tree/main/assets/screenshots).
 
 
 ## Future Enhancements
@@ -1398,31 +1501,30 @@ While testing every single functionality as I was creating and refining it was e
 
 __HTML__
 
-The [W3C Markup Validation Service](https://validator.w3.org/) was used to check any html files containing custom code. All files are passed the validation test without errors - you can see relevant screenshots [here]().
+The [W3C Markup Validation Service](https://validator.w3.org/) was used to check any html files containing custom code. All files are passed the validation test without errors - you can see relevant screenshots [here](https://github.com/Agnieszka-21/health-store/tree/main/assets/validators/html).
 
 __CSS__
 
-All css files containing custom styling for the application has been checked in the [W3C CSS Validation Service Jigsaw](https://jigsaw.w3.org/css-validator/) and have no errors - you can find relevant screenshot in [this folder]().
+All css files containing custom styling for the application has been checked in the [W3C CSS Validation Service Jigsaw](https://jigsaw.w3.org/css-validator/) and have no errors - you can find relevant screenshot in [this folder](https://github.com/Agnieszka-21/health-store/tree/main/assets/validators/css).
 
 __JavaScript__
 
-[JSHint](https://jshint.com/) has been used to validate all JavaScript files in the application. The files returned no errors and any related screenshots can be found [here]().
+[JSHint](https://jshint.com/) has been used to validate all JavaScript files in the application. The files returned no errors and any related screenshots can be found [here](https://github.com/Agnieszka-21/health-store/tree/main/assets/validators/jshint).
 
 __Python__
 
-All Python files containing custom code have been run through the [Code Institute's Python linter](https://pep8ci.herokuapp.com/#) in order to ensure that they meet the PEP8 requirements/recommendations. No errors were found - you can find relevenat screenshots in [this folder]().
+All Python files containing custom code have been run through the [Code Institute's Python linter](https://pep8ci.herokuapp.com/#) in order to ensure that they meet the PEP8 requirements/recommendations. No errors were found - you can find relevenat screenshots in [this folder](https://github.com/Agnieszka-21/health-store/tree/main/assets/validators/python).
 
 
 ### Lighthouse and Webaim Wave Testing
 
-The deployed website has been tested using both Lighthouse and WebaAim WAVE in order to ensure that it performs well and meets accessibility criteria. A vast majority of Lighthouse scores is in the optimal green range. However, it is worth noting that
-...
-...
-using Google maps on the homepage, images uploaded to Cloudinary on other pages, as well as applying Bootstrap and Google Fonts has led to Best Practices scores being slightly lower. From the perspective of a business using this web application it made more sense to keep the map and Cloudinary storage rather than trying to get the best score and missing out on those valuable resources, so the decision was simple. 
+The deployed website has been tested using both Lighthouse and WebaAim WAVE in order to ensure that it performs well and meets accessibility criteria. 
 
-In order to keep accessibility scores in the optimal range, I ensured to make the website fully-operational for keyboard users, including trapping focus in each modal while it is open (waiver.js and bio.js files) and adding tabindex to card titles on the Schedule page.
+Lighthouse accessibility and SEO scores are within the optimal green range on all tested pages. However, it is worth noting that using Stripe, MailChimp, AWS, as well as applying Bootstrap, Google Fonts, and Font Awesome has led to Best Practices and Performance scores being slightly lower - some of them in the green range, some in the yellow range. From the perspective of a business using this web application, it made more sense to keep these external resources. The mobile view scores are usually slightly lower, especially when any images are involved, despite all media files having been compressed and optimized. This would indicate that for optimal performance, each image should be available in at least two sizes, so that the mobile version does not have to load any images meant for larger screens.
 
-You can find screenshots with relevant results here for [Lighthouse](), amd here for [WebAim WAVE]().
+When it comes to WebAim WAVE, a few errors were indicated. There is a missing label error coming from the embedded newsletter form from MailChimp. There is a contrast issue indicated in the homepage carousel (which was copied from Bootstrap documentation), even though the element it applies to is visually hidden. There are also missing labels on the Shop page for the invisible input field for each product's quantity, and on the product detail page empty buttons were found (again, related to the quantity input field - which in this case is visible). Since the code for product quantity input has been copied from the Boutique Ado walkthrough project, I decided to leave it as it is for the moment. These errors can certainly be eliminated, so this has been added to the list of potential future enhancements.
+
+You can find screenshots with relevant results here for [Lighthouse](https://github.com/Agnieszka-21/health-store/tree/main/assets/lighthouse), and here for [WebAim WAVE](https://github.com/Agnieszka-21/health-store/tree/main/assets/wave_webaim).
 
 
 ### Responsiveness (tested with Chrome Dev Tools)
@@ -1998,12 +2100,12 @@ Blog articles and recipes as well as online events have been created as examples
 __Organic social media marketing__
 A business Facebook page has been set up for Health Store to provide an example of unpaid social media marketing. It could also be used for paid social media marketing, if the store owner were to boost posts or create ads. Please see screenshots of the page below.
 
-![Facebook page - part 1]()
-![Facebook page - part 2]()
+![Facebook page - part 1](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/fb_1.png)
+![Facebook page - part 2](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/fb_2.png)
 
 And here is the page as seen by an external user.
 
-![Facebook page - part 1]()
+![Facebook page - part 1](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/fb_customer.png)
 
 Since the action button "Buy now" required an external shopping platform, I decided to go with the classic "Learn more" which opens Health Store's website in a new tab.
 
@@ -2011,7 +2113,7 @@ __Email marketing__
 
 A MailChimp account was created in order to add to the website a newsletter signup form. The form can be found in the footer and is fully functioning. It has been customized to match the styling of the Health Store application. There is also a link to the newsletter in the promotional banner at the very top of each page, guiding users' attention toward in a subtle way and encouraging them to sign up. No email campaign has been connected to the form at the moment but it is something that could be done in the future.
 
-![Newsletter signup form]()
+![Newsletter signup form](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/home_footer.png)
 
 __GDPR considerations__
 
