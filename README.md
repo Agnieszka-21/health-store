@@ -766,29 +766,40 @@ __Implementation__
 
 #### Wireframe mock-ups
 
+Wireframes were produced for each major page for mobile devices since the intention was to make the site fully responsive so that it displays correctly regardless of the user's screen size. These wireframes were created in the initial stages of work on this project because of the mobile-first approach. This is why they show an earlier version of the project, which kept evolving with time as the development process was progressing.
+
+See the mobile wireframes below:
+
+| Homepage | Shop page | Product detail page |
+| :------------------- | :--------------- | :------------- |
+| ![Homepage mobile wireframe]() | ![Shop page mobile wireframe]() | ![Product detail mobile wireframe]() |
+
+| Blog | Recipe detail | Article detail |
+| :------------------- | :--------------- | :--------------- |
+| ![Blog mobile wireframe]() | ![Recipe detail mobile wireframe]() | ![Article detail mobile wireframe]() |
+
+| Basket | Account | Events |
+| :------------------- | :--------------- | :--------------- |
+| ![Basket mobile wireframe]() | ![Account mobile wireframe]() | ![Events mobile wireframe]() |
+
+
+#### Desktop version
+
 __Home page__
 
 The home page provides the user with a clear picture as to the purpose of the site. Under the hero carousel of images showcasing typical products that Health Store sells, there is a clear call to action for the user to go to the shop, with a large button in the center of the page that links directly to the Shop page. At the very top, there is a mimimalistic banner that encourages users to sign up to the newsletter in order to get a discount code for their first purchase - the words "sign up" are a link to the form, present in the footer. There is also a navigation bar at the top of the page with the menu and a search bar, and a footer including social media links, a link to the Privacy Policy page, and a newsletter sign-up form - these elements are visible on all pages.
-
-![Wireframe of the Home page - large screen]()
 
 __Shop page__
 
 The Shop page contains the title ("Products"), 2 dropdowns ("Filter", "Sort"), and a list of all products offered by the store. Each listed product is shown as a card, presenting the most important information like product image, its name, price, category, and average rating. Both the image and the title of each product are clickable links that lead to a detail page for that specific product, should the user be interested in checking out more details. At the bottom of each card, there is also an "Add" button (or "Add to basket" on larger screens) for users who do not need any additional information. The Shop page uses pagination to display 8 products at a time.
 
-![Wireframe of the Shop page - large screen]()
-
 __Product Detail pages__
 
 Each product listed on the Shop page leads to its own page where user can find the product's name and price, a detailed description, its ingredients (if applicable), its category, and brand. There is also an average product rating shown, if present, and a field where user can choose the quantity of the product, should they choose to add it to their basket by clicking the "Add to basket" button below. Underneath all that, there is a section displaying any existing reviews for the product, and a button with a call to action: "Log in to leave a review". For logged in users, instead of the button there is a review form they can fill to submit their rating and an optional comment.
 
-![Wireframe of the Product Detail page - large screen]()
-
 __Basket__
 
 This page is accessible to all users. It lists all items currently present in a user's basket (if there are any), including each product's basic information and details regarding quantities, which can be adjusted and updated. Any of the listed products can also be removed completely. Underneath, the basket total, delivery fee, and grand total payable amount are displayed, alongside with the information on how much more one needs to spend to qualify for free delivery. 2 buttons at the bottom of the page let the user decide whether they want to keep shopping, or proceed to checkout.
-
-![Wireframe of the Basket page - large screen]()
 
 __Checkout__
 
@@ -796,13 +807,9 @@ This page is also accessible to all users. It displays a checkout form that has 
 
 For logged in users, there is also a checkbox under the delivery section of the form that can be checked if the user wishes to save their information to the profile. If they saved their personal and address data in the past, the checkout form is pre-filled.
 
-![Wireframe of the Checkout page - large screen]()
-
 __Checkout Success page__
 
 This page, visible to any user upon placing their order successfully, displays any order details, including order number, basket items, and payment information. This is a confirmation that the order has been processed. Below all the order details, there is a button leading the customer back to the store.
-
-![Wireframe of the Checkout Success page - large screen]()
 
 __Account__
 
@@ -810,19 +817,13 @@ This page can be accessed only if user is logged in. Each user can see here a fo
 
 There are also 3 cards on this page: one for "Order history", one for "Wishlist", and one for "Bookmarked articles/recipes". These cards link user to further pages where they can see a table with their past orders, further leading them to each order's confirmation details, access and manage the list of their favourite items, as well as access and manage their lists of saved articles and recipes.
 
-![Wireframe of the Account page - large screen]()
-
 __Blog__
 
 This page can be accessed by all users and shows 2 options to choose from: one is a link leading to the page listing all blog articles, and the other is a link leading to the page listing recipes. 2 large images are used as backgrounds for these 2 options.
 
-![Wireframe of the Blog page - large screen]()
-
 __Articles page, Recipes page__
 
 These 2 pages are very similar to one another and they display a list of all published articles/recipes, with a thumbnail image and a title as a link to the detail page for each blog post.
-
-![Wireframe of the Articles page - large screen]()
 
 __Article Detail, Recipe Detail__
 
@@ -832,33 +833,9 @@ For an __article__, there is a title (heading), information on when the post was
 
 For a __recipe__, the structure of the detail page is only slightly different. Instead of one block of content, the text for each recipe is divided up into an intro, an ingredients section, and a method section. Apart from that, everything else is the same.
 
-![Wireframe of the Article detail page - large screen]()
-![Wireframe of the Recipe detail page - large screen]()
-
 __Events__
 
 This page can be accessed by all users and shows a list of all upcoming events. Past events are not shown by default. Each event is a card displaying the event's title, information on when it takes place, who the guest speaker is, and a short description. For unauthenticated users, a "Log in to register" button is shown for each event, and for logged-in users, a "Register" button. By clicking the "Register" button, user is taken to a new page with the particular event's details where they are asked to either confirm their decision with "Register" or to cancel, which sends them back to the Events page. If the user registers for an event, a confirmation email is sent to them.
-
-![Wireframe of the Events page - large screen]()
-
-
-__Wireframes for mobile devices__
-
-Wireframes were also produced for each major page for mobile devices since the intention was to make the site fully responsive so that it displays correctly regardless of the user's screen size. These wireframes were created before the ones for large screens (because of the mobile-first approach to design) and therefore depict an earlier version of the project, which evolved with time as the development process was progressing.
-
-See the mobile wireframes below:
-
-| Homepage | Shop page | Product detail page |
-| :------------------- | :--------------- | :------------- |
-| ![Homepage mobile wireframe]() | ![Shop page mobile wireframe]() | ![Product detail mobile wireframe]() |
-
-| Schedule detail | User profile page | My bookings page |
-| :------------------- | :--------------- | :--------------- |
-| ![Blog mobile wireframe]() | ![Recipe detail mobile wireframe]() | ![Article detail mobile wireframe]() |
-
-| Schedule detail | User profile page | My bookings page |
-| :------------------- | :--------------- | :--------------- |
-| ![Basket mobile wireframe]() | ![Account mobile wireframe]() | ![Events mobile wireframe]() |
 
 
 #### Database schema
@@ -873,7 +850,7 @@ There are no models in the Basket app.
 
 In the Checkout app, there are 2 models: __Order,__ and __OrderLineItem,__ both copied and adapted from the walkthrough project Boutique Ado. You can find a link to this project under [Credits](#code) in the Credits section.
 
-In the Blog app, further models were created: __Article, Recipe, Reading,__ and __FavouriteRecipe__. What is unique for the first two is the fact that they use Summernote to store blog post content. The last two models are connected to the UserProfile model and are created/updated with signals, ensuring that each user has automatically one reading list (a list of bookmarked articles), and one list of favourite recipes in their account that they can interact with.
+In the Blog app, further models were created: __Article, Recipe, Reading,__ and __FavouriteRecipe__. The last two models are connected to the UserProfile model and are created/updated with signals, ensuring that each user has automatically one reading list (a list of bookmarked articles), and one list of favourite recipes in their account that they can interact with.
 
 There is just one custom models in the Events app, called __Events__, utilized to store data in relation to monthly online events (webinars) on topics related to health and well-being.
 
@@ -885,7 +862,15 @@ What is more, I tried to ensure that any admin functionalities related to data m
 
 You can see the models and the relationships between the models in the following database schemas, created using the [drawSQL app](https://drawsql.app/).
 
-![Database schema]()
+The first schema showcases how different models revolve around the User or UserProfile model, using one of these two either in a one-to-one, foreign key, or many-to-many relationship.
+
+![Database schema - models connected with one another through User or UserProfile]()
+
+The second schema (see below) depicts product-related database models.
+
+![Database schema - models connected with one another through User or UserProfile]()
+
+The Carousel model has no connection with any of the other models.
 
 
 ### The Surface Plane
