@@ -1204,7 +1204,7 @@ The wishlist is where any products "liked" by the user are shown. Each product's
 
 If there are no items on the wishlist, the user is informed about it.
 
-![Empty wishlist](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/account_wishlist.png)
+![Empty wishlist](https://github.com/Agnieszka-21/health-store/blob/main/assets/screenshots/wishlist_empty.png)
 
 __Bookmarked articles/recipes__
 
